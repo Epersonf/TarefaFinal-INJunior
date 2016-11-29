@@ -20,6 +20,11 @@ var supervisorSchema = new Schema({
 		required: true,
 		default: "Pendente"
 	},
+	totalPecas: {
+		type: Number,
+		required: true,
+		default: 0
+	},
 	pecas: [String],
 	proxAcerto: Date
 }, {
