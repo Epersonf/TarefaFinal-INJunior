@@ -47,10 +47,10 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/consultores', consultores);
 app.use('/supervisores', supervisores);
-app.use('/kits', kits);
-app.use('/log', log);
-app.use('/pecas', peca);
-app.use('/fornecedores', peca);
+// app.use('/kits', kits);
+// app.use('/log', log);
+// app.use('/pecas', peca);
+// app.use('/fornecedores', peca);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

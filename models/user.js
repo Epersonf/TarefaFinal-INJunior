@@ -14,10 +14,10 @@ var User = new Schema({
 		type: String,		
         //required: true,
 	},
-	status: { //ativo, inativo, espera
+	status: { //ativo, inativo, pendente
         type: String,
         //required: true,
-		default: "espera"
+		default: "Pendente"
     },
     nome: {
         type: String,
@@ -59,7 +59,7 @@ var User = new Schema({
         type: String,
         //required: true
     },
-	tipo: {
+	tipo: { //supervisor, consultor, controladoria, estoque, 
         type: String,
         //required: true
     },

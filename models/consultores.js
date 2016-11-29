@@ -4,36 +4,7 @@ var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 // create a schema
-
-var personalizadoSchema = new Schema({
-	tipo: {
-        type: String,
-        required: true
-    },
-	status: { //encomendado, estoque, entregue, pago
-        type: String,
-        required: true,
-		default: "encomendado"
-    },
-	texto: {
-        type: String,
-        required: true
-    },
-	preco: {
-        type: Number,
-        required: true
-    },
-	previsaoEntrega: {
-		type: Date,
-		required: true
-	}
-});
-
 var consultorSchema = new Schema({
-	pessoaId: {
-		type: ObjectId,		
-        required: true
-	},
     supervisor: {
         type: ObjectId,
         required: true
@@ -48,7 +19,14 @@ var consultorSchema = new Schema({
 		required: true,
 		default: 0
 	},
-	pecasVendidas: [String]	
+	status:{
+		type: String,
+		required: true,
+		default: "Pendente"
+	},
+	pecas: [String],
+	pecasVendidas: [String],
+	proxAcerto: Date
 }, {
     timestamps: true
 });

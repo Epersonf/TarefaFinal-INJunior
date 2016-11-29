@@ -5,10 +5,6 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 var supervisorSchema = new Schema({
-	pessoaId: {
-		type: ObjectId,		
-        required: true
-	},
     investidor: {
         type: Boolean,
         required: true,
@@ -17,14 +13,15 @@ var supervisorSchema = new Schema({
 	porcentagem: {
 		type: Number,
 		required: true,
-		default: 30
-	}
-	pecas: [String],
-	totalPecas: {
-		type: Number,
-		required: true,
-		default: 0
+		default: 10
 	},
+	status:{
+		type: String,
+		required: true,
+		default: "Pendente"
+	},
+	pecas: [String],
+	proxAcerto: Date
 }, {
     timestamps: true
 });
