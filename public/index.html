@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="webapp" ng-controller="BaseController">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles/main-5cba9f14f6.css"/>
+	<title>Minha Ambaya - {{$state.current.name}}</title>
+</head>
+<body>
+	<div id="sidebar" class="uk-offcanvas">
+		<div class="uk-offcanvas-bar">
+			<ul class="uk-nav uk-nav-side uk-nav-offcanvas">
+				<li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="uk-active"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>
+				<!--<li ng-repeat="link in rotas" ng-class="{'uk-active': link.nome == $route.current.scope.titulo}"><a href="{{link.link}}"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>-->
+			</ul>
+		</div>
+	</div>
+	<nav class="uk-navbar" ng-if="logado">
+		<a href="#sidebar" data-uk-offcanvas="{mode:'slide'}" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+		<a ui-sref="Início" class="uk-navbar-brand"><img src="img/logo_barra.png" width="70"></img></a>
+		<ul class="uk-navbar-nav uk-hidden-small">			
+			<li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="uk-active"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>
+			<!--<li ng-repeat="link in rotas" ng-class="{'uk-active': link.nome == $route.current.scope.titulo}"><a href="{{link.link}}"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>-->
+		</ul>
+		<div class="uk-navbar-flip">
+        <ul class="uk-navbar-nav">
+            <li class="uk-button-dropdown" data-uk-dropdown>
+				<a href=""><i class="uk-icon-user"></i> {{usuario.nome}}</a>
+				<div class="uk-dropdown uk-dropdown-navbar">
+					<ul class="uk-nav uk-nav-navbar">
+						<li><a href="">Minha Conta</a></li>
+						<li><a href="" ng-click="sair()">Sair</a></li>
+					</ul>
+				</div>
+			</li>
+        </ul>
+    </div>
+	</nav>
+	<ul class="uk-breadcrumb uk-margin-left"  ng-if="logado">
+		<li ng-repeat="link in rotas" ng-if="link.nome=='Início' || link.nome==$route.current.scope.titulo"><a ng-if="link.nome!=$route.current.scope.titulo"  href="{{link.link}}">{{link.nome}}</a><span ng-if="link.nome==$route.current.scope.titulo">{{link.nome}}</span></li>
+		<hr>
+	</ul>
+	<div ui-view="{{usuario.nivel}}" ng-if="logado"></div>
+
+	<div class="uk-container uk-container-center uk-margin-top" ng-if="!logado">
+		
+		<div class="uk-panel uk-margin-bottom uk-text-center">
+			<div class="uk-grid uk-grid-match">
+				<div class="uk-panel uk-panel-box uk-margin-bottom  uk-width-1-1 uk-container-center">
+					<div>
+						Minha Ambaya
+					</div>
+				</div>				
+			</div>
+			<hr class="uk-grid-divider">
+			<div class="uk-grid uk-grid-match">
+				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-container-center">
+					<h2 class="uk-panel-title">Login</h2>
+					<hr class="uk-grid-divider">
+					<div>
+						Selecione o nível de acesso:
+						<select ng-model="nivel">
+							<option value="supervisor">Supervisor</option>
+							<option value="consultor">Consultor</option>
+							<option value="controladoria">Controladoria</option>
+							<option value="estoque">Estoque</option>
+						</select>
+						<button ng-click="login(nivel)">Entrar</button>
+					</div>
+				</div>				
+			</div>
+			<hr class="uk-grid-divider">
+			<div class="uk-grid uk-grid-match">
+				<div class="uk-panel uk-panel-box uk-margin-bottom  uk-width-1-1 uk-container-center">
+					<div>
+						Ambaya 2016
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+
+<script src="scripts/main-f31279b10a.js"></script>
+</body>
+</html>

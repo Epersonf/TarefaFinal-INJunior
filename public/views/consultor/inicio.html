@@ -1,0 +1,62 @@
+	<div class="uk-container uk-container-center uk-margin-top" ng-controller="ConsultorInicioController">
+		<div id="venda" class="uk-modal">
+			<div class="uk-modal-dialog">
+				<a class="uk-modal-close uk-close"></a>
+				<form class="uk-form uk-text-center">
+
+					<fieldset data-uk-margin>
+						<input type="text" placeholder="" ng-model="codigo">
+						<button class="uk-button" ng-click="vender()">Pronto!</button>
+					</fieldset>
+
+				</form>
+			</div>
+		</div>
+		<div class="uk-panel uk-margin-bottom uk-text-center">
+			<div class="uk-grid uk-grid-match">
+				<button class="uk-button uk-button-secondary uk-width-1-1" data-uk-modal="{target:'#venda'}"><i class="uk-icon-money uk-icon-large"></i> VENDER</button>
+			</div>
+			<hr class="uk-grid-divider">
+			<div class="uk-grid uk-grid-match">
+				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1">
+					<h2 class="uk-panel-title">Próximo Acerto <br> 00/00/00 (faltam x dias) </h2>
+					<hr class="uk-grid-divider">
+					<div class="uk-grid uk-grid-match">
+						<div class="uk-width-1-1 uk-width-medium-1-2">
+							<dl class="uk-description-list-line">
+								<dt><h1>Minha Parte</h1></dt>
+   								<dd><h1>{{dados.minhaParte}}</h1></dd>	
+							</dl>			
+							<hr class="uk-visible-small" ><br>
+						</div>
+						<div class="uk-width-1-1 uk-width-medium-1-2">
+							<dl class="uk-description-list-line">
+								<dt><h1>A Pagar</h1></dt>
+   								<dd><h1>{{dados.aPagar}}</h1></dd>	
+							</dl>
+						</div>	
+					</div>
+				</div>				
+			</div>
+			<hr class="uk-grid-divider">
+			<div class="uk-grid uk-grid-match">
+				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
+					<h3 class="uk-panel-title">Total de Peças</h3>
+					<div class="uk-panel">
+						<h1>{{dados.pecas}}</h1>					
+					</div>
+				</div>
+				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
+					<h3 class="uk-panel-title">Meu Supervisor</h3>
+					<div class="uk-panel">
+						<dl class="uk-description-list-horizontal uk-container-center">
+							<span ng-repeat="info in dados.supervisor" class="uk-description-list-horizontal">
+								<dt>{{info.info}}</dt>
+								<dd>{{info.desc}}</dd>
+							</span>
+						</dl>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
