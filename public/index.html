@@ -41,7 +41,7 @@
 		<li ng-repeat="link in rotas" ng-if="link.nome=='Início' || link.nome==$route.current.scope.titulo"><a ng-if="link.nome!=$route.current.scope.titulo"  href="{{link.link}}">{{link.nome}}</a><span ng-if="link.nome==$route.current.scope.titulo">{{link.nome}}</span></li>
 		<hr>
 	</ul>
-	<div ui-view="{{usuario.nivel}}" ng-if="logado"></div>
+	<div ui-view="{{tipo}}" ng-if="logado"></div>
 
 	<div class="uk-container uk-container-center uk-margin-top" ng-if="!logado">
 		
@@ -56,9 +56,7 @@
 			<hr class="uk-grid-divider">
 			<div class="uk-grid uk-grid-match">
 				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-container-center">
-					<h2 class="uk-panel-title">Login</h2>
-					<hr class="uk-grid-divider">
-					<div>
+					<!--<div>
 						Selecione o nível de acesso:
 						<select ng-model="nivel">
 							<option value="supervisor">Supervisor</option>
@@ -67,7 +65,15 @@
 							<option value="estoque">Estoque</option>
 						</select>
 						<button ng-click="login(nivel)">Entrar</button>
-					</div>
+					</div>-->
+					<form class="uk-form">
+						<fieldset data-uk-margin>
+							<legend>Login</legend>
+							<div class="uk-form-row"><input type="text" placeholder="Usuário" ng-model="usuario.username"></div>
+							<div class="uk-form-row"><input type="password" placeholder="Senha" ng-model="usuario.password"></div>
+							<div class="uk-form-row"><button class="uk-button" ng-click="login()">Entrar</button></div>							
+						</fieldset>
+					</form>
 				</div>				
 			</div>
 			<hr class="uk-grid-divider">
@@ -81,6 +87,6 @@
 		</div>
 	</div>
 
-<script src="scripts/main-a6e80befca.js"></script>
+<script src="scripts/main-a89c104327.js"></script>
 </body>
 </html>
