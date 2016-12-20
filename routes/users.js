@@ -26,6 +26,7 @@ router.post('/register', function(req, res) {
         
         if (user.tipo==="Consultor"){
             req.body.extra._id = user._id;
+            req.body.extra.nome = user.nome;
             Consultor.create(req.body.extra, function(err){
                 if (err) {
                     return res.status(500).json({err: "Falha ao criar Consultor"});;
@@ -33,6 +34,7 @@ router.post('/register', function(req, res) {
             });
         } else if (user.tipo==="Supervisor"){
             req.body.extra._id = user._id;
+            req.body.extra.nome = user.nome;
             Supervisor.create(req.body.extra, function(err){
                 if (err) {
                     return res.status(500).json({err: "Falha ao criar Supervisor"});;

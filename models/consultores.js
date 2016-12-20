@@ -5,7 +5,11 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 // create a schema
 var consultorSchema = new Schema({
-    supervisor: {
+    nome:{
+		type: String,
+		required: true
+	},
+	supervisor: {
         type: ObjectId,
         required: true
     },

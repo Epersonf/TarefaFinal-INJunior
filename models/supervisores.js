@@ -5,7 +5,11 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 var supervisorSchema = new Schema({
-    investidor: {
+    nome:{
+		type: String,
+		required: true
+	},
+	investidor: {
         type: Boolean,
         required: true,
 		default: false
