@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles/main-5cba9f14f6.css"/>
+<link rel="stylesheet" href="styles/main-dd470cd1b9.css"/>
 	<title>Minha Ambaya - {{$state.current.name}}</title>
 </head>
 <body>
@@ -37,10 +37,6 @@
         </ul>
     </div>
 	</nav>
-	<ul class="uk-breadcrumb uk-margin-left"  ng-if="logado">
-		<li ng-repeat="link in rotas" ng-if="link.nome=='Início' || link.nome==$route.current.scope.titulo"><a ng-if="link.nome!=$route.current.scope.titulo"  href="{{link.link}}">{{link.nome}}</a><span ng-if="link.nome==$route.current.scope.titulo">{{link.nome}}</span></li>
-		<hr>
-	</ul>
 	<div ui-view="{{tipo}}" ng-if="logado"></div>
 
 	<div class="uk-container uk-container-center uk-margin-top" ng-if="!logado">
@@ -87,6 +83,6 @@
 		</div>
 	</div>
 
-<script src="scripts/main-6b7de1ea34.js"></script>
+<script src="scripts/main-f3ba1a0eb9.js"></script>
 </body>
 </html>

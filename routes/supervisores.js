@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var User = require('../models/user');
 
 var Supervisor = require('../models/supervisores');
 
@@ -11,6 +12,13 @@ supervisorRouter.route('/')
 .get(function (req, res, next) {
     Supervisor.find({}, function (err, supervisor) {
         if (err) throw err;
+        // supervisor.forEach(function(sup){
+        //     User.findOne({_id: sup._id}, {nome:1}, function (err, user) {
+        //         console.log(user.nome);
+        //         sup.status = user.nome;
+        //         return sup;
+        //     });
+        // });
         res.json(supervisor);
     });
 })

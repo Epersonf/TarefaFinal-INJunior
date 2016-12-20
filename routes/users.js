@@ -41,7 +41,7 @@ router.post('/register', function(req, res) {
         }else console.log("Criacao completa!");
 
         passport.authenticate('local')(req, res, function () {
-            return res.status(200).json({status: 'Registration Successful!'});
+            return res.status(200).json({status: 'Usuário registrado'});
         });
     });
 });
@@ -59,13 +59,13 @@ router.post('/login', function(req, res, next) {
     req.logIn(user, function(err) {
       if (err) {
         return res.status(500).json({
-          err: 'Could not log in user'
+          err: 'Falha ao entrar.'
         });
       }
         
       var token = Verify.getToken(user);
               res.status(200).json({
-        status: 'Login successful!',
+        status: 'Logado com sucesso',
         success: true,
         token: token,
 		user: user
@@ -77,12 +77,18 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res) {
     req.logout();
   res.status(200).json({
-    status: 'Bye!'
+    status: 'Até mais!'
   });
 });
 
 router.delete('/', function (req, res, next) {
      User.remove({}, function (err, resp) {
+        if (err) throw err;
+        res.json(resp);
+    });
+});
+router.delete('/:id', function (req, res, next) {
+     User.remove({_id:req.params.id}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
