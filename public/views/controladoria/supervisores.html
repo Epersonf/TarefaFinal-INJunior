@@ -10,10 +10,15 @@
 			<hr class="uk-grid-divider">
 			<div class="uk-panel uk-panel-box uk-panel-box-secondary">
 				<button class="uk-button uk-button-secondary uk-width-1-1" data-uk-modal="{target:'#adicionar'}"><i class="uk-icon-plus"></i> Adicionar Supervisor</button>
-				<div class="uk-panel"><div class="uk-badge uk-width-1-1">Supervisores: {{total}}</div></div>
-				<ul class="uk-list uk-list-striped uk-margin-left uk-column-small-1-2 uk-column-medium-1-3">
-					<li ng-repeat="supervisor in supervisores"><a class="uk-link-muted" ui-sref="Supervisor({supervisorId: supervisor.id })"><b>{{supervisor.nome}}</b></a></li>
-				</ul>
+				<div class="uk-panel"><div class="uk-badge uk-width-1-1">Total: {{total}}</div></div>
+				<div class="uk-flex uk-margin">
+					<a class="uk-link-muted" href="#/supervisor/{{supervisor._id}}" ng-repeat="supervisor in supervisores">
+						<div class="uk-panel uk-panel-box uk-margin-right uk-text-center">
+							<!--<div class="uk-panel-badge uk-badge">...</div>-->
+							<h3 class="uk-panel-title">{{supervisor.nome}}</h3>
+						</div>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

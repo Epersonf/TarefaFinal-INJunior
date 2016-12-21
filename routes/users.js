@@ -95,6 +95,12 @@ router.delete('/:id', function (req, res, next) {
         res.json(resp);
     });
 });
+router.get('/:id', function(req, res, next) {
+  User.findOne({_id:req.params.id}, function (err, user) {
+        if (err) throw err;
+        res.json(user);
+    });
+});
 
 module.exports = router;
 

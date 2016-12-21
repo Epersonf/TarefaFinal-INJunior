@@ -9,12 +9,19 @@
 					<h2 class="uk-panel-title">Consultores</h2>
 					<hr class="uk-grid-divider">
 					<div class="uk-panel uk-panel-box uk-panel-box-secondary">
-						<button class="uk-button uk-button-secondary uk-width-1-1"><i class="uk-icon-plus"></i> Adicionar Consultor</button>
-						<div class="uk-panel"><div class="uk-badge uk-width-1-1">Consultores: {{total}}</div></div>
+						<div class="uk-alert uk-text-center">A adição de consultores deve ser feita em seu respectivo <a ui-sref="Supervisores">Supervisor</a> </div>
+						<div class="uk-panel"><div class="uk-badge uk-width-1-1">Total: {{total}}</div></div>
 						
-						<ul class="uk-list uk-list-striped uk-margin-left uk-column-small-1-2 uk-column-medium-1-3">
-							<li ng-repeat="consultor in consultores"><a class="uk-link-muted" ui-sref="Consultor({consultorId: consultor.id })"><b>{{consultor.nome}}</b> -  {{consultor.vendido | currency}} vendidos</a> <div class="uk-badge" ng-class="{'uk-badge-warning': consultor.status==='Pendente', 'uk-badge-danger': consultor.status==='Inativo', 'uk-badge-success': consultor.status==='Aprovado'}">{{consultor.status}}</div></li>
-						</ul>
+						<div class="uk-flex uk-margin">
+							<a class="uk-link-muted" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores">
+								<div class="uk-panel uk-panel-box uk-margin-right uk-text-center">
+									<h3 class="uk-panel-title">{{consultor.nome}}</h3>
+									<div class="uk-badge" ng-class="{'uk-badge-warning': consultor.status==='Pendente', 'uk-badge-danger': consultor.status==='Inativo', 'uk-badge-success': consultor.status==='Aprovado'}">{{consultor.status}}</div>
+									</br>
+									{{consultor.vendido | currency: 'R$'}} vendidos
+								</div>
+							</a>
+						</div>
 						<div class="uk-panel uk-panel-box"><div class="uk-align-center"><b>Total vendido: R$00,00</b></div></div>
 					</div>
 				</div>

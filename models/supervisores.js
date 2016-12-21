@@ -19,11 +19,6 @@ var supervisorSchema = new Schema({
 		required: true,
 		default: 10
 	},
-	status:{
-		type: String,
-		required: true,
-		default: "Pendente"
-	},
 	totalPecas: {
 		type: Number,
 		required: true,

@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var Consultor = require('../models/consultores');
 
@@ -78,5 +79,14 @@ consultorRouter.route('/:id')
         });
     })
 ;
+
+consultorRouter.route('/supervisor/:id')
+    .get(function (req, res, next) {
+        Consultor.find({'supervisor': req.params.id}, function (err, consultor) {
+            if (err) throw err;
+            res.json(consultor);
+        });
+    })
+;   
 
 module.exports = consultorRouter;

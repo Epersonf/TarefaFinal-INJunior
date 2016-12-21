@@ -17,7 +17,7 @@ var User = new Schema({
 	status: { //ativo, inativo, pendente
         type: String,
         //required: true,
-		default: "Pendente"
+		default: "Ativo"
     },
     nome: {
         type: String,

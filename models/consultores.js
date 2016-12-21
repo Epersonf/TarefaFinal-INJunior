@@ -28,6 +28,11 @@ var consultorSchema = new Schema({
 		required: true,
 		default: "Pendente"
 	},
+	vendido:{
+		type: Number,
+		required: true,
+		default: 0
+	},
 	pecas: [String],
 	pecasVendidas: [String],
 	proxAcerto: Date

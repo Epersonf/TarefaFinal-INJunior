@@ -8,6 +8,7 @@
 		<div class="uk-panel uk-margin-bottom">
 				<div class="uk-panel uk-panel-box uk-margin-bottom">
 					<h2 class="uk-panel-title">{{dados.nome}} {{dados.id}}
+						<div class="uk-badge" ng-class="{'uk-badge-warning': consultor.status==='Pendente', 'uk-badge-danger': consultor.status==='Inativo', 'uk-badge-success': consultor.status==='Aprovado'}">{{consultor.status}}</div>
 						<div class="uk-button-group uk-float-right">
 							<button class="uk-button"><i class="uk-icon-edit"></i></button>
 							<button class="uk-button"><i class="uk-icon-trash"></i></button>
