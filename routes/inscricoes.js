@@ -15,19 +15,13 @@ var banco = mysql.createConnection({
 
 inscricoesRouter.route('/')
     .get(function (req, res, next) {
-        banco.connect(function(err){
-        if(!err) {
-            console.log("Database is connected ... nn");    
-        } else {
-            console.log("Error connecting database ... nn");    
-        }
-        });
+        banco.connect();
 
         banco.query('SELECT * from possiveisconsultores', function(err, rows, fields) {
         if (!err)
             res.json(rows);
         else{
-                console.log('Error while performing Query.');
+                //console.log('Error while performing Query.');
                 res.json({'err': 'Problema na query'});
             }
         });
