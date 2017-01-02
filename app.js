@@ -17,6 +17,7 @@ var supervisores = require('./routes/supervisores');
 var log = require('./routes/log');
 var peca = require('./routes/pecas');
 var fornecedor = require('./routes/fornecedores');
+var inscricoes = require('./routes/inscricoes');
 
 var app = express();
 
@@ -47,6 +48,8 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/consultores', consultores);
 app.use('/supervisores', supervisores);
+app.use('/inscricoes', inscricoes);
+
 // app.use('/kits', kits);
 // app.use('/log', log);
 // app.use('/pecas', peca);
@@ -90,8 +93,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     // we're connected!
     console.log("Connected correctly to server");
-	//app.listen(port, hostname, function(){
-  app.listen(process.env.PORT || 8080, function(){
+	app.listen(port, hostname, function(){
+  //app.listen(process.env.PORT || 8080, function(){
 		console.log(`Server running at http://${hostname}:${port}/`);
 	});
 });
