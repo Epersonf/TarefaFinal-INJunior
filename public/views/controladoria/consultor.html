@@ -4,7 +4,7 @@
 		<li class="uk-active">{{dados.nome}}</li>
 		<hr>
 	</ul>
-	<div class="uk-container uk-container-center uk-margin-top" ng-controller="ConsultorController">
+	<div class="uk-container uk-container-center uk-margin-top">
 		<div class="uk-panel uk-margin-bottom">
 				<div class="uk-panel uk-panel-box uk-margin-bottom">
 					<h2 class="uk-panel-title"><i class="uk-icon-back"></i> {{dados.nome}}
@@ -22,7 +22,10 @@
 							<dd>{{dados.cidade}}</dd>
 							<dt>WhatsApp</dt>
 							<dd>{{dados.whatsapp}}</dd>
-							<dt>Supervisor</dt>
+							<dt>Endereço</dt>
+							<dd>{{dados.endereco}}</dd>
+							<dt>CEP</dt>
+							<dd>{{dados.cep}}</dd>
 							<dd><a class="uk-link-muted" ui-sref="Supervisor({supervisorId: dados.supervisorId })">{{dados.supervisor}}</a></dd>
 						</dl>
 						<div class="uk-panel uk-panel-box"><div class="uk-align-center"><b>Valor do próximo acerto: {{consultor.vendido | currency: 'R$'}}</b></div></div>

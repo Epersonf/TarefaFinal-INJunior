@@ -9,19 +9,12 @@
 					<h2 class="uk-panel-title">Meu Estoque</h2>
 					<hr class="uk-grid-divider">
 					<div class="uk-panel uk-panel-box uk-panel-box-secondary">
-						<div class="uk-panel"><div class="uk-badge uk-width-1-2">Minhas Peças: 150</div><div class="uk-badge uk-width-1-2">Peças Alocadas: 120</div></div>
+						<div class="uk-panel"><div class="uk-badge uk-width-1-2">Minhas Peças: 150</div><div class="uk-badge uk-width-1-2">Peças Alocadas: {{totalPecas}}</div></div>
 						<!-- Alocação de peças apenas em numeros -->
 						<ul class="uk-list uk-list-striped uk-margin-left uk-column-medium-1-2">
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
-							<li><b>Nome</b> -  2 Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: 00/00/0000 (0 dias)</li>
+							<li ng-repeat="consultor in consultores"><b>{{consultor.nome}}</b> -  {{consultor.pecas.length + consultor.pecasVendidas.length}} Peças - <button class="uk-button uk-button-secondary"> Alocar</button> | Próximo Acerto: {{consultor.proxAcerto | date: "d/MM/yy"}} ({{faltamDias(consultor.proxAcerto)}} dias)</li>
 						</ul>
-						<div class="uk-panel uk-panel-box"><div class="uk-align-center"><b>Total vendido: R$00,00</b></div></div>
+						<div class="uk-panel uk-panel-box"><div class="uk-align-center"><b>Total vendido: {{valorVendido | currency:'R$'}}</b></div></div>
 					</div>
 				</div>
 		</div>

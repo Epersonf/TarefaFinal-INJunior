@@ -43,7 +43,7 @@ router.post('/register', function(req, res) {
         }else console.log("Criacao completa!");
 
         passport.authenticate('local')(req, res, function () {
-            return res.status(200).json({status: 'Usuário registrado'});
+            return res.status(200).json({status: 'Usuário registrado', id: user._id});
         });
     });
 });
