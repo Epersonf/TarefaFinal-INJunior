@@ -35,7 +35,11 @@ var consultorSchema = new Schema({
 	},
 	pecas: [String],
 	pecasVendidas: [String],
-	proxAcerto: Date
+	proxAcerto:{
+		type: Date,
+		required: true,
+		default: new Date(+new Date() + 45*24*60*60*1000)
+	}
 }, {
     timestamps: true
 });

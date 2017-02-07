@@ -24,8 +24,12 @@ var supervisorSchema = new Schema({
 		required: true,
 		default: 0
 	},
-	pecas: [String],
-	proxAcerto: Date
+	proxAcerto:{
+		type: Date,
+		required: true,
+		default: new Date(+new Date() + 45*24*60*60*1000)
+	},
+	pecas: [String]
 }, {
     timestamps: true
 });

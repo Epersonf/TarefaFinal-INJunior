@@ -17,26 +17,27 @@
 			</div>
 		</div>
 		<div class="uk-panel uk-margin-bottom uk-text-center">
+			<div class="uk-alert uk-alert-warning" ng-show="dados.status!=='Aprovado'"> Aguardando aprovação. </br> Você precisa ser aprovado(a) como Consultor(a) para que possa começar a vender. </div>
 			<div class="uk-grid uk-grid-match">
-				<button class="uk-button uk-button-secondary uk-width-1-1" data-uk-modal="{target:'#venda'}"><i class="uk-icon-money uk-icon-large"></i> VENDER</button>
+				<button class="uk-button uk-button-secondary uk-width-1-1" data-uk-modal="{target:'#venda'}" ng-disabled="dados.status!=='Aprovado'"><i class="uk-icon-money uk-icon-large"></i> VENDER</button>
 			</div>
 			<hr class="uk-grid-divider">
 			<div class="uk-grid uk-grid-match">
 				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1">
-					<h2 class="uk-panel-title">Próximo Acerto <br> 00/00/00 (faltam x dias) </h2>
+					<h2 class="uk-panel-title">Próximo Acerto <br> {{dados.proxAcerto | date: 'dd/MM/yy'}} (faltam {{faltamDias(dados.proxAcerto)}} dias) </h2>
 					<hr class="uk-grid-divider">
 					<div class="uk-grid uk-grid-match">
 						<div class="uk-width-1-1 uk-width-medium-1-2">
 							<dl class="uk-description-list-line">
 								<dt><h1>Minha Parte</h1></dt>
-   								<dd><h1>{{dados.minhaParte}}</h1></dd>	
+								   <dd><h1>{{(dados.vendido * dados.porcentagem)/100 | currency: 'R$'}}</h1></dd>	
 							</dl>			
 							<hr class="uk-visible-small" ><br>
 						</div>
 						<div class="uk-width-1-1 uk-width-medium-1-2">
 							<dl class="uk-description-list-line">
 								<dt><h1>A Pagar</h1></dt>
-   								<dd><h1>{{dados.aPagar}}</h1></dd>	
+								   <dd><h1>{{dados.vendido*(100-dados.porcetagem)/100 | currency: 'R$'}}</h1></dd>	
 							</dl>
 						</div>	
 					</div>
@@ -45,19 +46,19 @@
 			<hr class="uk-grid-divider">
 			<div class="uk-grid uk-grid-match">
 				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
-					<h3 class="uk-panel-title">Total de Peças</h3>
+					<h3 class="uk-panel-title">Peças</h3>
 					<div class="uk-panel">
-						<h1>{{dados.pecas}}</h1>					
+						<h1>{{dados.pecasVendidas.length}}/{{dados.pecas.length+dados.pecasVendidas.length}}</h1>					
 					</div>
 				</div>
 				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
 					<h3 class="uk-panel-title">Meu Supervisor</h3>
 					<div class="uk-panel">
 						<dl class="uk-description-list-horizontal uk-container-center">
-							<span ng-repeat="info in dados.supervisor" class="uk-description-list-horizontal">
-								<dt>{{info.info}}</dt>
-								<dd>{{info.desc}}</dd>
-							</span>
+							<dt>Nome</dt>
+							<dd>{{supervisor.nome}}</dd>
+							<dt>Whatsapp</dt>
+							<dd>{{supervisor.whatsapp}}</dd>
 						</dl>						
 					</div>
 				</div>

@@ -87,7 +87,7 @@ app.use(function(err, req, res, next) {
 });
 
 var hostname = 'localhost';
-var port = 3000;
+var port = 3030;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {

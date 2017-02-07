@@ -4,7 +4,7 @@
 	<li class="uk-active">{{dados.nome}}</li>
 	<hr>
 </ul>
-<div class="uk-container uk-container-center uk-margin-top" ng-contoller="SupervisorController">
+<div class="uk-container uk-container-center uk-margin-top">
 	<div class="uk-panel uk-margin-bottom">
 			<div class="uk-panel uk-panel-box uk-margin-bottom">
 				<h2 class="uk-panel-title">{{dados.nome}}
@@ -43,7 +43,7 @@
 		<div class="uk-modal-header">Adicionar Consultor - {{dados.nome}}</div>
 			<form class="uk-form uk-form-stacked" ng-submit="novo()" name="formulario" novalidate>
 				<fieldset data-uk-margin>
-					<legend>Preencha os dados abaixo para adicionar um(a) supervisor(a) para {{dados.nome}}</legend>
+					<legend>Preencha os dados abaixo para adicionar um(a) consultor(a) para {{dados.nome}}</legend>
 					<div class="uk-form-row">
 						<label class="uk-form-label" for="usuario">Usuário: {{form.nome | lowercase}}</label>
 					</div>

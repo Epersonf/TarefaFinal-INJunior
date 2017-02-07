@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var Consultor = require('../models/consultores');
+var User = require('../models/user');
 
 var consultorRouter = express.Router();
 consultorRouter.use(bodyParser.json());
@@ -52,7 +53,14 @@ consultorRouter.route('/quantidade')
         });
     })
 ;
-
+consultorRouter.route('/totais/:id')
+    .get(function (req, res, next) {
+        Consultor.aggregate([{$match:{status: 'Pendente'}},{$group: {_id: null, totalVendido:{$sum: '$vendido'}}}], function (err, consultor) {
+            if (err) throw err;
+            res.json(consultor);
+        });
+    })
+; 
 consultorRouter.route('/:id')
     .get(function (req, res, next) {
         Consultor.findById(req.params.id, function (err, consultor) {
@@ -87,6 +95,15 @@ consultorRouter.route('/supervisor/:id')
             res.json(consultor);
         });
     })
-;   
+;
+consultorRouter.route('/atualizar/')
+    .post(function (req, res, next) {
+        Consultor.update({"_id" : req.body._id},{$set : req.body.update}, function (err, consultor) {
+                    if (err) throw err;
+                    res.json(consultor);
+                });
+    })
+;
+  
 
 module.exports = consultorRouter;
