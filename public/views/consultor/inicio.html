@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 	<ul class="uk-breadcrumb uk-margin-left uk-margin-top"  ng-if="logado">
 		<li class="uk-active">Início</li>
 		<hr>
@@ -64,4 +65,72 @@
 				</div>
 			</div>
 		</div>
+=======
+	<ul class="uk-breadcrumb uk-margin-left uk-margin-top"  ng-if="logado">
+		<li class="uk-active">Início</li>
+		<hr>
+	</ul>
+	<div class="uk-container uk-container-center uk-margin-top" ng-controller="ConsultorInicioController">
+		<div id="venda" class="uk-modal">
+			<div class="uk-modal-dialog">
+				<a class="uk-modal-close uk-close"></a>
+				<form class="uk-form uk-text-center">
+
+					<fieldset data-uk-margin>
+						<input type="text" placeholder="" ng-model="codigo">
+						<button class="uk-button" ng-click="vender()">Pronto!</button>
+					</fieldset>
+
+				</form>
+			</div>
+		</div>
+		<div class="uk-panel uk-margin-bottom uk-text-center">
+			<div class="uk-alert uk-alert-warning" ng-show="dados.status!=='Aprovado'"> Aguardando aprovação. </br> Você precisa ser aprovado(a) como Consultor(a) para que possa começar a vender. </div>
+			<div class="uk-grid uk-grid-match">
+				<button class="uk-button uk-button-secondary uk-width-1-1" data-uk-modal="{target:'#venda'}" ng-disabled="dados.status!=='Aprovado'"><i class="uk-icon-money uk-icon-large"></i> VENDER</button>
+			</div>
+			<hr class="uk-grid-divider">
+			<div class="uk-grid uk-grid-match">
+				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1">
+					<h2 class="uk-panel-title">Próximo Acerto <br> {{dados.proxAcerto | date: 'dd/MM/yy'}} (faltam {{faltamDias(dados.proxAcerto)}} dias) </h2>
+					<hr class="uk-grid-divider">
+					<div class="uk-grid uk-grid-match">
+						<div class="uk-width-1-1 uk-width-medium-1-2">
+							<dl class="uk-description-list-line">
+								<dt><h1>Minha Parte</h1></dt>
+								   <dd><h1>{{(dados.vendido * dados.porcentagem)/100 | currency: 'R$'}}</h1></dd>	
+							</dl>			
+							<hr class="uk-visible-small" ><br>
+						</div>
+						<div class="uk-width-1-1 uk-width-medium-1-2">
+							<dl class="uk-description-list-line">
+								<dt><h1>A Pagar</h1></dt>
+								   <dd><h1>{{dados.vendido*(100-dados.porcetagem)/100 | currency: 'R$'}}</h1></dd>	
+							</dl>
+						</div>	
+					</div>
+				</div>				
+			</div>
+			<hr class="uk-grid-divider">
+			<div class="uk-grid uk-grid-match">
+				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
+					<h3 class="uk-panel-title">Peças</h3>
+					<div class="uk-panel">
+						<h1>{{dados.pecasVendidas.length}}/{{dados.pecas.length+dados.pecasVendidas.length}}</h1>					
+					</div>
+				</div>
+				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
+					<h3 class="uk-panel-title">Meu Supervisor</h3>
+					<div class="uk-panel">
+						<dl class="uk-description-list-horizontal uk-container-center">
+							<dt>Nome</dt>
+							<dd>{{supervisor.nome}}</dd>
+							<dt>Whatsapp</dt>
+							<dd>{{supervisor.whatsapp}}</dd>
+						</dl>						
+					</div>
+				</div>
+			</div>
+		</div>
+>>>>>>> 2c53561b564454f6f4c20e634b0463a72203b687
 	</div>
