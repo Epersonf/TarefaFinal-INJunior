@@ -1,91 +1,44 @@
-<!DOCTYPE html>
-<html lang="pt-br" ng-app="webapp" ng-controller="BaseController">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles/main-493a6443b1.css"/>
-	<title>Minha Ambaya - {{$state.current.name}}</title>
+    <title>Minha Ambaya</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+<link rel="stylesheet" href="styles/main-429481e2e6.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
-	<div id="sidebar" class="uk-offcanvas">
-		<div class="uk-offcanvas-bar">
-			<ul class="uk-nav uk-nav-side uk-nav-offcanvas">
-				<li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="uk-active"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>
-				<!--<li ng-repeat="link in rotas" ng-class="{'uk-active': link.nome == $route.current.scope.titulo}"><a href="{{link.link}}"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>-->
-			</ul>
-		</div>
-	</div>
-	<nav class="uk-navbar" ng-if="logado">
-		<a href="#sidebar" data-uk-offcanvas="{mode:'slide'}" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
-		<a ui-sref="Início" class="uk-navbar-brand"><img src="img/logo_barra.png" width="70"></img></a>
-		<ul class="uk-navbar-nav uk-hidden-small">			
-			<li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="uk-active"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>
-			<!--<li ng-repeat="link in rotas" ng-class="{'uk-active': link.nome == $route.current.scope.titulo}"><a href="{{link.link}}"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>-->
-		</ul>
-		<div class="uk-navbar-flip">
-        <ul class="uk-navbar-nav">
-            <li class="uk-button-dropdown" data-uk-dropdown>
-				<a href=""><i class="uk-icon-user"></i> {{usuario.nome}}</a>
-				<div class="uk-dropdown uk-dropdown-navbar">
-					<ul class="uk-nav uk-nav-navbar">
-						<li><a href="#info" data-uk-modal>Minhas Informações</a></li>
-						<li><a href="" ng-click="sair()">Sair</a></li>
-					</ul>
-				</div>
-			</li>
-        </ul>
+<body ng-app="ambaya" ng-controller="BaseController" class="fundoPreto">
+    <ul id="navegacaoLateral" class="side-nav fundoAmarelo textoPreto">
+        <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
+        <li><a href="" ng-click="sair()" class="textoPreto"><i class="material-icons left">exit_to_app</i> Sair</a></li>
+    </ul>
+    <div class="navbar-fixed">
+        <nav class="fundoAmarelo black-text">
+            <div class="nav-wrapper">
+                <a href="#" ng-show="logado" class="button-collapse textoPreto right" data-activates="navegacaoLateral"><i class="material-icons">menu</i></a>
+                <a href="#" class="brand-logo"><img src="img/logo_barra.png" height="100%"></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="logado">
+                    <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
+                    <li><a href="" ng-click="sair()" class="textoPreto"><i class="material-icons left">exit_to_app</i> Sair</a></li>
+                </ul>
+            </div>
+        </nav>
     </div>
-	</nav>
-	<div ui-view="{{tipo}}" ng-if="logado"></div>
+    <main ui-view="{{tipo}}">
+    </main>
+    <footer class="page-footer fundoAmarelo">
+        <div class="footer-copyright textoPreto">
+            <div class="container">
+            © 2017 Ambaya Semijoias
+            <a class="textoPreto right" href="#!">by WebDrops</a>
+            </div>
+        </div>
+    </footer>
 
-	<div class="uk-container uk-container-center uk-margin-top" ng-if="!logado">
-		
-		<div class="uk-panel uk-margin-bottom uk-text-center">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom  uk-width-1-1 uk-container-center">
-					<div>
-						Minha Ambaya
-					</div>
-				</div>				
-			</div>
-			<hr class="uk-grid-divider">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-container-center">
-					<!--<div>
-						Selecione o nível de acesso:
-						<select ng-model="nivel">
-							<option value="supervisor">Supervisor</option>
-							<option value="consultor">Consultor</option>
-							<option value="controladoria">Controladoria</option>
-							<option value="estoque">Estoque</option>
-						</select>
-						<button ng-click="login(nivel)">Entrar</button>
-					</div>-->
-					<form class="uk-form">
-						<fieldset data-uk-margin>
-							<legend>Login</legend>
-							<div class="uk-form-row"><input type="text" placeholder="Usuário" ng-model="usuario.username"></div>
-							<div class="uk-form-row"><input type="password" placeholder="Senha" ng-model="usuario.password"></div>
-							<div class="uk-form-row"><button class="uk-button" ng-click="login()">Entrar</button></div>							
-						</fieldset>
-					</form>
-				</div>				
-			</div>
-		</div>
-	</div>
-	<hr class="uk-grid-divider">
-	<div class="uk-grid uk-grid-match">
-		<div class="uk-panel uk-panel-box uk-margin-bottom  uk-width-1-1 uk-container-center uk-text-center">
-				Ambaya 2017
-		</div>				
-	</div>
-	<div id="info" class="uk-modal">
-		<div class="uk-modal-dialog uk-modal-dialog-blank">
-			<h1>teste</h1>
-		</div>
-	</div>
-
-<script src="scripts/main-e4669ac76d.js"></script>
+<!-- JavaScript for: jQuery, angular, materialize, and angular-materialize. All of which are needed. -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>-->
+<script src="scripts/main-4343549288.js"></script>
 </body>
 </html>

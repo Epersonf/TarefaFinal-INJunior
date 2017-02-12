@@ -1,52 +1,44 @@
-	<ul class="uk-breadcrumb uk-margin-left uk-margin-top"  ng-if="logado">
-		<li class="uk-active">Início</li>
-		<hr>
-	</ul>
-	<div class="uk-container uk-container-center uk-margin-top">
-		<div class="uk-panel uk-margin-bottom uk-text-center">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-medium-1-2 uk-container-center">
-					<h2 class="uk-panel-title">Encomendas</h2>
-					<hr class="uk-grid-divider">
-					<div class="uk-panel">
-						<a ui-sref="Pedidos" class="uk-button uk-button-secondary">
-							<h1>{{dados.pedidos}}</h1>	
-						</a>	
-					</div>
-				</div>
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-medium-1-2 uk-container-center">
-					<h2 class="uk-panel-title">Próximos Acertos</h2>
-					<hr class="uk-grid-divider">
-					<div class="uk-panel">
-						<dl class="uk-description-list-horizontal uk-container-center">
-							<span ng-repeat="info in dados.acertos | limitTo: 4" class="uk-description-list-horizontal">
-								<dt>{{info.info}}</dt>
-								<dd>{{info.desc | currency}}</dd>
-							</span>
-						</dl>							
-					</div>
-				</div>
-			</div>
-			<hr class="uk-grid-divider">
-			<div class="uk-panel uk-width-1-1">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2 uk-container-center">
-					<h3 class="uk-panel-title"> Peças</h3>
-					<div class="uk-panel">
-						<dl class="uk-description-list-horizontal uk-container-center">
-							<span ng-repeat="info in dados.pecas | limitTo: 4" class="uk-description-list-horizontal">
-								<dt>{{info.info}}</dt>
-								<dd>{{info.desc}} <i class="uk-icon-line-chart"></i></dd>
-							</span>
-						</dl>
-						<button class="uk-button"><i class="uk-icon-plus"></i>Adicionar</button>		
-					</div>
-				</div>
-				<div class="uk-panel uk-margin-bottom uk-width-1-1 uk-width-small-1-2 uk-container-center">
-					<div class="uk-panel">
-						<button class="uk-button uk-width-1-1 uk-margin-bottom">Solicitação de material</button>
-						<button class="uk-button uk-width-1-1">Outras despesas</button>					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="container">
+            <div class="row">
+                <div class="col s12 m6">
+                <div class="card small center-align fundoAmarelo">
+                    <div class="card-content">
+                        <span class="card-title">Encomendas</span>
+                        <h1 >12</h1>                    
+                    </div>
+                    <div class=card-action>
+                        <a class="waves-effect waves-light btn">Ver Todas</a>
+                    </div>
+                </div>
+                </div>
+                <div class="col s12 m6">
+                <div class="card small center-align fundoAmarelo">
+                    <div class="card-content">
+                    <span class="card-title">Próximos Acertos</span>
+                        <ul class="collection">
+                            <li class="collection-item">Alvin</li>
+                            <li class="collection-item">Alvin</li>
+                            <li class="collection-item">Alvin</li>
+                        </ul>
+                    </div>
+                    <div class=card-action>
+                        <a class="waves-effect waves-light btn">Ver Todos</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m6 push-m3">
+                <div class="card center-align fundoAmarelo">
+                    <div class="card-content">
+                        <span class="card-title">Peças</span>
+                        <p>I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively.</p>
+                    </div>
+                    <div class=card-action>
+                        <a class="waves-effect waves-light btn"><i class="material-icons left">add</i>Adicionar</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>

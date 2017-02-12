@@ -1,58 +1,48 @@
-	<ul class="uk-breadcrumb uk-margin-left uk-margin-top"  ng-if="logado">
-		<li class="uk-active">Início</li>
-		<hr>
-	</ul>
-	<div class="uk-container uk-container-center uk-margin-top">
-		<div class="uk-panel uk-margin-bottom uk-text-center">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-medium-1-2">
-					<h2 class="uk-panel-title">Peças Vendidas</h2>
-					<hr class="uk-grid-divider">
-					<div class="uk-panel">
-						<a ui-sref="Consultores" class="uk-button uk-button-secondary">
-							<h1>{{dados.consultores.totalVendido}}</h1>			
-							<h1>{{dados.consultores.valorVendido | currency: 'R$'}}</h1>	
-						</a>		
-					</div>
-				</div>
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-medium-1-2">
-					<h2 class="uk-panel-title">Próximo Acerto</h2>
-					<hr class="uk-grid-divider">
-					<div class="uk-panel">
-						<a ui-sref="Acertos" class="uk-button uk-button-secondary">
-							<h1>{{dados.proxAcerto | date: "d/MM/yy"}}</h1>		
-							<h3>Faltam {{ faltamDias(dados.proxAcerto)}} dias</h3>
-							<h3>Valor devido: {{dados.acerto | currency: 'R$'}}</h3>
-						</a>
-					</div>
-				</div>
-			</div>
-			<hr class="uk-grid-divider">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-3">
-					<h3 class="uk-panel-title">Peças Comigo</h3>
-					<div class="uk-panel">
-						<a ui-sref="Estoque" class="uk-button uk-button-secondary">
-							<h1>{{dados.pecas.length}}</h1>
-						</a>					
-					</div>
-				</div>
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-3">
-					<h3 class="uk-panel-title">Consultores</h3>
-					<div class="uk-panel">
-						<a ui-sref="Consultores" class="uk-button uk-button-secondary">
-							<h1>{{dados.consultores.total}}</h1>	
-						</a>					
-					</div>
-				</div>
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-3">
-					<h3 class="uk-panel-title">Peças com Consultoras</h3>
-					<div class="uk-panel">
-						<a ui-sref="Estoque" class="uk-button uk-button-secondary">
-							<h1>{{dados.consultores.totalPecas}}</h1>
-						</a>					
-					</div>
-				</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div class="card small center-align fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Peças Vendidas</span>
+				<h1>{{dados.consultores.totalVendido}}</h1>			
+				<h1>{{dados.consultores.valorVendido | currency: 'R$'}}</h1>                   
 			</div>
 		</div>
 	</div>
+	<div class="col s12 m6">
+		<div class="card small center-align fundoAmarelo">
+			<div class="card-content">
+			<span class="card-title">Próximo Acerto</span>
+				<h1>{{dados.proxAcerto | date: "d/MM/yy"}}</h1>		
+				<h5>Faltam {{ faltamDias(dados.proxAcerto)}} dias</h5>
+				<h5>Valor devido: {{dados.acerto | currency: 'R$'}}</h5>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row center-align"><a class="waves-effect waves-light btn" ui-sref="Estoque">Ver Estoque</a> <a class="waves-effect waves-light btn" ui-sref="Consultores">Ver Consultores</a></div>
+<div class="row">
+	<div class="col s12 m3">
+		<div class="card center-align fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Peças comigo</span>
+				<h1>{{dados.pecas.length}}</h1>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m3">
+		<div class="card center-align fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Consultores</span>
+				<h1>{{dados.consultores.total}}</h1>
+			</div>
+		</div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card center-align fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Peças com Consultores</span>
+				<h1>{{dados.consultores.totalPecas}}</h1>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,34 +1,37 @@
-	<ul class="uk-breadcrumb uk-margin-left uk-margin-top"  ng-if="logado">
-		<li class="uk-active">Início</li>
-		<hr>
-	</ul>
-	<div class="uk-container uk-container-center uk-margin-top">
-		<div class="uk-panel uk-margin-bottom uk-text-center">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1">
-					<h2 class="uk-panel-title">Pessoal</h2>
-					<hr class="uk-grid-divider">
-					<div class="uk-grid uk-grid-match">
-						<div class="uk-width-1-1 uk-width-medium-1-2">
-							<a ui-sref="Supervisores" class="uk-button uk-button-secondary">
-								<h1>Supervisores</h1>			
+<div class="row">
+	<div class="col s12 m12">
+		<div class="card center-align fundoAmarelo">
+			<div class="card-content">
+			<span class="card-title">Pessoal</span>
+				<div class="row">
+					<div class="col s12 m6">
+						<div class="card center-align fundoAmarelo">
+							<div class="card-content">
+								<span class="card-title">Supervisores</span>
 								<h1>{{supervisores}}</h1>
-							</a>								
+								<a class="waves-effect waves-light btn" ui-sref="Supervisores">Ver supervisores</a>	
+							</div>
 						</div>
-						<div class="uk-width-1-1 uk-width-medium-1-2">
-							<a ui-sref="Consultores" class="uk-button uk-button-secondary" >
-								<h1>Consultores</h1>			
-								<h1>{{consultores}}</h1>
-							</a>	
-						</div>	
 					</div>
-				</div>				
-			</div>
-			<hr class="uk-grid-divider">
-			<div class="uk-grid uk-grid-match">
-				<a ui-sref="Relatórios" class="uk-button uk-button-secondary uk-width-1-1 uk-width-medium-1-2 uk-container-center"><i class="uk-icon-file uk-icon-medium"></i> Relatórios</a>
+					<div class="col s12 m6">
+						<div class="card center-align fundoAmarelo">
+							<div class="card-content">
+								<span class="card-title">Consultores</span>
+								<h1>{{consultores}}</h1>
+								<a class="waves-effect waves-light btn" ui-sref="Consultores">Ver consultores</a>	
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
+	<div class="center-align">
+		<a class="waves-effect waves-light btn">Relatórios</a>	
+	</div>
+</div>
+
 
 	<!-- Visualização de histórico e datas de acertos e pedidos dos supervisores para poder aprovar os pedidos feitos -->

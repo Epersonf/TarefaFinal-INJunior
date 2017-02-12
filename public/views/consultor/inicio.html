@@ -1,67 +1,83 @@
-	<ul class="uk-breadcrumb uk-margin-left uk-margin-top"  ng-if="logado">
-		<li class="uk-active">Início</li>
-		<hr>
-	</ul>
-	<div class="uk-container uk-container-center uk-margin-top" ng-controller="ConsultorInicioController">
-		<div id="venda" class="uk-modal">
-			<div class="uk-modal-dialog">
-				<a class="uk-modal-close uk-close"></a>
-				<form class="uk-form uk-text-center">
-
-					<fieldset data-uk-margin>
-						<input type="text" placeholder="" ng-model="codigo">
-						<button class="uk-button" ng-click="vender()">Pronto!</button>
-					</fieldset>
-
-				</form>
-			</div>
-		</div>
-		<div class="uk-panel uk-margin-bottom uk-text-center">
-			<div class="uk-alert uk-alert-warning" ng-show="dados.status!=='Aprovado'"> Aguardando aprovação. </br> Você precisa ser aprovado(a) como Consultor(a) para que possa começar a vender. </div>
-			<div class="uk-grid uk-grid-match">
-				<button class="uk-button uk-button-secondary uk-width-1-1" data-uk-modal="{target:'#venda'}" ng-disabled="dados.status!=='Aprovado'"><i class="uk-icon-money uk-icon-large"></i> VENDER</button>
-			</div>
-			<hr class="uk-grid-divider">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1">
-					<h2 class="uk-panel-title">Próximo Acerto <br> {{dados.proxAcerto | date: 'dd/MM/yy'}} (faltam {{faltamDias(dados.proxAcerto)}} dias) </h2>
-					<hr class="uk-grid-divider">
-					<div class="uk-grid uk-grid-match">
-						<div class="uk-width-1-1 uk-width-medium-1-2">
-							<dl class="uk-description-list-line">
-								<dt><h1>Minha Parte</h1></dt>
-								   <dd><h1>{{(dados.vendido * dados.porcentagem)/100 | currency: 'R$'}}</h1></dd>	
-							</dl>			
-							<hr class="uk-visible-small" ><br>
-						</div>
-						<div class="uk-width-1-1 uk-width-medium-1-2">
-							<dl class="uk-description-list-line">
-								<dt><h1>A Pagar</h1></dt>
-								   <dd><h1>{{dados.vendido*(100-dados.porcetagem)/100 | currency: 'R$'}}</h1></dd>	
-							</dl>
-						</div>	
-					</div>
-				</div>				
-			</div>
-			<hr class="uk-grid-divider">
-			<div class="uk-grid uk-grid-match">
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
-					<h3 class="uk-panel-title">Peças</h3>
-					<div class="uk-panel">
-						<h1>{{dados.pecasVendidas.length}}/{{dados.pecas.length+dados.pecasVendidas.length}}</h1>					
-					</div>
-				</div>
-				<div class="uk-panel uk-panel-box uk-margin-bottom uk-width-1-1 uk-width-small-1-2">
-					<h3 class="uk-panel-title">Meu Supervisor</h3>
-					<div class="uk-panel">
-						<dl class="uk-description-list-horizontal uk-container-center">
-							<dt>Nome</dt>
-							<dd>{{supervisor.nome}}</dd>
-							<dt>Whatsapp</dt>
-							<dd>{{supervisor.whatsapp}}</dd>
-						</dl>						
-					</div>
-				</div>
+<div class="row" ng-show="dados.status!=='Aprovado'">
+	<div class="col s12 m12">
+		<div class="card center-align red">
+			<div class="card-content">
+				<h5>Aguardando aprovação</h5>                 
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
+	<div class="col s12 m8 offset-m2">
+		<div class="card center-align fundoAmarelo ">
+			<div class="card-content">
+				<span class="card-title">Peças</span>
+				<h1>{{dados.pecasVendidas.length}}/{{dados.pecas.length+dados.pecasVendidas.length}}</h1>
+				<a class="waves-effect waves-light btn btn-large activator">Vender</a>
+			</div>
+			<div class="card-reveal fundoAmarelo center-align">
+				<span class="card-title grey-text text-darken-4">Vender<i class="material-icons right">close</i></span>
+				<br>
+				<div class="row">
+					<div class="input-field col m8 s12 offset-m2">
+						<input placeholder="Código" id="codigo" type="text" ng-model="codigo">
+					</div>
+				</div>
+				<a class="btn-floating btn-large waves-effect waves-light botaoAmarelo" ng-click="vender()"><i class="material-icons">attach_money</i></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col s12 m12">
+		<div class="card center-align fundoAmarelo">
+			<div class="card-content">
+			<span class="card-title">Próximo Acerto</span>
+				<h5>{{dados.proxAcerto | date: "d/MM/yy"}} ({{ faltamDias(dados.proxAcerto)}} dias)</h5>
+				<div class="row">
+					<div class="col s12 m6">
+						<div class="card center-align fundoAmarelo">
+							<div class="card-content">
+								<span class="card-title">Minha parte</span>
+								<h1>{{(dados.vendido * dados.porcentagem)/100 | currency: 'R$'}}</h1>
+							</div>
+						</div>
+					</div>
+					<div class="col s12 m6">
+						<div class="card center-align fundoAmarelo">
+							<div class="card-content">
+								<span class="card-title">A pagar</span>
+								<h1>{{dados.vendido*(100-dados.porcetagem)/100 | currency: 'R$'}}</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				<a class="waves-effect waves-light btn">Acertar Agora</a>	
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col s12 m8 offset-m2">
+		<div class="card center-align fundoAmarelo ">
+			<div class="card-content">
+				<span class="card-title">Meu supervisor</span>
+				<table class="responsive-table">
+					<thead>
+					<tr>
+						<th data-field="nome">Nome</th>
+						<th data-field="whatsapp">Whatsapp</th>
+					</tr>
+					</thead>
+
+					<tbody>
+					<tr>
+						<td>{{supervisor.nome}}</td>
+						<td>{{supervisor.whatsapp}}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
