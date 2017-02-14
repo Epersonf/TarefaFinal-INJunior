@@ -19,9 +19,11 @@
 				<span class="card-title grey-text text-darken-4">Vender<i class="material-icons right">close</i></span>
 				<br>
 				<div class="row">
-					<div class="input-field col m8 s12 offset-m2">
-						<input placeholder="Código" id="codigo" type="text" ng-model="codigo">
-					</div>
+					<form ng-submit="vender()">
+						<div class="input-field col m8 s12 offset-m2">
+							<input placeholder="Código" id="codigo" type="text" ng-model="codigo">
+						</div>
+					</form>
 				</div>
 				<a class="btn-floating btn-large waves-effect waves-light botaoAmarelo" ng-click="vender()"><i class="material-icons">attach_money</i></a>
 			</div>
@@ -52,7 +54,6 @@
 						</div>
 					</div>
 				</div>
-				<a class="waves-effect waves-light btn">Acertar Agora</a>	
 			</div>
 		</div>
 	</div>

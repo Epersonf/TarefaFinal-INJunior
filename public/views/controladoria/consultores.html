@@ -16,6 +16,9 @@
 					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores">
 						<i class="material-icons circle">person</i>
 						<span class="title">{{consultor.nome}}</span>
+						<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
+							{{consultor.status}}
+						</div>
 						<p>
 							{{consultor.vendido | currency: 'R$'}} vendidos
 						</p>

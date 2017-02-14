@@ -3,6 +3,10 @@
 		<div class="card fundoAmarelo">
 			<div class="card-content">
 				<span class="card-title">{{dados.nome}}</span>
+				<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
+					{{consultor.status}}
+					<i class="right material-icons clicavel" ng-click="desaprovar()" ng-show="consultor.status==='Aprovado'">close</i>
+				</div>
 				<div class="card center-align fundoAmarelo">
 					<div class="card-content">
 					<span class="card-title">Próximo Acerto</span>
@@ -11,8 +15,8 @@
 						<h5>Valor devido: {{consultor.porcentagem*consultor.vendido/100 | currency: 'R$'}}</h5>
 					</div>
 				</div>
-				<div class="row center-align">
-					<a class="waves-effect waves-light btn">Aprovar</a> 
+				<div class="row center-align" ng-show="consultor.status!=='Aprovado'">
+					<a class="waves-effect waves-light btn" ng-click="aprovar()">Aprovar</a> 
 				</div>
 				<table class="responsive-table white">
 					<thead>
@@ -37,8 +41,19 @@
 		</div>
 	</div>
 	<div class="fixed-action-btn botaoAlto">
-		<a class="btn-floating btn-large botaoAmarelo tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir">
+		<a class="btn-floating btn-large botaoAmarelo tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="del()">
 			<i class="large material-icons red">delete_sweep</i>
 		</a>
   </div>
 </div>
+
+<div id="excluir" class="modal">
+    <div class="modal-content">
+      <h4>Excluir</h4>
+      <p>Tem certeza que deseja excluir o Supervisor?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="excluir()">Excluir</a>
+	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
+    </div>
+  </div>
