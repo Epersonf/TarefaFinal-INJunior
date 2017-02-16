@@ -2,7 +2,7 @@
 	<div class="col s12 m12">
 		<div class="card fundoAmarelo">
 			<div class="card-content">
-				<span class="card-title">{{dados.nome}}</span>
+				<span class="card-title">{{consultor.nome}}</span>
 				<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
 							{{consultor.status}}
 				</div>
@@ -31,10 +31,10 @@
 
 					<tbody>
 					<tr>
-						<td>{{dados.cidade}}</td>
-						<td>{{dados.whatsapp}}</td>
-						<td>{{dados.endereco}}</td>
-						<td>{{dados.cep}}</td>
+						<td>{{consultor.cidade}}</td>
+						<td>{{consultor.whatsapp}}</td>
+						<td>{{consultor.endereco}}</td>
+						<td>{{consultor.cep}}</td>
 					</tr>
 					</tbody>
 				</table>

@@ -14,7 +14,7 @@
 							{{consultor.status}}
 						</div>
 						<p>
-							{{consultor.vendido | currency: 'R$'}} vendidos
+							{{consultor.totalVendido | currency: 'R$'}} vendidos
 						</p>
 					</a>
 				</div>                 
@@ -30,7 +30,7 @@
 
 <div id="adicionar" class="modal modal-fixed-footer">
 	<div class="modal-content">
-		<h4>Adicionar Supervisor</h4>
+		<h4>Adicionar Consultor</h4>
 		<form ng-submit="novo()" name="formulario" id="formulario">
 			<legend>Preencha os dados abaixo para adicionar um(a) supervisor(a)</legend>
 			<div class="input-field">
@@ -53,25 +53,12 @@
 				<input type="tel" class="telefone" ng-model="form.whatsapp" name="whatsapp" required>
 			</div>
 			<div class="input-field">
-				<select name="operadora" ng-model="form.operadora" required>
-					<option value="" disabled selected>Selecione operadora</option>
-					<option value="Oi">Oi</option>
-					<option value="TIM">TIM</option>
-					<option value="Claro">Claro</option>
-					<option value="Vivo">Vivo</option>
-				</select>
-			</div>
-			<div class="input-field">
 				<label   for="nascimento">Nascimento</label>	
 				<input type="date" class="datepicker" ng-model="form.nascimento" name="nascimento" required>
 			</div>
 			<div class="input-field">
 				<label   for="cpf">CPF</label>	
 				<input type="text" ng-model="form.cpf" name="cpf" class="cpf" required>
-			</div>
-			<div class="input-field">
-				<label   for="rg">RG</label>	
-				<input type="text" ng-model="form.rg" name="rg" required>
 			</div>
 			<div class="input-field">
 				<label   for="cidade">Cidade</label>	
@@ -85,7 +72,6 @@
 				<label   for="cep">CEP</label>	
 				<input type="text" ng-model="form.cep" name="cep" class="cep" required>
 			</div>
-			{{formulario.$invalid}}
 	</form>
 	</div>
 	<div class="modal-footer">

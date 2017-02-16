@@ -21,64 +21,73 @@
                         <div class="col m5 s12">
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Anéis</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.aneis"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Brincos P</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.brincosP"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Brincos G</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.brincosG"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Cordões Fem.</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.cordoesF"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Cordões Masc.</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.cordoesM"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                         </div>
                         <div class="col m5 s12 offset-m1">
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Pingentes</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.pingentes"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Pulseiras Fem.</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.pulseirasF"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Pulseiras Masc.</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.pulseirasM"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Tornozeleiras</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.tornozeleiras"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Escapulários</b></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
-                                <li class="collection-item"><span class="badge">1</span><div>{{0 | currency: 'R$'}}</div></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.escapularios"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class=card-action>
-                    <a class="waves-effect waves-light btn"><i class="material-icons left">add</i>Adicionar</a>
+                    <a class="waves-effect waves-light btn" ng-click="abrir()"><i class="material-icons left">add</i>Adicionar</a>
                 </div>
             </div>
         </div>
+    </div>    
+</div>
+
+<div id="entrada" class="modal bottom-sheet modal-fixed-footer">
+    <div class="modal-content center-align">
+        <h4>Entrada de Peças</h4>
+        <form ng-submit="entrada()" id="entradaForm">
+            <div class="input-field col m8 s12 offset-m2">
+                <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
+                <div class="chip" ng-repeat="codigo in adicionando track by $index">
+					{{codigo}}
+					<i class="right material-icons clicavel" ng-click="deletaElemento(adicionando, $index)">close</i>
+				</div>
+                <br><input type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo" value="+"></input>
+            </div>
+        </form>
     </div>
-    
+    <div class="modal-footer">
+        <a class="waves-effect waves-light btn" ng-click="concluir()"><i class="material-icons left">done</i>Concluir</a>
+        <a class="waves-effect waves-light btn-flat modal-close" ><i class="material-icons left">close</i>Cancelar</a>
+    </div>
 </div>

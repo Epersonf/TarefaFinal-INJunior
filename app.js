@@ -12,12 +12,6 @@ var config = require('./config')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var consultores = require('./routes/consultores');
-var supervisores = require('./routes/supervisores');
-var log = require('./routes/log');
-var peca = require('./routes/pecas');
-var fornecedor = require('./routes/fornecedores');
-var inscricoes = require('./routes/inscricoes');
 
 var app = express();
 
@@ -46,14 +40,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/consultores', consultores);
-app.use('/supervisores', supervisores);
-app.use('/inscricoes', inscricoes);
-
-// app.use('/kits', kits);
-// app.use('/log', log);
-// app.use('/pecas', peca);
-// app.use('/fornecedores', peca);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,9 +4,6 @@ var passport = require('passport');
 var User = require('../models/user');
 var Verify    = require('./verify');
 
-var Supervisor = require('../models/supervisores');
-var Consultor = require('../models/consultores');
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   User.find({}, function (err, user) {
@@ -23,24 +20,6 @@ router.post('/register', function(req, res) {
         }
         //console.log(user);
         //criacaoo de configuracoes de consultor e supervisor
-        
-        if (user.tipo==="Consultor"){
-            req.body.extra._id = user._id;
-            req.body.extra.nome = user.nome;
-            Consultor.create(req.body.extra, function(err){
-                if (err) {
-                    return res.status(500).json({err: "Falha ao criar Consultor"});;
-                }
-            });
-        } else if (user.tipo==="Supervisor"){
-            req.body.extra._id = user._id;
-            req.body.extra.nome = user.nome;
-            Supervisor.create(req.body.extra, function(err){
-                if (err) {
-                    return res.status(500).json({err: "Falha ao criar Supervisor"});;
-                }
-            });
-        }else console.log("Criacao completa!");
 
         passport.authenticate('local')(req, res, function () {
             return res.status(200).json({status: 'Usuário registrado', id: user._id});
@@ -83,11 +62,55 @@ router.get('/logout', function(req, res) {
   });
 });
 
-router.delete('/', function (req, res, next) {
+/*router.delete('/', function (req, res, next) {
      User.remove({}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
+});*/
+
+
+//supervisores
+router.get('/supervisores', function(req, res, next) {
+  User.find({tipo:"Supervisor"}, function (err, user) {
+        if (err) throw err;
+        res.json(user);
+    });
+});
+router.get('/supervisores/num', function(req, res, next) {
+  User.find({tipo:"Supervisor"}).count (function (err, user) {
+        if (err) throw err;
+        res.json(user);
+    });
+});
+
+//consultores
+router.get('/consultores', function(req, res, next) {
+  User.find({tipo:"Consultor"}, function (err, user) {
+        if (err) throw err;
+        res.json(user);
+    });
+});
+router.get('/consultores/num', function(req, res, next) {
+  User.find({tipo:"Consultor"}).count(function (err, user) {
+        if (err) throw err;
+        res.json(user);
+    });
+});
+router.get('/consultores/:id', function(req, res, next) { //por supervisor
+  User.find({tipo:"Consultor", supervisor:req.params.id}, function (err, user) {
+        if (err) throw err;
+        res.json(user);
+    });
+});
+
+//todos
+
+router.post('/atualizar' ,function (req, res, next) {
+    User.update({"_id" : req.body._id},{$set : req.body.update}, function (err, consultor) {
+                    if (err) throw err;
+                    res.json(consultor);
+                });
 });
 router.delete('/:id', function (req, res, next) {
      User.remove({_id:req.params.id}, function (err, resp) {
