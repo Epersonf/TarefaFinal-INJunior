@@ -12,6 +12,8 @@ var config = require('./config')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var historico = require('./routes/historico');
+var encomendas = require('./routes/encomendas');
 
 var app = express();
 
@@ -40,6 +42,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/historico', historico);
+app.use('/encomendas', encomendas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -79,8 +83,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     // we're connected!
     console.log("Connected correctly to server");
-	//app.listen(port, hostname, function(){
-  app.listen(process.env.PORT || 8080, function(){
+	app.listen(port, hostname, function(){
+  //app.listen(process.env.PORT || 8080, function(){
 		console.log(`Server running at http://${hostname}:${port}/`);
 	});
 });

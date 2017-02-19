@@ -4,10 +4,10 @@
 			<div class="card-content">
 				<span class="card-title">Meu Estoque</span>
 				<div class="chip white">
-					0 peças comigo
+					{{usuario.estoque.length}} peças comigo
 				</div>
 				<div class="chip white">
-					0 peças com consultores
+					{{geral.totalPecas}} peças com consultores
 				</div>
 				<ul class="collection">
 					<li class="collection-item avatar" ng-repeat="consultor in consultores">
@@ -15,7 +15,7 @@
 						<span class="title">{{consultor.nome}}</span>
 						<a tooltipped class="btn-floating btn-large waves-effect waves-light right botaoAmarelo" data-position="left" data-delay="100" data-tooltip="Alocar peças"><i class="material-icons">add_shopping_cart</i></a>
 						<p>
-							{{consultor.pecas.length + consultor.pecasVendidas.length}} Peças <br>
+							{{consultor.estoque.length}}/{{consultor.estoque.length + consultor.vendido.length}} Peças <br>
 							Próximo Acerto: {{consultor.proxAcerto | date: "d/MM/yy"}} ({{faltamDias(consultor.proxAcerto)}} dias)
 
 						</p>

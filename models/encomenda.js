@@ -4,33 +4,38 @@ var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 
-var solicitacaoSchema = new Schema({
-	pessoaId: {
-		type: ObjectId,		
+var encomendaSchema = new Schema({
+	item: {
+		type: String,		
         required: true
 	},
-    item: {
-        type: String,
-        required: true
-    },
-	quantidade: {
-		type: Number,
-		required: true,
-		default: 0
-	},
-	status:{ //Pendente, Enviado, Cancelado...
+    status: {
         type: String,
         required: true,
         default: "Pendente"
     },
-    consultor: ObjectId
+	quantidade: {
+		type: Number,
+		required: true
+	},
+	donoNome:{
+        type: String,
+        required: true
+    },
+    donoId:{ 
+        type: ObjectId,
+        required: true
+    },
+    consultorNome: String,
+    consultorId: ObjectId,
+    detalhes: String
 }, {
     timestamps: true
 });
 
 // the schema is useless so far
 // we need to create a model using it
-var Solicitacao = mongoose.model('Solicitacao', solicitacaoSchema);
+var Encomenda = mongoose.model('Encomenda', encomendaSchema);
 
 // make this available to our Node applications
-module.exports = Solicitacao;
+module.exports = Encomenda;

@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col s12 m12">
+		<div class="card fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Itens Encomendados</span>
+				<table class="responsive-table fundoBranco bordered striped">
+					<thead>
+						<tr>
+							<th>Item</th>
+							<th>Quantidade</th>
+							<th>Supervisor</th>
+							<th>Detalhes</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="encomenda in encomendas | orderBy: '-createdAt'">
+							<td>{{encomenda.item}}</td>
+							<td>{{encomenda.quantidade}}</td>							
+							<td>{{encomenda.donoNome}}</td>
+							<td>
+								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
+								<div ng-if="encomenda.consultorNome" class="chip">
+									<i class="material-icons left">person</i>
+									{{encomenda.consultorNome}}
+								</div>
+							</td>
+							<td>
+								<div class="chip" ng-class="{'orange': encomenda.status==='Pendente', 'red': encomenda.status==='Cancelada', 'green': encomenda.status==='Aprovada' || encomenda.status==='Enviada'}">
+									{{encomenda.status}}
+								</div>
+							</td>
+							<td>
+								<a ng-show="encomenda.status==='Pendente'"  class="waves-effect waves-light btn btn-small botaoVerde" ng-click="aprovar(encomenda._id)"><i class="material-icons">done</i></a>
+								<a ng-show="encomenda.status!=='Cancelada' && encomenda.status!=='Enviada'"  class="waves-effect waves-light btn btn-small botaoVermelho" ng-click="cancelar(encomenda._id)"><i class="material-icons">close</i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

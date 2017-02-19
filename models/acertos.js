@@ -5,7 +5,11 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 var acertoSchema = new Schema({
-	pessoaId: {
+	userNome: {
+		type: String,		
+        required: true
+	},
+	userId: {
 		type: ObjectId,		
         required: true
 	},
@@ -19,10 +23,6 @@ var acertoSchema = new Schema({
 		default: 0
 	},
 	pecas: [String], //pecas vendidas no caso de consultores
-	data: {
-        type: Date,
-        required: true
-    }
 }, {
     timestamps: true
 });

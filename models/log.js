@@ -6,11 +6,6 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 // create a schema
 
 var logSchema = new Schema({
-	data: {
-		type: Date,		
-        required: true,
-		default: Date.now
-	},
     ator: {
         type: String,
         required: true
@@ -31,6 +26,8 @@ var logSchema = new Schema({
 		type: ObjectId,
         required: true
 	}
+},{
+    timestamps: true
 });
 
 // the schema is useless so far

@@ -1,35 +1,84 @@
-	<ul class="uk-breadcrumb uk-margin-left uk-margin-top"  ng-if="logado">
-		<li><a ui-sref="Início" ui-sref-active="uk-active">Início</a></li>
-		<li class="uk-active">Encomendas</li>
-		<hr>
-	</ul>
-	<div class="uk-container uk-container-center uk-margin-top">
-		<div class="uk-panel uk-margin-bottom">
-				<div class="uk-panel uk-panel-box uk-margin-bottom">
-					<h2 class="uk-panel-title">Encomendas</h2>
-					<hr class="uk-grid-divider">
-					<div class="uk-panel uk-panel-box uk-panel-box-secondary">
-						<div class="uk-panel uk-panel-box"><i class="uk-icon-clock-o"></i> Envio Pendente</div>
-						<ul class="uk-list uk-list-striped uk-margin-left uk-column-small-1-2 uk-column-medium-1-3">
-							<li>Nome - 00/00/0000 -  3 Brincos <div class="uk-badge uk-badge-warning">Enviar</div></li>
-							<li>Nome - 00/00/0000 -  1 Reposicao padrao <div class="uk-badge uk-badge-warning">Enviar</div></li>	
-						</ul>
-						<hr class="uk-grid-divider">
-						<div class="uk-panel uk-panel-box"><i class="uk-icon-clock-o"></i> Histórico</div>
-						<ul class="uk-list uk-list-striped uk-margin-left uk-column-small-1-2 uk-column-medium-1-3">
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Enviado</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>
-							<li>Nome - 00/00/0000 -  R$00,00 <div class="uk-badge uk-badge-success">Recebido</div></li>	
-						</ul>
-					</div>
-				</div>
+<div class="row">
+	<div class="col s12 m12">
+		<div class="card fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Encomendas Aprovadas</span>
+				<table class="responsive-table fundoBranco bordered striped">
+					<thead>
+						<tr>
+							<th>Item</th>
+							<th>Quantidade</th>
+							<th>Supervisor</th>
+							<th>Detalhes</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:{'status': 'Aprovada'}">
+							<td>{{encomenda.item}}</td>
+							<td>{{encomenda.quantidade}}</td>							
+							<td>{{encomenda.donoNome}}</td>
+							<td>
+								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
+								<div ng-if="encomenda.consultorNome" class="chip">
+									<i class="material-icons left">person</i>
+									{{encomenda.consultorNome}}
+								</div>
+							</td>
+							<td>
+								<div class="chip tooltipped" ng-class="{'orange': encomenda.status==='Pendente', 'red': encomenda.status==='Cancelada', 'green': encomenda.status==='Aprovada' || encomenda.status==='Enviada'}" >
+									{{encomenda.status}}
+								</div>
+							</td>
+							<td>
+								<a ng-show="encomenda.status==='Aprovada'"  class="waves-effect waves-light btn btn-small botaoVerde" ng-click="enviar(encomenda._id)"><i class="material-icons">send</i> Enviar</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
+		<div class="col s12 m12">
+		<div class="card fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Encomendas Enviadas</span>
+				<table class="responsive-table fundoBranco bordered striped">
+					<thead>
+						<tr>
+							<th>Item</th>
+							<th>Quantidade</th>
+							<th>Supervisor</th>
+							<th>Detalhes</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:{'status': 'Enviada'}">
+							<td>{{encomenda.item}}</td>
+							<td>{{encomenda.quantidade}}</td>							
+							<td>{{encomenda.donoNome}}</td>
+							<td>
+								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
+								<div ng-if="encomenda.consultorNome" class="chip">
+									<i class="material-icons left">person</i>
+									{{encomenda.consultorNome}}
+								</div>
+							</td>
+							<td>
+								<div class="chip tooltipped" ng-class="{'orange': encomenda.status==='Pendente', 'red': encomenda.status==='Cancelada', 'green': encomenda.status==='Aprovada' || encomenda.status==='Enviada'}" >
+									{{encomenda.status}}
+								</div>
+							</td>
+							<td>
+								{{encomenda.updatedAt | date: "d/MM/yy"}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
