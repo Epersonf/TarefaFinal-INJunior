@@ -112,6 +112,14 @@ router.post('/atualizar' ,function (req, res, next) {
                     res.json(consultor);
                 });
 });
+
+router.post('/entrada' ,function (req, res, next) {
+    User.update({"_id" : req.body._id},{$push: {estoque: {$each: req.body.entrada} } }, function (err, consultor) {
+        if (err) throw err;
+        res.json("Peças adicionadas!");
+    });
+});
+
 router.delete('/:id', function (req, res, next) {
      User.remove({_id:req.params.id}, function (err, resp) {
         if (err) throw err;
@@ -122,6 +130,32 @@ router.get('/:id', function(req, res, next) {
   User.findOne({_id:req.params.id}, function (err, user) {
         if (err) throw err;
         res.json(user);
+    });
+});
+
+//pecas
+router.get('/estoque/:id', function(req, res, next) {
+  User.findOne({_id:req.params.id}, function (err, user) {
+        if (err) throw err;
+        res.json(user.estoque);
+    });
+});
+router.post('/estoque/:id' ,function (req, res, next) {
+    User.update({_id:req.params.id},{$push: {estoque: {$each: req.body.estoque} } }, function (err, consultor) {
+        if (err) throw err;
+        res.json("Peças adicionadas!");
+    });
+});
+router.get('/vendido/:id', function(req, res, next) {
+  User.findOne({_id:req.params.id}, function (err, user) {
+        if (err) throw err;
+        res.json(user.vendido);
+    });
+});
+router.post('/vendido/:id' ,function (req, res, next) {
+    User.update({_id:req.params.id},{$push: {estoque: {$each: req.body.vendido} } }, function (err, consultor) {
+        if (err) throw err;
+        res.json("Peças adicionadas!");
     });
 });
 

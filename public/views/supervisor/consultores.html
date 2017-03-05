@@ -4,7 +4,7 @@
 			<div class="card-content">
 				<span class="card-title">Consultores</span>
 				<div class="chip white">
-					Total vendido:{{0 | currency: 'R$'}}
+					Total vendido:{{valorVendido | currency: 'R$'}}
 				</div>
 				<div class="collection">
 					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores">
@@ -14,6 +14,7 @@
 							{{consultor.status}}
 						</div>
 						<p>
+							Usuário: {{consultor.username}} <br>
 							{{consultor.totalVendido | currency: 'R$'}} vendidos
 						</p>
 					</a>

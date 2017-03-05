@@ -19,9 +19,9 @@
 						<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
 							{{consultor.status}}
 						</div>
-						Usuário: {{consultor.username}}
 						<p>
-							{{consultor.vendido | currency: 'R$'}} vendidos
+							Usuário: {{consultor.username}} <br>
+							{{consultor.totalVendido | currency: 'R$'}} vendidos
 						</p>
 					</a>
 				</div>                 

@@ -2,42 +2,40 @@
 	<div class="col s12 m12">
 		<div class="card fundoAmarelo">
 			<div class="card-content">
-				<span class="card-title">Itens Encomendados</span>
-				<table class="responsive-table fundoBranco bordered striped">
-					<thead>
-						<tr>
-							<th>Item</th>
-							<th>Quantidade</th>
-							<th>Supervisor</th>
-							<th>Detalhes</th>
-							<th>Status</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="encomenda in encomendas | orderBy: '-createdAt'">
-							<td>{{encomenda.item}}</td>
-							<td>{{encomenda.quantidade}}</td>							
-							<td>{{encomenda.donoNome}}</td>
-							<td>
+				<span class="card-title">Encomendas</span>
+				<div class="row fundoBranco">
+					<div class="col s12">
+						<ul class="tabs">
+							<li class="tab col m3 s6"><a class="clicavel" ng-click="status=['Aprovada', 'Enviada', 'Pendente', 'Cancelada']">Todas</a></li>
+							<li class="tab col m3 s6"><a class="active clicavel" ng-click="status=['Pendente']">Pendentes</a></li>
+							<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Aprovada']" >Aprovadas</a></li>
+							<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Enviada']">Enviadas</a></li>							
+							<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Cancelada']">Canceladas</a></li>
+						</ul>
+					</div>
+					<div class="col s12 m3" ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:filtroStatus">
+						<div class="card medium center-align z-depth-5" >
+							<div class="card-content">
+								<span class="card-title">{{encomenda.item}}<br>
+									<div class="chip tooltipped" ng-class="{'orange': encomenda.status==='Pendente', 'red': encomenda.status==='Cancelada', 'green': encomenda.status==='Aprovada' || encomenda.status==='Enviada'}" >
+										{{encomenda.status}}
+									</div>
+								</span>
+								<h1>{{encomenda.quantidade}}</h1>
 								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
-								<div ng-if="encomenda.consultorNome" class="chip">
+								<div class="chip">
 									<i class="material-icons left">person</i>
-									{{encomenda.consultorNome}}
+									{{encomenda.donoNome}}
 								</div>
-							</td>
-							<td>
-								<div class="chip" ng-class="{'orange': encomenda.status==='Pendente', 'red': encomenda.status==='Cancelada', 'green': encomenda.status==='Aprovada' || encomenda.status==='Enviada'}">
-									{{encomenda.status}}
-								</div>
-							</td>
-							<td>
+							</div>
+							<div class="card-action">
 								<a ng-show="encomenda.status==='Pendente'"  class="waves-effect waves-light btn btn-small botaoVerde" ng-click="aprovar(encomenda._id)"><i class="material-icons">done</i></a>
 								<a ng-show="encomenda.status!=='Cancelada' && encomenda.status!=='Enviada'"  class="waves-effect waves-light btn btn-small botaoVermelho" ng-click="cancelar(encomenda._id)"><i class="material-icons">close</i></a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+								<span ng-show="encomenda.status==='Enviada'">Data de envio: {{encomenda.updatedAt | date: "d/MM/yy"}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
