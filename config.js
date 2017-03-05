@@ -1,5 +1,5 @@
 module.exports = {
-    'secretKey': '12345-67890-09876-54321',
-    'mongoUrl' : 'mongodb://localhost:27017/ambaya'
-    //'mongoUrl' : process.env.MONGODB_URI
+    'secretKey': '84126-67890-67412-54321',
+    //'mongoUrl' : 'mongodb://localhost:27017/ambaya'
+    'mongoUrl' : process.env.MONGODB_URI
 }
