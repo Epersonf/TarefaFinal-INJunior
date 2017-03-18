@@ -72,19 +72,56 @@
     </div>    
 </div>
 
-<div id="entrada" class="modal bottom-sheet modal-fixed-footer">
+<div id="entrada" class="modal modal-fixed-footer">
     <div class="modal-content center-align">
         <h4>Entrada de Peças</h4>
         <form ng-submit="entrada()" id="entradaForm">
-            <div class="input-field col m8 s12 offset-m2">
-                <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
-                <div class="chip" ng-repeat="codigo in adicionando track by $index">
-					{{codigo}}
-					<i class="right material-icons clicavel" ng-click="deletaElemento(adicionando, $index)">close</i>
-				</div>
-                <br><input type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo" value="+"></input>
-            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <select id="item" ng-model="codigo" style="margin-top: -50px">
+                        <option value="AN">Anéis</option>
+                        <option value="BG">Brinco Grande</option>
+                        <option value="BP">Brinco Pequeno</option>
+                        <option value="CF">Cordão Feminino</option>
+                        <option value="CM">Cordão Masculino</option>
+                        <option value="PN">Pingente</option>
+                        <option value="PF">Pulseira Feminina</option>
+                        <option value="PM">Pulseira Masculina</option>
+                        <option value="TZ">Tornozeleira</option>
+                        <option value="ES">Escapulário</option>
+                    </select>
+                </div>
+                <div class="input-field col s4">
+                    <input id="preco" type="number" min=1 class="validate" placeholder="Preço">
+                </div>
+                <div class="input-field col s4">
+                    <input id="quantidade" type="number" min=1 class="validate" placeholder="Quantidade">
+                </div>
+            </div> 
+            <input type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo" value="+"></input>
         </form>
+        <table ng-hide="adicionando.length===0">
+            <thead>
+                <tr>
+                    <th data-field="item" class="center-align">Item</th>
+                    <th data-field="preco" class="center-align">Preço</th>
+                    <th data-field="quantidade" class="center-align">Quantidade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="item in adicionando">
+                    <td class="center-align">{{item.item}}</td>
+                    <td class="center-align">{{item.preco}}</td>
+                    <td class="center-align">{{item.quantidade}}</td>
+                    <td class="center-align">
+                        <a class="btn-floating btn-small red tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="deletaElemento(adicionando, $index)">
+                            <i class="large material-icons red">delete_sweep</i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="modal-footer">
         <a class="waves-effect waves-light btn" ng-click="concluir()"><i class="material-icons left">done</i>Concluir</a>
