@@ -1,3 +1,23 @@
+    <div id="impressao" >
+        <table >
+            <tbody>
+                <tr ng-repeat="codigo in adicionando track by $index" ng-if="$index % 4 == 0">
+                    <td>
+                        <angular-barcode ng-model="adicionando[$index]" bc-options="bc" bc-class="barcode" bc-type="svg"></angular-barcode>
+                    </td>
+                    <td>
+                        <angular-barcode ng-model="adicionando[$index+1]" bc-options="bc" bc-class="barcode" bc-type="svg"></angular-barcode>
+                    </td>
+                    <td>
+                        <angular-barcode ng-model="adicionando[$index+2]" bc-options="bc" bc-class="barcode" bc-type="svg"></angular-barcode>
+                    </td>
+                    <td>
+                        <angular-barcode ng-model="adicionando[$index+3]" bc-options="bc" bc-class="barcode" bc-type="svg"></angular-barcode>
+                    </td>
+                </tr>
+            </tbody>
+            </table>  
+    </div>
 <div class="container">
     <div class="row">
         <div class="col s12 m6 offset-m3">
@@ -69,7 +89,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>   
 </div>
 
 <div id="entrada" class="modal modal-fixed-footer">
