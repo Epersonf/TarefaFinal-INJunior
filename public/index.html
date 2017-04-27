@@ -1,14 +1,14 @@
 <html>
 <head>
     <title>Minha Ambaya</title>
-<link rel="stylesheet" href="styles/main-dc55e062db.css"/>
+<link rel="stylesheet" href="styles/main-4350ddcf45.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body ng-app="ambaya" ng-controller="BaseController" class="fundoPreto">
     <ul id="navegacaoLateral" class="side-nav fundoAmarelo textoPreto" >
         <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
     </ul>
-    <div class="navbar-fixed" print-remove>
+    <div class="navbar-fixed">
         <nav class="fundoAmarelo black-text">
             <div class="nav-wrapper">
                 <a href="#" ng-hide="$state.is('Início')" class="textoPreto left" onclick="history.back()"> <i class="material-icons">arrow_back</i> </a>
@@ -23,7 +23,7 @@
     </div>
     <main ui-view="{{tipo}}">
     </main>
-    <footer class="page-footer fundoAmarelo" print-remove>
+    <footer class="page-footer fundoAmarelo">
         <div class="footer-copyright textoPreto">
             <div class="container">
             © 2017 Ambaya Semijoias
@@ -37,6 +37,6 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>-->
-<script src="scripts/main-897b01c02c.js"></script>
+<script src="scripts/main-0e8828c57d.js"></script>
 </body>
 </html>
