@@ -13,10 +13,20 @@
 						<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
 							{{consultor.status}}
 						</div>
-						<p>
-							Usuário: {{consultor.username}} <br>
-							{{consultor.totalVendido | currency: 'R$'}} vendidos
-						</p>
+						<div class="row">
+							<div class="col s6 m4">
+								<p>
+									Usuário: {{consultor.username}} <br>
+									{{consultor.totalVendido | currency: 'R$'}} vendidos
+								</p>
+							</div>
+							<div class="col s6 m4">
+								<p>
+									Cidade: {{consultor.cidade}} <br>
+									WhatsApp: {{consultor.whatsapp}}
+								</p>
+							</div>
+						</div>
 					</a>
 				</div>                 
 			</div>
@@ -33,7 +43,7 @@
 	<div class="modal-content">
 		<h4>Adicionar Consultor</h4>
 		<form ng-submit="novo()" name="formulario" id="formulario">
-			<legend>Preencha os dados abaixo para adicionar um(a) supervisor(a)</legend>
+			<legend>Preencha os dados abaixo para adicionar um(a) consultor(a)</legend>
 			<div class="input-field">
 				<label  for="nome">Nome</label>
 				<input type="text" ng-model="form.nome" name="nome" required>
