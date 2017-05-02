@@ -23,8 +23,8 @@ mongoose.connect(config.mongoUrl);
 var db = mongoose.connection;
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -85,8 +85,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     // we're connected!
     console.log("Connected correctly to server");
-	app.listen(port, hostname, function(){
-  //app.listen(process.env.PORT || 8080, function(){
+	//app.listen(port, hostname, function(){
+  app.listen(process.env.PORT || 8080, function(){
 		console.log(`Server running at http://${hostname}:${port}/`);
 	});
 });
