@@ -10,7 +10,9 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var config = require('./config')
 
-var routes = require('./routes/index');
+var Verify = require('./routes/verify');
+
+var login = require('./routes/login');
 var users = require('./routes/users');
 var historico = require('./routes/historico');
 var encomendas = require('./routes/encomendas');
@@ -40,10 +42,10 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/historico', historico);
-app.use('/encomendas', encomendas);
+app.use('/login', login);
+app.use('/users', Verify.verifyOrdinaryUser, users);
+app.use('/historico', Verify.verifyOrdinaryUser, historico);
+app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -77,14 +79,14 @@ app.use(function(err, req, res, next) {
 });
 
 var hostname = 'localhost';
-var port = 3000;
+var port = 3030;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     // we're connected!
     console.log("Connected correctly to server");
-	//app.listen(port, hostname, function(){
-  app.listen(process.env.PORT || 8080, function(){
+	app.listen(port, hostname, function(){
+  //app.listen(process.env.PORT || 8080, function(){
 		console.log(`Server running at http://${hostname}:${port}/`);
 	});
 });
