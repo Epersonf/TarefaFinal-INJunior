@@ -88,8 +88,9 @@
     <div class="modal-content center-align">
         <form ng-submit="entrada()" id="entradaForm">
             <div class="input-field col m8 s12 offset-m2">
+				<a class="waves-effect waves-teal btn-flat btn-large textoAmarelo" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>
                 <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
-                <div class="chip" ng-repeat="codigo in adicionando track by $index">
+				<div class="chip" ng-repeat="codigo in adicionando track by $index">
 					{{codigo}}
 					<i class="right material-icons clicavel" ng-click="deletaElemento(adicionando, $index)">close</i>
 				</div>
@@ -102,3 +103,11 @@
         <a class="waves-effect waves-light btn-flat modal-close" ><i class="material-icons left">close</i>Cancelar</a>
     </div>
 </div>
+<div id="modalCamera" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <div id="camera"></div>
+    </div>
+    <div class="modal-footer center-align">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="fechaCamera()">Cancelar</a>
+    </div>
+  </div>
