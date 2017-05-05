@@ -78,15 +78,15 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var hostname = 'localhost';
+var hostname = '0.0.0.0';
 var port = 3030;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     // we're connected!
     console.log("Connected correctly to server");
-	//app.listen(port, hostname, function(){
-  app.listen(process.env.PORT || 8080, function(){
+	app.listen(port, hostname, function(){
+  //app.listen(process.env.PORT || 8080, function(){
 		console.log(`Server running at http://${hostname}:${port}/`);
 	});
 });
