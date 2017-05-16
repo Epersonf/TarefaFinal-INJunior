@@ -88,7 +88,7 @@
     <div class="modal-content center-align">
         <form ng-submit="entrada()" id="entradaForm">
             <div class="input-field col m8 s12 offset-m2">
-				<a class="waves-effect waves-teal btn-flat btn-large textoAmarelo" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>
+				<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>
                 <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
 				<div class="chip" ng-repeat="codigo in adicionando track by $index">
 					{{codigo}}

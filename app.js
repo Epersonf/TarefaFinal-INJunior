@@ -16,6 +16,7 @@ var login = require('./routes/login');
 var users = require('./routes/users');
 var historico = require('./routes/historico');
 var encomendas = require('./routes/encomendas');
+var equipamentos = require('./routes/equipamentos');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use('/login', login);
 app.use('/users', Verify.verifyOrdinaryUser, users);
 app.use('/historico', Verify.verifyOrdinaryUser, historico);
 app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
+app.use('/equipamentos', equipamentos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

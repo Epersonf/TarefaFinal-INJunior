@@ -50,6 +50,7 @@
                                     </div> 
                                     <input type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo" value="+"></input>
                                 </form>
+                                <div class="center-align" ng-if="entradas.length%4!=0">Adicione mais {{entradas.length%4}} peça(s)</div>
                                 <table ng-hide="adicionando.length===0">
                                     <thead>
                                         <tr>
@@ -76,6 +77,7 @@
                     </div>
                 </div>
                 <div class=card-action>
+                    <a class="waves-effect waves-light btn red" ng-click="limpar();"><i class="material-icons left">delete_sweep</i>Limpar</a>
                     <a class="waves-effect waves-light btn" onclick="window.print();"><i class="material-icons left">print</i>Imprimir</a>
                 </div>
             </div>
