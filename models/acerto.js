@@ -23,6 +23,10 @@ var acertoSchema = new Schema({
 		default: 0
 	},
 	pecas: [String], //pecas vendidas no caso de consultores
+	pendente: {
+		type: Number, 
+		default: 0
+	}
 }, {
     timestamps: true
 });

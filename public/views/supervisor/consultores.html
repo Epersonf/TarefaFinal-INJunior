@@ -4,6 +4,9 @@
 			<div class="card-content">
 				<span class="card-title">Consultores</span>
 				<div class="chip white">
+					Peças:{{totalVendido}}/{{totalPecas}}
+				</div>
+				<div class="chip white">
 					Total vendido:{{valorVendido | currency: 'R$'}}
 				</div>
 				<div class="collection">
@@ -17,7 +20,8 @@
 							<div class="col s6 m4">
 								<p>
 									Usuário: {{consultor.username}} <br>
-									{{consultor.totalVendido | currency: 'R$'}} vendidos
+									{{consultor.totalVendido | currency: 'R$'}} vendidos <br>
+									Peças: {{consultor.vendido.length}} / {{consultor.estoque.length + consultor.vendido.length}}
 								</p>
 							</div>
 							<div class="col s6 m4">

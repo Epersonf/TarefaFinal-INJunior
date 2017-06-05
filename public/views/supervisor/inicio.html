@@ -2,9 +2,9 @@
 	<div class="col s12 m6">
 		<div class="card small center-align fundoAmarelo">
 			<div class="card-content">
-				<span class="card-title">Peças Vendidas</span>
-				<h1>{{consultores.totalVendido}}</h1>			
-				<h1>{{consultores.valorVendido | currency: 'R$'}}</h1>                   
+				<span class="card-title">Minha Parte</span>		
+				</br>
+				<h1>{{usuario.porcentagem*usuario.totalVendido/100 | currency: 'R$'}}</h1>                   
 			</div>
 		</div>
 	</div>
@@ -14,7 +14,7 @@
 			<span class="card-title">Próximo Acerto</span>
 				<h1>{{usuario.proxAcerto | date: "d/MM/yy"}}</h1>		
 				<h5>Faltam {{faltamDias(usuario.proxAcerto)}} dias</h5>
-				<h5>Valor devido: {{consultores.valorVendido - (consultores.valorVendido*usuario.porcentagem)/100 - consultores.totalGanho | currency: 'R$'}}</h5>
+				<h5>Valor devido: {{usuario.totalVendido*(100 - usuario.porcentagem - 30)/100 | currency: 'R$'}}</h5>
 			</div>
 		</div>
 	</div>
@@ -22,7 +22,7 @@
 <div class="row center-align"><a class="waves-effect waves-light btn" ui-sref="Estoque">Ver Estoque</a> <a class="waves-effect waves-light btn" ui-sref="Consultores">Ver Consultores</a></div>
 <div class="row">
 	<div class="col s12 m3">
-		<div class="card center-align fundoAmarelo">
+		<div class="card center-align fundoAmarelo" ng-click="irPara('Estoque');">
 			<div class="card-content">
 				<span class="card-title">Peças comigo</span>
 				<h1>{{usuario.estoque.length}}</h1>
@@ -30,7 +30,7 @@
 		</div>
 	</div>
 	<div class="col s12 m3">
-		<div class="card center-align fundoAmarelo">
+		<div class="card center-align fundoAmarelo" ng-click="irPara('Consultores');">
 			<div class="card-content">
 				<span class="card-title">Consultores</span>
 				<h1>{{consultores.total}}</h1>
@@ -38,10 +38,11 @@
 		</div>
 	</div>
 	<div class="col s12 m6">
-		<div class="card center-align fundoAmarelo">
+		<div class="card center-align fundoAmarelo" ng-click="irPara('Consultores');">
 			<div class="card-content">
 				<span class="card-title">Peças com Consultores</span>
-				<h1>{{consultores.totalPecas}}/{{consultores.totalPecas+consultores.totalVendido}}</h1>
+				<h2>{{consultores.totalPecas}}/{{consultores.totalPecas+consultores.totalVendido}}</h2>
+				<p>Vendido: {{consultores.valorVendido | currency: 'R$'}}</p>
 			</div>
 		</div>
 	</div>
