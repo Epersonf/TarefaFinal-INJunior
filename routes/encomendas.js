@@ -44,7 +44,7 @@ router.post('/atualizar' ,function (req, res, next) {
     });
 });
 router.post('/total' ,function (req, res, next) {
-    Encomenda.find({"status" : req.body.status}).count(function (err, resp) {
+    Encomenda.find({}).count(function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
