@@ -10,7 +10,7 @@ router.post('/' ,function (req, res, next) {
     });
 });
 router.get('/' ,function (req, res, next) {
-    Encomenda.find({}).limit(5, function (err, encomenda) {
+    Encomenda.find({}, function (err, encomenda) {
         if (err) throw err;
         res.json(encomenda);
     });
