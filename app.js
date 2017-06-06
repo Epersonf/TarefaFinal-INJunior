@@ -45,14 +45,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/login', login);
 //app.use('/users', Verify.verifyOrdinaryUser, users);
-app.use('/historico', Verify.verifyOrdinaryUser, historico);
-app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
-app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
+//app.use('/historico', Verify.verifyOrdinaryUser, historico);
+//app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
+//app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
 
 app.use('/users', users);
-//app.use('/historico', historico);
-//app.use('/encomendas', encomendas);
-//app.use('/acertos', acertos);
+app.use('/historico', historico);
+app.use('/encomendas', encomendas);
+app.use('/acertos', acertos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -10,7 +10,7 @@ router.post('/' ,function (req, res, next) {
     });
 });
 router.get('/' ,function (req, res, next) {
-    Encomenda.find({}, function (err, encomenda) {
+    Encomenda.find({}.limit(20), function (err, encomenda) {
         if (err) throw err;
         res.json(encomenda);
     });
@@ -44,7 +44,7 @@ router.post('/atualizar' ,function (req, res, next) {
     });
 });
 router.post('/total' ,function (req, res, next) {
-    Encomenda.find({}).count(function (err, resp) {
+    Encomenda.find({"status" : req.body.status}).count(function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
