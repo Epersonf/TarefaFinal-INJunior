@@ -29,6 +29,12 @@ router.get('/pendente/:id' ,function (req, res, next) {
         res.json(brinde);
     });
 });
+router.get('/maleta/:id' ,function (req, res, next) {
+    Brinde.find({consultorId:req.params.id, campanha:"maleta"}, function (err, brinde) {
+        if (err) throw err;
+        res.json(brinde);
+    });
+});
 
 router.delete('/:id', function (req, res, next) {
      Brinde.remove({_id:req.params.id}, function (err, resp) {
