@@ -6,7 +6,7 @@ var Brinde = require('../models/brinde');
 router.post('/' ,function (req, res, next) {
     Brinde.create(req.body, function (err) {
         if (err) throw err;
-        res.json("Brinde realizado!");
+        res.json("Brinde criado!");
     });
 });
 router.get('/' ,function (req, res, next) {
@@ -17,7 +17,14 @@ router.get('/' ,function (req, res, next) {
 });
 
 router.get('/usuario/:id' ,function (req, res, next) {
-    Brinde.find({userId:req.params.id}, function (err, brinde) {
+    Brinde.find({consultorId:req.params.id}, function (err, brinde) {
+        if (err) throw err;
+        res.json(brinde);
+    });
+});
+
+router.get('/pendente/:id' ,function (req, res, next) {
+    Brinde.find({consultorId:req.params.id, status:"Pendente"}, function (err, brinde) {
         if (err) throw err;
         res.json(brinde);
     });

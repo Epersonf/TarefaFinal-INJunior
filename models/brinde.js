@@ -6,8 +6,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var brindeSchema = new Schema({
 	peca: {
-		type: String,		
-        required: true
+		type: String
 	},
 	consultorId: {
 		type: ObjectId,		
@@ -19,6 +18,7 @@ var brindeSchema = new Schema({
     },
     status: {
         type: String,//pendente ou entregue	
+        default: "Pendente",
         required: true
     },
     campanha: { 
