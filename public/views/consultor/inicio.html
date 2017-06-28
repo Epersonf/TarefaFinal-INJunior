@@ -62,14 +62,15 @@
 		<div class="col s12 m12">
 			<div class="card center-align fundoAmarelo">
 				<div class="card-content">
-				<span class="card-title">Próximo Acerto em {{ faltamDias(usuario.proxAcerto)}} dias!</span>
-					<h5>{{usuario.proxAcerto | date: "d/MM/yy"}}</h5>
+				<span class="card-title">Vendas</span>
+					<h4></h4>
+					<h1>{{usuario.totalVendido | currency: 'R$'}}</h1>
 					<div class="row">
 						<div class="col s12 m6">
 							<div class="card center-align fundoAmarelo">
 								<div class="card-content">
 									<span class="card-title">Minha parte</span>
-									<h1>{{(usuario.totalVendido * usuario.porcentagem)/100 | currency: 'R$'}}</h1>
+									<h4>{{(usuario.totalVendido * usuario.porcentagem)/100 | currency: 'R$'}}</h4>
 								</div>
 							</div>
 						</div>
@@ -77,11 +78,12 @@
 							<div class="card center-align fundoAmarelo">
 								<div class="card-content">
 									<span class="card-title">A pagar</span>
-									<h1>{{usuario.totalVendido - (usuario.totalVendido * usuario.porcentagem)/100| currency: 'R$'}}</h1>
+									<h4>{{usuario.totalVendido - (usuario.totalVendido * usuario.porcentagem)/100| currency: 'R$'}}</h4>
 								</div>
 							</div>
 						</div>
 					</div>
+					<h5>Próximo Acerto em {{ faltamDias(usuario.proxAcerto)}} dias!</br>{{usuario.proxAcerto | date: "d/MM/yy"}}</h5>
 				</div>
 			</div>
 		</div>
