@@ -158,13 +158,23 @@
 
 <div id="troca" class="modal bottom-sheet">
     <div class="modal-content center-align">
-        <form ng-submit="troca()" id="trocaForm">
+        <form ng-submit="trocaPeca()" id="trocaForm">
             <div class="input-field col m8 s12 offset-m2">
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
-                <input placeholder="Peça com defeito" id="codigoDefeito" type="text" ng-model="codigoDefeito" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
-                <input placeholder="Peça nova" id="codigoNova" type="text" ng-model="codigoNova" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
-				<br><button type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo"><i class="material-icons">import_export</i></button>
+                <input placeholder="Peça com defeito" id="codigoDefeito" type="text" ng-model="troca.pecaDefeito" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
+                <input placeholder="Peça nova" id="codigoNova" type="text" ng-model="troca.pecaNova" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
             </div>
+			<div class="input-field">
+				<select id="defeito" ng-model="troca.defeito" required>
+					<option value="" disabled selected>Qual é o defeito?</option>
+					<option value="Banho">Banho</option>
+					<option value="Bruto">Bruto</option>
+				</select>
+			</div>
+			<div class="input-field col m8 s12 offset-m2">
+				<input placeholder="Observações (opcional)" type="text" ng-model="troca.obs">
+			</div>
+			<button type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo"><i class="material-icons">import_export</i></button>
         </form>
     </div>
 </div>

@@ -24,14 +24,19 @@ var trocaSchema = new Schema({
     defeito: { 
         type: String, //banho ou bruto
         required: true
-    }
+    },
+    saldo: {
+        type: Number,
+        required: true
+    },
+    obs: String
 }, {
     timestamps: true
 });
 
 // the schema is useless so far
 // we need to create a model using it
-var Troca = mongoose.model('Troca', acertoSchema);
+var Troca = mongoose.model('Troca', trocaSchema);
 
 // make this available to our Node applications
 module.exports = Troca;

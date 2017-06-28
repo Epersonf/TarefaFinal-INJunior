@@ -1,43 +1,43 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var Acerto = require('../models/acerto');
+var Troca = require('../models/troca');
 
 router.post('/' ,function (req, res, next) {
-    Acerto.create(req.body, function (err) {
+    Troca.create(req.body, function (err) {
         if (err) throw err;
-        res.json("Acerto realizado!");
+        res.json("Troca realizado!");
     });
 });
 router.get('/' ,function (req, res, next) {
-    Acerto.find({}, function (err, acerto) {
+    Troca.find({}, function (err, troca) {
         if (err) throw err;
-        res.json(acerto);
+        res.json(troca);
     });
 });
 
 router.get('/usuario/:id' ,function (req, res, next) {
-    Acerto.find({userId:req.params.id}, function (err, acerto) {
+    Troca.find({userId:req.params.id}, function (err, troca) {
         if (err) throw err;
-        res.json(acerto);
+        res.json(troca);
     });
 });
 
 router.delete('/:id', function (req, res, next) {
-     Acerto.remove({_id:req.params.id}, function (err, resp) {
+     Troca.remove({_id:req.params.id}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
 });
 
 router.post('/atualizar' ,function (req, res, next) {
-    Acerto.update({"_id" : req.body._id},{$set : req.body.update}, function (err, resp) {
+    Troca.update({"_id" : req.body._id},{$set : req.body.update}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
 });
 router.post('/total' ,function (req, res, next) {
-    Acerto.find({"status" : req.body.status}).count(function (err, resp) {
+    Troca.find({"status" : req.body.status}).count(function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
