@@ -12,14 +12,32 @@
 						<h5>{{consultor.proxAcerto | date: "d/MM/yy"}}</h5>		
 						<h5>Faltam {{ faltamDias(consultor.proxAcerto)}} dias</h5>
 						<h5>Valor devido: {{devido | currency: 'R$'}}</h5>
+						<h5>Total vendido: {{consultor.totalVendido | currency: 'R$'}}</h5>
 					</div>
 				</div>
 				<div class="row center-align">
 					<a class="waves-effect waves-light btn" ng-click="modalAcerto()">Realizar acerto</a>
 					<a class="waves-effect waves-light btn" ng-click="modalEncomenda()">Alocar peças</a> 
-					<a class="waves-effect waves-light btn">Verificar venda</a>
+					<!--<a class="waves-effect waves-light btn">Verificar venda</a>-->
 					<!--<a class="waves-effect waves-light btn">Troca de peça</a>-->
 				</div>
+                <div class="row center align" ng-show="consultor.taxa>0">
+                    <p>Taxa de entrada:{{consultor.taxa | currency:'R$'}} ({{consultor.tipoTaxa}})</p>
+                </div>
+                <div class="row center align" ng-if="consultor.taxa>300">
+                    <p class="col s12 m4">
+                        <input name="tipo" type="radio"  value="À vista" id="vista" ng-model="consultor.tipoTaxa" ng-change="mudaTaxa()"/>
+                        <label for="vista">À vista</label>
+                    </p>
+                    <p class="col s12 m4">
+                        <input name="tipo" type="radio"  value="Primeiro pagamento" id="primeiro" ng-model="consultor.tipoTaxa" ng-change="mudaTaxa()"/>
+                        <label for="primeiro">Primeiro pagamento</label>
+                    </p>
+                    <p class="col s12 m4">
+                        <input name="tipo" type="radio"  value="Porcentagem" id="porcentagem" ng-model="consultor.tipoTaxa" ng-change="mudaTaxa()"/>
+                        <label for="porcentagem">Porcentagem</label>
+                    </p>
+                </div>
 				<table class="responsive-table white">
 					<thead>
 					<tr>
@@ -228,13 +246,10 @@
             <h4>Realizar acerto</h4>
             <p class="red">Atenção! Essa ação não pode ser desfeita</p>
             <div class="row">
-                <div class="col s12">
-                    Valor pago RS:
-                    <div class="input-field inline">
-                        <input id="pago" type="number" class="validate" step="0.01" ng-model="pago">
-                    </div>        
-                    <p>Valor mínimo: {{devido*0.9 | currency: 'R$'}}</p>
-                    <p>Valor remanescente: {{devido - pago | currency: 'R$'}}</p>  
+                <div class="col s12">     
+                    <h5>Valor do acerto: {{devido | currency: 'R$'}}</h5>
+                    <p ng-show="consultor.taxa > 0">Pagamento de taxa: {{parcelaTaxa | currency: 'R$'}}</p>  
+                    <h5 ng-show="consultor.taxa > 0">Total: {{devido + parcelaTaxa | currency: 'R$'}}</h5>  
                 </div>        
             </div>
         </div>
@@ -242,5 +257,16 @@
     <div class="modal-footer">
       <a href="" class=" waves-effect waves-green btn btn-small botaoVerde" ng-click="acerto()">Concluir</a>
 	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
+    </div>
+  </div>
+
+  <div id="avista" class="modal center-align">
+    <div class="modal-content">
+      <h4>Pagamento a vista</h4>
+      <p>Confirmar recebimento a vista de 330 reais?</p>
+    </div>
+    <div class="modal-footer center-align">
+      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="confirmaPagamento();">Confirmar</a>
+	  <a href="" class=" modal-close waves-effect waves-red btn-flat" ng-click="consultor.taxa = 350; consultor.tipoTaxa = 'Primeiro pagamento'">Cancelar</a>
     </div>
   </div>

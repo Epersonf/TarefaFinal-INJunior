@@ -83,11 +83,10 @@ var User = new Schema({
 	},
     estoque: [String],
     vendido: [String],
-    pendente: { //valor pendente do último pagamento
-        type: Number,
-        default: 0
-    }, 
-    totalVendido: Number
+    totalVendido: Number,
+    tipoTaxa: String,//vista, primeiro, parcelado
+    taxa: Number
+
 }, {
     timestamps: true
 });
