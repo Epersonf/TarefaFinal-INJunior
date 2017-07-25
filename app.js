@@ -19,6 +19,7 @@ var encomendas = require('./routes/encomendas');
 var acertos = require('./routes/acertos');
 var brindes = require('./routes/brindes');
 var trocas = require('./routes/trocas');
+var logs = require('./routes/logs');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/encomendas', encomendas);
 app.use('/acertos', acertos);
 app.use('/brindes', brindes);
 app.use('/trocas', trocas);
+app.use('/logs', trocas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

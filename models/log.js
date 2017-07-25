@@ -19,13 +19,12 @@ var logSchema = new Schema({
         required: true
     },
 	atorId: {
-        type: ObjectId,
-        required: true
+        type: ObjectId
     },
 	objetoId: {
-		type: ObjectId,
-        required: true
-	}
+		type: ObjectId
+	},
+    pecas: [String]
 },{
     timestamps: true
 });
