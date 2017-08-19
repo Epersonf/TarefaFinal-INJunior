@@ -75,7 +75,7 @@
 								<div class="card-content">
 									<span class="card-title">{{encomenda.item}}
 									</span>
-									<div class="chip green clicavel" ng-repeat="peca in estoqueTemp | filter:porItem track by $index " ng-click="enviado(peca)">
+									<div class="chip green clicavel" ng-repeat="peca in estoqueTemp | orderBy:extraiPreco |filter:porItem track by $index " ng-click="enviado(peca)">
 										{{extraiPreco(peca) | currency: 'R$'}}
 									</div>
 								</div>
@@ -86,7 +86,7 @@
 								<div class="card-content">
 									<span class="card-title">{{encomenda.item}}
 									</span>
-									<div class="chip red clicavel" ng-repeat="peca in pecasEnviadas track by $index " ng-click="devolvido(peca)">
+									<div class="chip red clicavel" ng-repeat="peca in pecasEnviadas | orderBy:extraiPreco track by $index " ng-click="devolvido(peca)">
 										{{extraiPreco(peca) | currency: 'R$'}}
 									</div>
 								</div>
