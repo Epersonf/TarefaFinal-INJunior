@@ -78,6 +78,13 @@ router.get('/consultores/:id', function(req, res, next) { //por supervisor
 
 //todos
 
+router.get('/estoqueId/', function(req, res, next) { //por supervisor
+  User.findOne({tipo:"Estoque"}, function (err, user) {
+        if (err) throw err;
+        res.json(user._id);
+    });
+});
+
 router.post('/atualizar' ,function (req, res, next) {
     User.update({"_id" : req.body._id},{$set : req.body.update}, function (err, consultor) {
                     if (err) throw err;

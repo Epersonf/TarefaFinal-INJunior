@@ -3,6 +3,7 @@
             <div class="card center-align fundoAmarelo">
                 <div class="card-content">
                     <span class="card-title">Peças</span>
+                    <a class="waves-effect waves-light btn" ng-click="modalEncomenda()">Devolver peças ao estoque</a> 
                     <div class="row">
                         <div class="col m5 s12">
                             <ul class="collection with-header">
@@ -54,7 +55,61 @@
         </div>
     </div>
 
-
+<div id="enviar" class="modal modal-fixed-footer" >
+	<div class="modal-content">
+				<div class="center-align">
+					<h3>Devolver peças ao estoque</h3>
+						<div class="input-field">	
+							<select style="display:block !important" id="item" ng-model="codigo" ng-options="peca.val as peca.label for peca in opcoesPecas">
+								
+							</select>
+						</div>
+                        {{codigo}}
+					<div class="row">
+						<div class="col m6">
+							<div class="chip">
+								<i class="material-icons left">business_center</i>
+								Eu
+							</div>
+						</div>							
+						<div class="col m6">
+							<div class="chip">
+								<i class="material-icons left">person</i>
+								Estoque
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s6 m6">
+							<div class="card  center-align z-depth-5">
+								<div class="card-content">
+									<span class="card-title">{{encomenda.item}}
+									</span>
+									<div class="chip green clicavel" ng-repeat="peca in estoqueTemp| orderBy:extraiPreco | filter:porItem track by $index " ng-click="enviado(peca)">
+										{{extraiPreco(peca) | currency: 'R$'}}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col s6 m6">
+							<div class="card  center-align z-depth-5">
+								<div class="card-content">
+									<span class="card-title">{{encomenda.item}}
+									</span>
+									<div class="chip red clicavel" ng-repeat="peca in pecasEnviadas| orderBy:extraiPreco | filter:porItem track by $index " ng-click="devolvido(peca)">
+										{{extraiPreco(peca) | currency: 'R$'}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	</div>
+	<div class="modal-footer">
+		<a class="waves-effect waves-light btn btn-small botaoVerde" ng-click="enviar()"><i class="material-icons left">send</i> Enviar</a>
+		<a class="modal-close waves-effect waves-red btn-flat" >Cancelar</a>
+	</div>
+</div>
 
 	<!-- Na troca de estoque completo o valor do envio tem que ser descontado e tudo será conferido
 	No acerto 
