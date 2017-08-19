@@ -34,9 +34,24 @@
 									{{encomenda.consultorNome}}
 								</div>
 							</div>
+							<div ng-if="encomenda.status==='Enviada'" class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Peças enviadas<i class="material-icons right">close</i></span>
+								<table>
+									<thead>
+									<tr>
+										<th>Códigos</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td ng-repeat="cod in encomenda.enviados">{{cod}}}</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
 							<div class="card-action">
 								<a ng-show="encomenda.status==='Pendente'"  class="waves-effect waves-light btn btn-small botaoVermelho" ng-click="cancelar(encomenda._id)"><i class="material-icons">close</i></a>
-								<span ng-show="encomenda.status==='Enviada'">Data de envio: {{encomenda.updatedAt | date: "d/MM/yy"}}</span>
+								<span ng-show="encomenda.status==='Enviada'">Data de envio: {{encomenda.updatedAt | date: "d/MM/yy"}} <a class="activator" href="#"><i class="material-icons right" title="Ver peças">list</i></a></span>
 							</div>
 						</div>
 					</div>
