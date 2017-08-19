@@ -184,20 +184,10 @@
 				<div class="center-align">
 					<h3>Alocação de Peças</h3>
 						<div class="input-field">	
-							<select id="item" ng-model="codigo">
-								<option value="AN">Anéis</option>
-								<option value="BG">Brinco Grande</option>
-								<option value="BP">Brinco Pequeno</option>
-								<option value="CF">Cordão Feminino</option>
-								<option value="CM">Cordão Masculino</option>
-								<option value="PN">Pingente</option>
-								<option value="PF">Pulseira Feminina</option>
-								<option value="PM">Pulseira Masculina</option>
-								<option value="TZ">Tornozeleira</option>
-								<option value="ES">Escapulário</option>
+							<select style="display:block !important" id="item" ng-model="codigo" ng-options="peca.val as peca.label for peca in opcoesPecas">
+								
 							</select>
 						</div>
-                        {{codigo}}
 					<div class="row">
 						<div class="col m6">
 							<div class="chip">
