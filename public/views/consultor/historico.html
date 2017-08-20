@@ -7,7 +7,7 @@
 					Vendido no ano: {{vendidoAno | currency:'R$'}}
 				</div>
 				<div class="collection">
-					<a class="textoPreto collection-item avatar" ng-repeat="acerto in acertos">
+					<a class="textoPreto collection-item avatar" ng-repeat="acerto in acertos | orderBy:'-createdAt'">
 						<i class="material-icons circle green">done</i>
 						<span class="title strong">Data: {{acerto.createdAt | date: "d/MM/yy"}}</span>
 						<div class="row">
