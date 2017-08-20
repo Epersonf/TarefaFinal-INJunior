@@ -75,8 +75,8 @@
 					<option value="Pulseira Masculina">Pulseira Masculina</option>
 					<option value="Escapulário">Escapulário</option>
 					<option value="Tornozeleira">Tornozeleira</option>
-					<!--<option value="Personalizado">Personalizado</option>
-					<option value="Reposição padrão">Reposição padrão</option>-->
+					<option value="Personalizada">Personalizada</option>
+					<!--<option value="Reposição padrão">Reposição padrão</option>-->
 				</select>
 			</div>									
 			<div class="input-field">
@@ -89,7 +89,7 @@
 					<option ng-repeat="consultor in consultores" value="{{consultor.nome}}">{{consultor.nome}}</option>
 				</select>
 			</div>
-			<div class="input-field" ng-show="form.item==='Personalizado'">
+			<div class="input-field" ng-show="form.item==='Personalizada'">
 				<label  for="detalhes">Detalhes</label>
 				<input  type="text" ng-model="form.detalhes" name="detalhes" >
 			</div>

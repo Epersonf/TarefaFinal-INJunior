@@ -48,6 +48,10 @@
                                 <li class="collection-header"><b>Escapulários ({{pecas.totais.escapularios}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.escapularios | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
+                            <ul class="collection with-header">
+                                <li class="collection-header"><b>Personalizadas ({{pecas.totais.personalizadas}})</b></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.personalizadas | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

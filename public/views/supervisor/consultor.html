@@ -78,87 +78,95 @@
                         <div class="col m5 s12">
                             <h3>Estoque</h3>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Anéis</b></li>
+                                <li class="collection-header"><b>Anéis ({{pecas.totais.aneis}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.aneis | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos P</b></li>
+                                <li class="collection-header"><b>Brincos P ({{pecas.totais.brincosP}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.brincosP | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos G</b></li>
+                                <li class="collection-header"><b>Brincos G ({{pecas.totais.brincosG}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.brincosG | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Fem.</b></li>
+                                <li class="collection-header"><b>Cordões Fem. ({{pecas.totais.cordoesF}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.cordoesF | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Masc.</b></li>
+                                <li class="collection-header"><b>Cordões Masc. ({{pecas.totais.cordoesM}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.cordoesM | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Pingentes</b></li>
+                                <li class="collection-header"><b>Pingentes ({{pecas.totais.pingentes}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.pingentes | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Fem.</b></li>
+                                <li class="collection-header"><b>Pulseiras Fem. ({{pecas.totais.pulseirasF}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.pulseirasF | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Masc.</b></li>
+                                <li class="collection-header"><b>Pulseiras Masc. ({{pecas.totais.pulseirasM}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.pulseirasM | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Tornozeleiras</b></li>
+                                <li class="collection-header"><b>Tornozeleiras ({{pecas.totais.tornozeleiras}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.tornozeleiras | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Escapulários</b></li>
+                                <li class="collection-header"><b>Escapulários ({{pecas.totais.escapularios}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.escapularios | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
+                            </ul>
+                            <ul class="collection with-header">
+                                <li class="collection-header"><b>Personalizadas ({{pecas.totais.personalizadas}})</b></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.personalizadas | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                         </div>
                         <div class="col m5 s12 offset-m1">
                             <h3>Vendido</h3>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Anéis</b></li>
+                                <li class="collection-header"><b>Anéis ({{vendidas.totais.aneis}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.aneis | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos P</b></li>
+                                <li class="collection-header"><b>Brincos P ({{vendidas.totais.brincosP}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.brincosP | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos G</b></li>
+                                <li class="collection-header"><b>Brincos G ({{vendidas.totais.brincosG}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.brincosG | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Fem.</b></li>
+                                <li class="collection-header"><b>Cordões Fem. ({{vendidas.totais.cordoesF}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.cordoesF | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Masc.</b></li>
+                                <li class="collection-header"><b>Cordões Masc. ({{vendidas.totais.cordoesM}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.cordoesM | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Pingentes</b></li>
+                                <li class="collection-header"><b>Pingentes ({{vendidas.totais.pingentes}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.pingentes | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Fem.</b></li>
+                                <li class="collection-header"><b>Pulseiras Fem. ({{vendidas.totais.pulseirasF}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.pulseirasF | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Masc.</b></li>
+                                <li class="collection-header"><b>Pulseiras Masc. ({{vendidas.totais.pulseirasM}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.pulseirasM | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Tornozeleiras</b></li>
+                                <li class="collection-header"><b>Tornozeleiras ({{vendidas.totais.tornozeleiras}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.tornozeleiras | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                             <ul class="collection with-header">
-                                <li class="collection-header"><b>Escapulários</b></li>
+                                <li class="collection-header"><b>Escapulários ({{vendidas.totais.escapularios}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.escapularios | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
+                            </ul>
+                            <ul class="collection with-header">
+                                <li class="collection-header"><b>Personalizadas ({{vendidas.totais.personalizadas}})</b></li>
+                                <li class="collection-item" ng-repeat="peca in vendidas.personalizadas | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                         </div>
                     </div>
@@ -286,7 +294,7 @@
 		<form ng-submit="novoProxAcerto()" name="formEdit" id="formEdit">
 			<div class="input-field">
 				<label   for="proxAcerto">Data de acerto</label>	
-				<input type="date" class="datepicker" ng-model="novo.proxAcerto" name="proxAcerto" required>
+				<input type="date" class="datepicker" ng-model="novo.proxAcerto" name="proxAcerto" ng-model-options="{timezone:'UTC'}" required>
 			</div>
 	    </form>
 	</div>

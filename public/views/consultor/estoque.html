@@ -45,6 +45,10 @@
                                 <li class="collection-header"><b>Escapulários ({{pecas.totais.escapularios}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in pecas.escapularios | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
+                            <ul class="collection with-header">
+                                <li class="collection-header"><b>Personalizadas ({{pecas.totais.personalizadas}})</b></li>
+                                <li class="collection-item" ng-repeat="peca in pecas.personalizadas | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
+                            </ul>
                         </div>
                         <div class="col m5 s12 offset-m1">
                             <h3>Vendido</h3>
@@ -87,6 +91,10 @@
                             <ul class="collection with-header">
                                 <li class="collection-header"><b>Escapulários ({{vendidas.totais.escapularios}})</b></li>
                                 <li class="collection-item" ng-repeat="peca in vendidas.escapularios | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
+                            </ul>
+                            <ul class="collection with-header">
+                                <li class="collection-header"><b>Personalizadas ({{vendidas.totais.personalizadas}})</b></li>
+                                <li class="collection-item" ng-repeat="peca in vendidas.personalizadas | orderBy:'-val'"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
                             </ul>
                         </div>
                     </div>
