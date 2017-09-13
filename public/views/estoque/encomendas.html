@@ -19,10 +19,10 @@
 										{{encomenda.status}}
 									</div>
 								</span>
-								<h1 ng-if="encomenda.status==='Pendente' | encomenda.status==='Cancelada' | encomenda.status==='Aprovada'">{{encomenda.quantidade}}</h1>
+								<h1 ng-if="encomenda.status!=='Enviada'">{{encomenda.quantidade}}</h1>
 								<h1 ng-if="encomenda.status==='Enviada'">{{encomenda.enviados.length}}</h1>
 								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
-								<div class="chip" ng-if="encomenda.consultorNome">
+								<div class="chip">
 									<i class="material-icons left">person</i>
 									{{encomenda.donoNome}}
 								</div>
