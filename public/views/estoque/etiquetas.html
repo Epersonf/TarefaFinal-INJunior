@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="input-field col s4">
                                             <label   for="preco">Preço</label>
-                                            <input id="preco" type="number" min=1 max=99 maxlength="10" name="preco" required>
+                                            <input id="preco" type="number" min=1 max=999 maxlength="10" name="preco" required>
                                         </div>
                                         <div class="input-field col s4">
                                             <label   for="quantidade">Quantidade</label>
@@ -51,7 +51,7 @@
                                     </div> 
                                     <input type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo" value="+"></input>
                                 </form>
-                                <div class="center-align" ng-if="entradas.length%4!=0">Adicione mais {{entradas.length%4}} peça(s)</div>
+                                <div class="center-align" ng-if="entradas.length%4!=0">Adicione mais {{(entradas.length+4)%4}} peça(s)</div>
                                 <table ng-hide="adicionando.length===0">
                                     <thead>
                                         <tr>
@@ -64,7 +64,7 @@
                                     <tbody>
                                         <tr ng-repeat="item in adicionando">
                                             <td class="center-align">{{item.item}}</td>
-                                            <td class="center-align">{{item.preco}}</td>
+                                            <td class="center-align">{{item.preco | currency:'R$'}}</td>
                                             <td class="center-align">{{item.quantidade}}</td>
                                             <td class="center-align">
                                                 <a class="btn-floating btn-small red tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="excluir($index)">

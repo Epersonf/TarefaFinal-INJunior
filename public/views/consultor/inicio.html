@@ -133,7 +133,7 @@
         <form ng-submit="entrada()" id="entradaForm">
             <div class="input-field col m8 s12 offset-m2">
 				<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>
-                <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
+                <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[A-Za-z0-9]{1}[0-9]{5}" title="Código inválido" required>
 				<div class="chip" ng-repeat="codigo in adicionando track by $index">
 					{{codigo}}
 					<i class="right material-icons clicavel" ng-click="deletaElemento(adicionando, $index)">close</i>
@@ -162,7 +162,7 @@
         <form ng-submit="pegaBrinde()" id="brindeForm">
             <div class="input-field col m8 s12 offset-m2">
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
-                <input placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
+                <input placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[A-Za-z0-9]{1}[0-9]{5}" title="Código inválido" required>
 				<br><button type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo"><i class="material-icons">card_giftcard</i></button>
             </div>
         </form>
@@ -174,8 +174,8 @@
         <form ng-submit="trocaPeca()" id="trocaForm">
             <div class="input-field col m8 s12 offset-m2">
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
-                <input placeholder="Peça com defeito" id="codigoDefeito" type="text" ng-model="troca.pecaDefeito" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
-                <input placeholder="Peça nova" id="codigoNova" type="text" ng-model="troca.pecaNova" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{6}" title="Código inválido" required>
+                <input placeholder="Peça com defeito" id="codigoDefeito" type="text" ng-model="troca.pecaDefeito" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[A-Za-z0-9]{1}[0-9]{5}" title="Código inválido" required>
+                <input placeholder="Peça nova" id="codigoNova" type="text" ng-model="troca.pecaNova" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[A-Za-z0-9]{1}[0-9]{5}" title="Código inválido" required>
             </div>
 			<div class="input-field">
 				<select id="defeito" ng-model="troca.defeito" required>
