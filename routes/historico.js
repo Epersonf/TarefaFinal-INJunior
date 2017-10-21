@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var Historico = require('../models/historico');
+var PecaLog = require('../models/pecalog');
 
 router.post('/' ,function (req, res, next) {
     Historico.create(req.body, function (err, consultor) {
@@ -39,8 +40,18 @@ router.get('/entrada', function(req, res, next) {
 router.post('/entrada' ,function (req, res, next) {
     Historico.update({},{$push: {entrada: {$each: req.body.entrada} } }, function (err, consultor) {
         if (err) throw err;
-        res.json("Peças adicionadas!");
+        PecaLog.create({acao: "entrada", pecas: req.body.entrada }, function (err, pecalog) {
+            if (err) throw err;
+            res.json("Peças Adicionadas");
+        });
     });
 });
+
+router.get('/pecalog', function(req, res, next) {
+    PecaLog.find({}, function (err, pecalog) {
+          if (err) throw err;
+          res.json(pecalog);
+      });
+  });
 
 module.exports = router;

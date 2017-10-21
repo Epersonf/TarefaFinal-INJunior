@@ -81,7 +81,7 @@
         <h4>Entrada de Peças</h4>
         <form ng-submit="entrada()" id="entradaForm">
             <div class="input-field col m8 s12 offset-m2">
-                <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[A-Za-z0-9]{1}[0-9]{5}" title="Código inválido" required>
+                <input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
                 <div class="chip" ng-repeat="codigo in adicionando track by $index">
 					{{codigo}}
 					<i class="right material-icons clicavel" ng-click="deletaElemento(adicionando, $index)">close</i>
