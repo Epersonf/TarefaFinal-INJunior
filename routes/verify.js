@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config.js');
 
 exports.getToken = function (user) {
-    return jwt.sign(user, config.secretKey, {
+    return jwt.sign(user._id, config.secretKey, {
         expiresIn: "7d"
     });
 };

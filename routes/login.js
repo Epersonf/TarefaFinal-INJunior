@@ -22,8 +22,8 @@ router.post('/', function(req, res, next) {
         });
       }
         
-      var token = Verify.getToken(user);
-              res.status(200).json({
+    var token = Verify.getToken(user);
+    res.status(200).json({
         status: 'Logado com sucesso',
         success: true,
         token: token,

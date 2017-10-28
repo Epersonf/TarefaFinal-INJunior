@@ -44,21 +44,23 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/login', login);
-//app.use('/users', Verify.verifyOrdinaryUser, users);
-//app.use('/historico', Verify.verifyOrdinaryUser, historico);
-//app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
-//app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
 
-app.use('/users', users);
-app.use('/historico', historico);
-app.use('/encomendas', encomendas);
-app.use('/acertos', acertos);
-app.use('/brindes', brindes);
-app.use('/trocas', trocas);
-app.use('/logs', trocas);
+app.use('/users', Verify.verifyOrdinaryUser, users);
+app.use('/historico', Verify.verifyOrdinaryUser, historico);
+app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
+app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
+app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
+app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
+app.use('/logs', Verify.verifyOrdinaryUser, trocas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -98,8 +100,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     // we're connected!
     console.log("Connected correctly to server");
-	//app.listen(port, hostname, function(){
-  app.listen(process.env.PORT || 8080, function(){
+	app.listen(port, hostname, function(){
+  //app.listen(process.env.PORT || 8080, function(){
 		console.log(`Server running at http://${hostname}:${port}/`);
 	});
 });
