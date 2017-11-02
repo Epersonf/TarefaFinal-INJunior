@@ -62,7 +62,7 @@ app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
 app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
 app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
 app.use('/logs', Verify.verifyOrdinaryUser, trocas);
-app.use('/api', trocas);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
