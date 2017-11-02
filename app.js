@@ -20,6 +20,7 @@ var acertos = require('./routes/acertos');
 var brindes = require('./routes/brindes');
 var trocas = require('./routes/trocas');
 var logs = require('./routes/logs');
+var api = require('./routes/logs');
 
 var app = express();
 
@@ -61,6 +62,7 @@ app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
 app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
 app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
 app.use('/logs', Verify.verifyOrdinaryUser, trocas);
+app.use('/api', trocas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
