@@ -20,7 +20,7 @@ var acertos = require('./routes/acertos');
 var brindes = require('./routes/brindes');
 var trocas = require('./routes/trocas');
 var logs = require('./routes/logs');
-var api = require('./routes/logs');
+var api = require('./routes/api');
 
 var app = express();
 
