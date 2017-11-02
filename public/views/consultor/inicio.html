@@ -78,7 +78,7 @@
 								<div class="card-content">
 									<span class="card-title">{{encomenda.detalhes}}<br>
 										<div class="chip tooltipped">
-											{{encomenda.createdAt | date: "d/MM/yy"}}</span>
+											{{encomenda.createdAt | date: "d/MM/yy"}} (Data do Pedido)</span>
 										</div>
 										<button class="btn" ng-click="vendaPersonalizado(encomenda)" ng-disabled="encomenda.status!='Enviada'">Entregar</button>
 									</span>
