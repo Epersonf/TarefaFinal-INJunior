@@ -17,3 +17,5 @@ router.post('/cadastro', function(req, res) {
         });
     });
 });
+
+module.exports = router;
