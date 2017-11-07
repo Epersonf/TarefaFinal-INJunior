@@ -25,4 +25,11 @@ router.get('/porConsultora/:id' ,function (req, res, next) {
     });
 });
 
+router.post('/atualizar' ,function (req, res, next) {
+    Kit.update({"_id" : req.body._id},{$set : req.body.update}, function (err, resp) {
+        if (err) throw err;
+        res.json(resp);
+    });
+});
+
 module.exports = router;
