@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
+var User = require('./user');
 
 
 var pecalogSchema = new Schema({
@@ -9,13 +10,10 @@ var pecalogSchema = new Schema({
 		type: String,		
         required: true
     },
-    userId: {
+    user: {
         type: ObjectId,
-        required: false
-    },
-    userName: {
-        type: String,
-        required: false
+        required: false,
+        ref: 'User'
     },
     pecas: [String]
 }, {
