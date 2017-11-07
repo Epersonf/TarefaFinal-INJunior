@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var User = require('user');
+var User = require('./user');
 
 
 var kitSchema = new Schema({
@@ -28,7 +28,7 @@ var kitSchema = new Schema({
 
 // the schema is useless so far
 // we need to create a model using it
-var Acerto = mongoose.model('Acerto', acertoSchema);
+var Kit = mongoose.model('Kit', kitSchema);
 
 // make this available to our Node applications
-module.exports = Acerto;
+module.exports = Kit;

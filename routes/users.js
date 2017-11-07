@@ -58,7 +58,7 @@ router.get('/supervisores/num', function(req, res, next) {
 
 //consultores
 router.get('/consultores', function(req, res, next) {
-  User.find({tipo:"Consultor"}, function (err, user) {
+  User.find({tipo:"Consultor"}).populate().exec(function (err, user) {
         if (err) throw err;
         res.json(user);
     });
@@ -70,7 +70,7 @@ router.get('/consultores/num', function(req, res, next) {
     });
 });
 router.get('/consultores/:id', function(req, res, next) { //por supervisor
-  User.find({tipo:"Consultor", supervisor:req.params.id}, function (err, user) {
+  User.find({tipo:"Consultor", supervisor:req.params.id}).populate().exec(function (err, user) {
         if (err) throw err;
         res.json(user);
     });

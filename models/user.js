@@ -63,10 +63,12 @@ var User = new Schema({
     //caracteristicas extras, depende do tipo de usuario
     estoquista: {
         type: ObjectId,
+        ref: 'User'
         //required: true
     },
     supervisor: {
         type: ObjectId,
+        ref: 'User'
         //required: true
     },
     porcentagem: {

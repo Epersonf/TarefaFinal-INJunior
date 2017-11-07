@@ -21,6 +21,7 @@ var brindes = require('./routes/brindes');
 var trocas = require('./routes/trocas');
 var logs = require('./routes/logs');
 var api = require('./routes/api');
+var kits = require('./routes/kits');
 
 var app = express();
 
@@ -62,6 +63,7 @@ app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
 app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
 app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
 app.use('/logs', Verify.verifyOrdinaryUser, trocas);
+app.use('/kits', Verify.verifyOrdinaryUser, kits);
 app.use('/api', api);
 
 // catch 404 and forward to error handler
