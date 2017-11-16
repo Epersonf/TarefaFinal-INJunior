@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var User = require('../models/user');
+var PecaLog = require('../models/pecalog');
 var Verify    = require('./verify');
 
 /* GET users listing. */
@@ -141,6 +142,16 @@ router.post('/vendido/:id' ,function (req, res, next) {
     User.update({_id:req.params.id},{$push: {estoque: {$each: req.body.vendido} } }, function (err, consultor) {
         if (err) throw err;
         res.json("Peças adicionadas!");
+    });
+});
+
+router.post('/venda' ,function (req, res, next) {
+    User.update({"_id" : req.body._id},{$set : req.body.update}, function (err, consultor) {
+        if (err) throw err;
+        PecaLog.create({acao: "venda", pecas: req.body.pecas, user: req.body.userId }, function (err, pecalog) {
+            if (err) throw err;
+            res.json("Venda efetivada");
+        });
     });
 });
 

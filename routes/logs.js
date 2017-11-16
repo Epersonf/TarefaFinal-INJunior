@@ -1,43 +1,56 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var Log = require('../models/log');
+var Pecalog = require('../models/pecalog');
 
 router.post('/' ,function (req, res, next) {
-    Log.create(req.body, function (err) {
+    Pecalog.create(req.body, function (err) {
         if (err) throw err;
-        res.json("Log realizado!");
+        res.json("Pecalog realizado!");
     });
 });
 router.get('/' ,function (req, res, next) {
-    Log.find({}, function (err, log) {
+    Pecalog.find({}).populate({
+        path: 'user',
+        select: 'nome _id'
+    }).exec( function (err, log) {
+        if (err) throw err;
+        res.json(log);
+    });
+});
+
+router.get('/acao/:acao' ,function (req, res, next) {
+    Pecalog.find({acao:req.params.acao}).populate({
+        path: 'user',
+        select: 'nome _id'
+    }).exec(function (err, log) {
         if (err) throw err;
         res.json(log);
     });
 });
 
 router.get('/usuario/:id' ,function (req, res, next) {
-    Log.find({userId:req.params.id}, function (err, log) {
+    Pecalog.find({user:req.params.id}, function (err, log) {
         if (err) throw err;
         res.json(log);
     });
 });
 
 router.delete('/:id', function (req, res, next) {
-     Log.remove({_id:req.params.id}, function (err, resp) {
+     Pecalog.remove({_id:req.params.id}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
 });
 
 router.post('/atualizar' ,function (req, res, next) {
-    Log.update({"_id" : req.body._id},{$set : req.body.update}, function (err, resp) {
+    Pecalog.update({"_id" : req.body._id},{$set : req.body.update}, function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });
 });
 router.post('/total' ,function (req, res, next) {
-    Log.find({"status" : req.body.status}).count(function (err, resp) {
+    Pecalog.find({"acao" : req.body.acao}).count(function (err, resp) {
         if (err) throw err;
         res.json(resp);
     });

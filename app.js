@@ -62,7 +62,7 @@ app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
 app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
 app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
 app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
-app.use('/logs', Verify.verifyOrdinaryUser, trocas);
+app.use('/logs', Verify.verifyOrdinaryUser, logs);
 app.use('/kits', Verify.verifyOrdinaryUser, kits);
 app.use('/api', api);
 
