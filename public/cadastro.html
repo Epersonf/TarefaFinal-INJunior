@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col s12 m12">
+		<div class="card large-card fundoAmarelo">
+			<div class="card-content center-align">
+				<span class="card-title">Cadastro</span>
+                    <form ng-submit="cadastro()" name="formulario" id="formulario">
+                        <div class="input-field">
+                            <label  for="nome">Nome</label>
+                            <input type="text" ng-model="form.nome" name="nome" required>
+                        </div>
+                        <div class="input-field">
+                            <label   for="sobrenome">Sobrenome</label>	
+                            <input type="text" ng-model="form.sobrenome" name="sobrenome" required>
+                        </div>
+                        <div class="input-field">
+                            <label  for="nome">Senha</label>
+                            <input type="password" ng-model="form.password" name="nome" required>
+                        </div>
+                        <div class="input-field">	
+                            <select style="display:block !important; background-color:#ffd44c; border-color:#997500;" ng-model="form.sexo" required>
+                                <option value="" disabled selected>Selecione o gênero</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label   for="whatsapp">WhatsApp</label>
+                            <input type="tel" class="telefone" ng-model="form.whatsapp" name="whatsapp" required>
+                        </div>
+                        <div class="input-field">
+                            <label   for="nascimento">Nascimento</label>	
+                            <input type="date" class="datepicker" ng-model="form.nascimento" name="nascimento" required>
+                        </div>
+                        <div class="input-field">
+                            <label   for="cpf">CPF</label>	
+                            <input type="text" ng-model="form.cpf" name="cpf" class="cpf" required>
+                        </div>
+                        <div class="input-field">
+                            <select style="display:block !important; background-color:#ffd44c; border-color:#997500;" ng-model="form.cidade" required>
+                                <option value="" disabled selected>Selecione a Cidade</option>
+                                <option value="Barbacena">Barbacena</option>
+                                <option value="Barroso">Barroso</option>
+                                <option value="Belo Horizonte">Belo Horizonte</option>
+                                <option value="Betim">Betim</option>
+                                <option value="Carandaí">Carandaí</option>
+                                <option value="Contagem">Contagem</option>
+                                <option value="Ibireté">Ibireté</option>
+                                <option value="Mariana">Mariana</option>
+                                <option value="Nova Lima">Nova Lima</option>
+                                <option value="Ouro Preto">Ouro Preto</option>
+                                <option value="Ribeirão das Neves">Ribeirão das Neves</option>
+                                <option value="Santa Cruz de Minas">Santa Cruz de Minas</option>
+                                <option value="São João del Rei">São João del Rei</option>
+                                <option value="Senhora dos Remédios">Senhora dos Remédios</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label   for="endereco">Endereço</label>	
+                            <input type="text" ng-model="form.endereco" name="endereco" required>
+                        </div>
+                        <div class="input-field">
+                            <label   for="cep">CEP</label>	
+                            <input type="text" ng-model="form.cep" name="cep" class="cep" required>
+                        </div>
+                        <input type="submit" value="Cadastrar" class="btn">
+                </form>              
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal-video" class="modal" style="width:100vw; height:90vh; max-height:none;">
+    <div class="modal-content center-align">
+        <iframe width="250" height="300" src="https://www.youtube.com/embed/qhBEEAhu_Sw?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="modal-footer center-align">
+      <a class="btn clicavel modal-action modal-close waves-effect waves-green" style="float: none">Cadastrar agora!</a>
+    </div>
+  </div>
