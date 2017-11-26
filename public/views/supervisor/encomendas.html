@@ -65,7 +65,6 @@
 			<div class="input-field">
 				<select ng-model="form.item" name="item" required>
 					<option value="" disabled selected>Selecione o item</option>
-					<option value="Personalizada">Personalizada</option>
 					<option value="Anel">Anel</option>
 					<option value="Brinco Pequeno">Brinco Pequeno</option>
 					<option value="Brinco Grande">Brinco Grande</option>
@@ -76,6 +75,7 @@
 					<option value="Pulseira Masculina">Pulseira Masculina</option>
 					<option value="Escapulário">Escapulário</option>
 					<option value="Tornozeleira">Tornozeleira</option>
+					<option value="Personalizada">Personalizada</option>
 					<!--<option value="Reposição padrão">Reposição padrão</option>-->
 				</select>
 			</div>									
@@ -83,14 +83,15 @@
 				<label  for="quantidade">Quantidade</label>
 				<input placeholder="Quantidade" type="number" min="1" ng-model="form.quantidade" name="quantidade" required>
 			</div>
-			<div class="input-field" ng-show="form.item==='Personalizada'">
-				<select ng-model="form.consultor" ng-options="consultor.nome for consultor in consultores">
-					<option value=""  selected>Selecione o consultor</option>
+			<div class="input-field">
+				<select ng-model="form.consultorNome" name="consultor">
+					<option value=""  selected>Selecione o consultor(opcional)</option>
+					<option ng-repeat="consultor in consultores" value="{{consultor.nome}}">{{consultor.nome}}</option>
 				</select>
 			</div>
-			<div class="input-field" ng-if="form.item==='Personalizada'">
+			<div class="input-field" ng-show="form.item==='Personalizada'">
 				<label  for="detalhes">Detalhes</label>
-				<input  type="text" ng-model="form.detalhes" name="detalhes" required>
+				<input  type="text" ng-model="form.detalhes" name="detalhes" >
 			</div>
 		</form>
 	</div>
