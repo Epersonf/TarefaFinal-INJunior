@@ -1,0 +1,251 @@
+<div class="row">
+    <div class="col s12 m12">
+        <div class="card center-align fundoAmarelo" id="formKit">
+            <div class="card-content">
+                <span class="card-title">{{acao}} Kit</span>
+                <div class="chip fundoBranco" ng-show="kitAtual.consultora!=''">Total de Peças: {{kitAtual.pecas.length}}</div>
+                <div class="row" ng-hide="acao=='Atualizar'">
+                    <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
+                            <option value="" disabled selected>Selecione o supervisor</option>
+                            <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{supervisor.nome}} - {{supervisor.cidade}}</option>
+                    </select>
+                    <select style="display:block" ng-model="kitAtual.consultora" class="col m6 s12" ng-show="consultores.length>0">
+                            <option value="" disabled selected>Selecione o consultor</option>
+                            <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome}}</option>
+                    </select>
+                </div>
+                <div class="row text-center" ng-show="acao=='Atualizar'">
+                    <h4>{{consultora}} 
+                        <a class='clicavel textoVermelho' ng-click="fecharEdicao()">
+                            <i class="material-icons">highlight_off</i>
+                        </a>
+                    </h4>
+                </div>
+                <div class="row" ng-show="kitAtual.consultora!=''">
+                    <div class="col m5 s12">
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Anéis ({{pecas.totais.aneis || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.aneis | orderBy:'-val'">
+                                <span class="badge">
+                                    <a class='clicavel textoVermelho' ng-click="excluir(peca, 'AN')">
+                                            <i class="material-icons">highlight_off</i>
+                                    </a>
+                                </span>
+                                <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'AN')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Brincos P ({{pecas.totais.brincosP || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.brincosP | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'BP')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'BP')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Brincos G ({{pecas.totais.brincosG || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.brincosG | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'BG')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'BG')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Cordões Fem. ({{pecas.totais.cordoesF || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.cordoesF | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'CF')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'CF')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Cordões Masc. ({{pecas.totais.cordoesM || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.cordoesM | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'CM')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'CM')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col m5 s12 offset-m1">
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pingentes ({{pecas.totais.pingentes || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.pingentes | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'PN')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'PN')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pulseiras Fem. ({{pecas.totais.pulseirasF || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.pulseirasF | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'PF')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'PF')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pulseiras Masc. ({{pecas.totais.pulseirasM || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.pulseirasM | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'PM')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'PM')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Tornozeleiras ({{pecas.totais.tornozeleiras || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.tornozeleiras | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'TZ')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'TZ')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Escapulários ({{pecas.totais.escapularios || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.escapularios | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'ES')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form  ng-submit="addPeca($event, 'ES')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Personalizadas ({{pecas.totais.personalizadas || 0}})</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.personalizadas | orderBy:'-val'">
+                                    <span class="badge">
+                                        <a class='clicavel textoVermelho' ng-click="excluir(peca, 'PZ')">
+                                                <i class="material-icons">highlight_off</i>
+                                        </a>
+                                    </span>
+                                    <span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                            <li class="collection-item">
+                                <form ng-submit="addPeca($event, 'PZ')" class="addPeca row">
+                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class=card-action>
+                <button class="waves-effect waves-light btn" ng-click="concluir()" ng-disabled="kitAtual.consultora =='' || kitAtual.pecas.length==0"><i class="material-icons left">add</i>{{acao}}</button>
+            </div>
+        </div>
+    </div>
+</div> 
+<div class="row">
+    <div class="col s12 m12">
+        <div class="card fundoAmarelo" id="kitList">
+            <div class="card-content">
+                <span class="card-title" >Kits</span>
+                <div class="collection">
+                    <a class="textoPreto collection-item avatar" ng-repeat="kit in kits | orderBy:'-createdAt'">
+                        <i class="material-icons circle">work</i>
+                        <span class="title">{{kit.consultora.nome}} - {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
+                        <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="imprimir(kit)"><i class="material-icons">print</i></button>
+                        <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button>
+                    </a>
+                </div>                 
+            </div>
+        </div>
+    </div>
+</div>
