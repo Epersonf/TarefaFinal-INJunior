@@ -14,7 +14,6 @@
 	</div>
 </div>
 <span ng-if="usuario.status==='Aprovado'">
-	<!-- diretiva de brinde urgente -->
 	<div ng-if="brinde.campanha==='mil'" class="row" id="brindeMil">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
@@ -25,12 +24,12 @@
 					<p>em vendas!</p>
 				</div>
 				<div class="card-action">
-					<a class="waves-effect waves-light btn" ng-click="modalBrinde('mil')"><i class="material-icons left">card_giftcard</i>Pegar brinde!</a>
+					<a class="waves-effect waves-light btn" ng-click="modalBrinde()"><i class="material-icons left">card_giftcard</i>Pegar brinde!</a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div ng-if="brinde.campanha==='maleta'" class="row" id="brindeMaleta">
+	<div ng-if="brinde.campanha==='maleta'" class="row" id="brindeMil">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
 				<div class="card-content">
@@ -41,21 +40,6 @@
 				</div>
 				<div class="card-action">
 					<a class="waves-effect waves-light btn" ng-click="pedeMaleta()"><i class="material-icons left">card_giftcard</i>Solicitar Maleta!</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div ng-if="brinde.campanha==='natal'" class="row" id="brindeNatal">
-		<div class="col s12 m8 offset-m2">
-			<div class="card notificacaoBoa center-align">
-				<div class="card-content">
-					<span class="card-title">Brinde de Natal!</span>
-					<p>Venda com um valor maior que</p>
-					<h1>R$100</h1>
-					<p>Dê um brinde para seu cliente!</p>
-				</div>
-				<div class="card-action">
-					<a class="waves-effect waves-light btn" ng-click="modalBrinde('natal')"><i class="material-icons left">card_giftcard</i>Pegar brinde!</a>
 				</div>
 			</div>
 		</div>
@@ -201,16 +185,7 @@
         <form ng-submit="pegaBrinde()" id="brindeForm">
             <div class="input-field col m8 s12 offset-m2">
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
-				<select style="display:block" ng-model="codigoBrinde" name="item" ng-show="tipoBrinde == 'natal'" required>
-					<option value="" disabled selected>Selecione o item</option>
-					<option value="BP017">Brinco Pequeno de R$17,00</option>
-					<option value="BP023">Brinco Pequeno de R$23,00</option>
-					<option value="BP027">Brinco Pequeno de R$27,00</option>
-					<option value="PN017">Pingente de R$17,00</option>
-					<option value="PN023">Pingente de R$23,00</option>
-					<option value="PN027">Pingente de R$27,00</option>
-				</select>
-				<input ng-show="tipoBrinde == 'mil'" placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
+                <input placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
 				<br><button type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo"><i class="material-icons">card_giftcard</i></button>
             </div>
         </form>
