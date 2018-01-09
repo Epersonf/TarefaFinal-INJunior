@@ -6,9 +6,13 @@
 				<div class="row">
 					<ul class="collapsible" data-collapsible="accordion">
 						<li>
-							<div class="collapsible-header active"><i class="material-icons">date_range</i> Meses <span class="badge"><span ng-repeat="mes in filtroMeses">{{mes}}<span ng-if="!$last">, </span></span></span></div>
+							<div class="collapsible-header active"><i class="material-icons">date_range</i> Meses <span class="badge truncate-text" style="width: 50%; text-align:right;"><span ng-repeat="mes in filtroMeses">{{mes}}<span ng-if="!$last">, </span></span></span></div>
 							<div class="collapsible-body fundoBranco">
-								<div class="row">
+								<div class="row" ng-show="meses.length>0">
+									<div class="col s12" ng-click="toggleAllCheck(meses, filtroMeses)" style="padding-bottom:15px;">
+											<input type="checkbox" class="filled-in" ng-click="toggleAllCheck(meses, filtroMeses)" ng-checked="meses.length == filtroMeses.length" />
+											<label><b>Todos</b></label>
+									</div>
 									<div class="col s12 m3" ng-repeat="mes in meses" ng-click="toggleCheck(mes, filtroMeses)">
 										<input type="checkbox" class="filled-in" value="{{mes}}" ng-checked="filtroMeses.indexOf(mes) != -1" />
 										<label>{{mes}}</label>
@@ -17,9 +21,13 @@
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header"><i class="material-icons">person</i> Supervisores <span class="badge"><span ng-repeat="supervisor in filtroSupervisores">{{supervisor.nome}}<span ng-if="!$last">, </span></span></span></div>
-							<div class="collapsible-body fundoBranco">
-								<div class="row">
+							<div class="collapsible-header"><i class="material-icons">person</i> Supervisores <span class="badge truncate-text" style="width: 50%; text-align:right;"><span ng-repeat="supervisor in filtroSupervisores">{{supervisor.nome}}<span ng-if="!$last">, </span></span></span></div>
+							<div class="collapsible-body fundoBranco" >
+								<div class="row" ng-show="supervisores.length>0">
+										<div class="col s12" ng-click="toggleAllCheck(supervisores, filtroSupervisores)" style="padding-bottom:15px;">
+												<input type="checkbox" class="filled-in" ng-click="toggleAllCheck(supervisores, filtroSupervisores)" ng-checked="supervisores.length == filtroSupervisores.length" />
+												<label><b>Todos</b></label>
+										</div>
 									<div class="col s12 m3" ng-repeat="supervisor in supervisores" ng-click="toggleCheck(supervisor, filtroSupervisores)">
 										<input type="checkbox" class="filled-in" value="{{supervisor}}" ng-checked="filtroSupervisores.indexOf(supervisor) != -1" />
 										<label>{{supervisor.nome}}</label>
@@ -28,9 +36,13 @@
 							</div>
 						</li>
 						<li>
-							<div class="collapsible-header"><i class="material-icons">person</i> Consultores <span class="badge"><span ng-repeat="consultor in filtroConsultores">{{consultor.nome}}<span ng-if="!$last">, </span></span></span></div>
+							<div class="collapsible-header"><i class="material-icons">person</i> Consultores <span class="badge truncate-text" style="width: 50%; text-align:right;"><span ng-repeat="consultor in filtroConsultores">{{consultor.nome}}<span ng-if="!$last">, </span></span></span></div>
 							<div class="collapsible-body fundoBranco">
-								<div class="row">
+								<div class="row" ng-show="consultoresFiltrados.length>0">
+										<div class="col s12" ng-click="toggleAllCheck(consultoresFiltrados, filtroConsultores)" style="padding-bottom:15px;">
+												<input type="checkbox" class="filled-in" ng-click="toggleAllCheck(consultoresFiltrados, filtroConsultores)" ng-checked="consultoresFiltrados.length == filtroConsultores.length" />
+												<label><b>Todos</b></label>
+										</div>
 									<div class="col s12 m3" ng-repeat="consultor in consultoresFiltrados" ng-click="toggleCheck(consultor, filtroConsultores)">
 										<input type="checkbox" class="filled-in" value="{{consultor}}" ng-checked="filtroConsultores.indexOf(consultor) != -1" />
 										<label>{{consultor.nome}} ({{consultor.supervisor.nome}})</label>
@@ -38,7 +50,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li ng-if="filtroConsultores.length>0">
 							<div class="collapsible-header" ng-click="filtra()"><i class="material-icons">filter_list</i> Filtrar</div>
 						</li>
 					</ul>

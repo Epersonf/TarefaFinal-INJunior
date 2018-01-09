@@ -8,57 +8,44 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var User = new Schema({
 	username: {
 		type: String,		
-        //required: true,
         unique: true
 	},
 	passowrd: {
 		type: String,		
-        //required: true,
 	},
 	status: { //ativo, inativo, pendente
         type: String,
-        //required: true,
 		default: "Pendente"
     },
     nome: {
-        type: String,
-        //required: true
+        type: String
     },
     sobrenome: {
-        type: String,
-        //required: true
+        type: String
     },
 	whatsapp: {
-        type: String,
-        //required: true
+        type: String
     },
 	nascimento: {
-        type: Date,
-        //required: true
+        type: Date
     },
 	cpf: {
-        type: String,
-        //required: true
+        type: String
     },
 	cidade: {
-        type: String,
-        //required: true
+        type: String
     },
 	endereco: {
-        type: String,
-        //required: true
+        type: String
     },
 	cep: {
-        type: String,
-        //required: true
+        type: String
     },
 	tipo: { //supervisor, consultor, controladoria, estoque, 
-        type: String,
-        //required: true
+        type: String
     },
 	sexo: {
-		type: String,
-		//required: true
+		type: String
 	},
     //caracteristicas extras, depende do tipo de usuario
     estoquista: {
