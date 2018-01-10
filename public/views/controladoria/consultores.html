@@ -13,16 +13,18 @@
 					</div>
 				</div>
 				<div class="collection">
-					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores">
+					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" style="overflow-y:overlay" ng-repeat="consultor in consultores | orderBy:'proxAcerto'">
 						<i class="material-icons circle">person</i>
-						<span class="title">{{consultor.nome}}</span>
-						<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
-							{{consultor.status}}
+						<div class="col s12"><b>{{consultor.nome}} - ({{consultor.supervisor.nome}})</b></div>
+							<div class="col s12 m2">
+								<br>
+								<p>Próximo Acerto</p>
+								<p>{{consultor.proxAcerto | date: "d/MM/yy"}}</p>
+							</div>
+							<div class="col s12 m10" style="overflow-x:auto">
+								<tabela-totais-pecas pecas="consultor.vendido"></tabela-totais-pecas>
+							</div>
 						</div>
-						<p>
-							Usuário: {{consultor.username}} <br>
-							{{consultor.totalVendido | currency: 'R$'}} vendidos
-						</p>
 					</a>
 				</div>                 
 			</div>
