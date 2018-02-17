@@ -73,8 +73,8 @@ router.get('/consultores/num', function(req, res, next) {
         res.json(user);
     });
 });
-router.get('/consultores/:id', function(req, res, next) { //por supervisor
-  User.find({tipo:"Consultor", supervisor:req.params.id}).populate({
+router.get('/consultores/:supervisorId', function(req, res, next) { //por supervisor
+  User.find({tipo:"Consultor", supervisor:req.params.supervisorId}).populate({
       path: 'supervisor',
       select: 'nome _id'
   }).exec(function (err, user) {
@@ -82,6 +82,7 @@ router.get('/consultores/:id', function(req, res, next) { //por supervisor
         res.json(user);
     });
 });
+
 
 //todos
 
@@ -151,6 +152,16 @@ router.post('/venda' ,function (req, res, next) {
         PecaLog.create({acao: "venda", pecas: req.body.pecas, user: req.body.userId }, function (err, pecalog) {
             if (err) throw err;
             res.json("Venda efetivada");
+        });
+    });
+});
+
+router.post('/estorno' ,function (req, res, next) {
+    User.update({"_id" : req.body._id},{$set : req.body.update}, function (err, consultor) {
+        if (err) throw err;
+        PecaLog.create({acao: "estorno", pecas: req.body.pecas, user: req.body.userId }, function (err, pecalog) {
+            if (err) throw err;
+            res.json("Estorno efetivado");
         });
     });
 });
