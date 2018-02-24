@@ -12,7 +12,10 @@ var User = new Schema({
 	},
 	passowrd: {
 		type: String,		
-	},
+    },
+    email:{
+        type: String
+    },
 	status: { //ativo, inativo, pendente
         type: String,
 		default: "Pendente"
