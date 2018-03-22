@@ -77,7 +77,8 @@ var User = new Schema({
     vendido: [String],
     totalVendido: Number,
     tipoTaxa: String,//vista, primeiro, parcelado
-    taxa: Number
+    taxa: Number,
+    state: String
 
 }, {
     timestamps: true
