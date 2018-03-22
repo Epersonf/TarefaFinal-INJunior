@@ -5,6 +5,7 @@ var User = require('../models/user');
 var PecaLog = require('../models/pecalog');
 var Verify    = require('./verify');
 
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   User.find({}, function (err, user) {
