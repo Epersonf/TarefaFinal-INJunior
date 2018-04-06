@@ -10,7 +10,7 @@
 					Total vendido:{{valorVendido | currency: 'R$'}}
 				</div>
 				<div class="collection">
-					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores | orderBy:'proxAcerto'">
+					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores | orderBy:'proxAcerto' | filter:{status:'!inativo'}">
 						<i class="material-icons circle">person</i>
 						<span class="title">{{consultor.nome}}</span>
 						<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
