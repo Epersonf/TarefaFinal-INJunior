@@ -2,9 +2,16 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var Troca = require('../models/troca');
+var User = require('../models/user');
 
 router.post('/' ,function (req, res, next) {
     Troca.create(req.body, function (err) {
+        if(req.body.saldo){
+            User.findOne({_id:req.body.consultorId}, function (err, user) {
+                user.totalVendido = user.totalVendido+req.body.saldo;
+                user.save();
+            });
+        }
         if (err) throw err;
         res.json("Troca realizado!");
     });
