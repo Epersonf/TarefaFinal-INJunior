@@ -9,8 +9,12 @@
 				<div class="chip white">
 					Total vendido:{{valorVendido | currency: 'R$'}}
 				</div>
+				<div class="input-field">
+					<i class="material-icons prefix">filter_list</i>
+					<input type="text" class="validate" placeholder="Filtrar" ng-model="filtro" />
+				</div>
 				<div class="collection">
-					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores | orderBy:'proxAcerto' | filter:{status:'!inativo'}">
+					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores | orderBy:'proxAcerto' | filter:{status:'!inativo', nome: filtro}">
 						<i class="material-icons circle">person</i>
 						<span class="title">{{consultor.nome}}</span>
 						<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">

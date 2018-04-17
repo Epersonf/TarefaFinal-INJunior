@@ -3,8 +3,12 @@
 		<div class="card fundoAmarelo">
 			<div class="card-content">
 				<span class="card-title">Supervisores</span>
+				<div class="input-field">
+					<i class="material-icons prefix">filter_list</i>
+					<input type="text" class="validate" placeholder="Filtrar" ng-model="filtro" />
+				</div>
 				<div class="collection">
-					<a class="textoPreto collection-item avatar" href="#/supervisor/{{supervisor._id}}" ng-repeat="supervisor in supervisores">
+					<a class="textoPreto collection-item avatar" href="#/supervisor/{{supervisor._id}}" ng-repeat="supervisor in supervisores | filter:filtro">
 						<i class="material-icons circle">person</i>
 						<span class="title">{{supervisor.nome}}</span>
 						<p> Usuário: {{supervisor.username}} </p>
