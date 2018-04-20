@@ -8,9 +8,13 @@ var User = require('./user');
 var kitSchema = new Schema({
 	consultora: {
 		type: ObjectId,		
+        ref: 'User'
+    },
+    supervisor: {
+		type: ObjectId,		
         required: true,
         ref: 'User'
-	},
+    },
 	valor: {
 		type: Number,
 		required: true,

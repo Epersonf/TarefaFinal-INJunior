@@ -12,9 +12,14 @@ router.get('/' ,function (req, res, next) {
     Kit.find({}).populate({
         path: 'consultora',
         select: 'nome _id',
-        }).exec(function (err, kit) {
-            if (err) throw err;
-            res.json(kit);
+        })
+        .populate({
+        path: 'supervisor',
+        select: 'nome _id',
+        })
+        .exec(function (err, kit) {
+        if (err) throw err;
+        res.json(kit);
     });
 });
 

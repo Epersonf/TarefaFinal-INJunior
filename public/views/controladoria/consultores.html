@@ -17,10 +17,19 @@
 					<input type="text" class="validate" placeholder="Filtrar" ng-model="filtro" />
 				</div>
 				<div class="collection">
-					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" style="overflow-y:overlay" ng-repeat="consultor in consultores | orderBy:'proxAcerto' | filter:filtro">
+						<ul class="tabs">
+								<li class="tab col m3 s6"><a class="active clicavel" ng-click="status=['Aprovado', 'Pendente', 'Inativo']">Todos</a></li>
+								<li class="tab col m3 s6"><a class="clicavel" ng-click="status=['Pendente']">Pendentes</a></li>
+								<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Aprovado']" >Aprovados</a></li>
+								<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Inativo']">Inativos</a></li>	
+							</ul>
+					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" style="overflow-y:overlay" ng-repeat="consultor in consultores | orderBy:'proxAcerto' | filter:filtroStatus |filter:filtro">
 						<i class="material-icons circle">person</i>
 						<div class="col s12"><b>{{consultor.nome}} - ({{consultor.supervisor.nome}})</b></div>
 							<div class="col s12 m2">
+									<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
+											{{consultor.status}}
+										</div>
 								<br>
 								<p>Próximo Acerto</p>
 								<p>{{consultor.proxAcerto | date: "d/MM/yy"}}</p>
