@@ -12,7 +12,7 @@ var kitSchema = new Schema({
     },
     supervisor: {
 		type: ObjectId,		
-        required: true,
+        required: false,
         ref: 'User'
     },
 	valor: {
