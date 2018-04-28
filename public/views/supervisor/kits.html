@@ -5,7 +5,7 @@
                 <span class="card-title">{{acao}} Kit</span>
                 <div class="chip fundoBranco" ng-show="selectedSupervisor!=''">Total de Peças: {{kitAtual.pecas.length}}</div>
                 <div class="row">
-                    <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
+                    <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()" ng-disabled="usuario.tipo=='Supervisor'">
                             <option value="" disabled selected>Selecione o supervisor</option>
                             <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{supervisor.nome}} - {{supervisor.cidade}}</option>
                     </select>
@@ -15,7 +15,7 @@
                             <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome}}</option>
                     </select>
                 </div>
-                <div class="row" ng-show="selectedSupervisor!=''">
+                <div class="row" ng-show="kitAtual.supervisor!=''">
                     <div class="col m5 s12">
                         <ul class="collection with-header">
                             <li class="collection-header"><b>Anéis ({{pecas.totais.aneis || 0}})</b></li>
@@ -221,7 +221,7 @@
                 </div>
             </div>
             <div class=card-action>
-                <button class="waves-effect waves-light btn" ng-click="concluir()" ng-disabled="selectedSupervisor =='' || kitAtual.pecas.length==0"><i class="material-icons left">done</i>Concluir</button>
+                <button class="waves-effect waves-light btn" ng-click="concluir()" ng-disabled="kitAtual.consultora =='' || kitAtual.pecas.length==0"><i class="material-icons left">done</i>Concluir</button>
             </div>
         </div>
     </div>
@@ -232,25 +232,25 @@
             <div class="card-content">
                 <span class="card-title" >Kits</span>
                 <div class="collection">
-                    <a class="textoPreto collection-item avatar" ng-repeat="kit in kits | orderBy:'-createdAt'">
+                    <a class="textoPreto collection-item avatar" ng-repeat="kit in kits | orderBy:'-createdAt' | filter:usuario._id">
                         <i class="material-icons circle">work</i>
                         <div class="row">
                             <div class="col s6">
                                     <span class="title">
-                                            <span ng-if="kit.consultora.nome">{{kit.consultora.nome}} </span>
-                                            <span ng-if="!kit.consultora.nome"><SEM CONSULTOR> </span>
-                                         </br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
-                                     </br>
-                                     <span>Supervisor: {{kit.supervisor.nome}}</span>
+                                       <span ng-if="kit.consultora.nome">{{kit.consultora.nome}} </span>
+                                       <span ng-if="!kit.consultora.nome"><SEM CONSULTOR> </span>
+                                    </br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
                                 </br>
-                                
+                                <span>Supervisor: {{kit.supervisor.nome}}</span>
+                                </br>
                                 <div class="chip tooltipped" ng-class="{'orange': kit.status==='Pendente', 'green': kit.status==='Entregue'}" >
                                     {{kit.status}}
                                 </div>
                             </div>
                             <div class="col s6">
                                 <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="imprimir(kit)"><i class="material-icons">print</i></button> 
-                                <button ng-if="kit.status=='Pendente'" class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button>  
+                                <button ng-if="kit.status=='Pendente'" class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button> 
+                                <button ng-if="kit.status=='Pendente' && kit.supervisor._id == usuario._id" class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="pegaKit(kit)"><i class="material-icons">get_app</i></button>   
                                 <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="mostraTabelaPecas(kit)"><i class="material-icons" title="Ver peças">assignment</i></button>
                             </div>
                         </div>  

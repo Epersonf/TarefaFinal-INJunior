@@ -19,6 +19,7 @@
 					<a class="waves-effect waves-light btn" ng-click="modalAcerto()">Realizar acerto</a>
 					<a class="waves-effect waves-light btn" ng-click="modalEncomenda()">Alocar peças</a> 
                     <a class="waves-effect waves-light btn" ng-click="modalEstorno()">Estorno de venda</a>
+                    <a ng-hide="consultor.estoque.length==0" class="waves-effect waves-light btn" ng-click="recolherPecas()">Recolher kit</a>
 					<!--<a class="waves-effect waves-light btn">Troca de peça</a>-->
 				</div>
                 <div class="row center align" ng-show="consultor.taxa>0">
