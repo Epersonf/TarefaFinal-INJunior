@@ -63,17 +63,33 @@
 			</div>
 		</div>
 	</div>
-	<div ng-if="brinde.campanha==='natal'" class="row" id="brindeNatal">
+	<div ng-if="brinde.campanha==='maes'" class="row" id="brindeNatal">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
 				<div class="card-content">
-					<span class="card-title">Brinde de Natal!</span>
+					<span class="card-title">Brinde do mês das Mães!</span>
 					<p>Venda com um valor maior que</p>
 					<h1>R$100</h1>
 					<p>Dê um brinde para seu cliente!</p>
 				</div>
 				<div class="card-action">
-					<a class="waves-effect waves-light btn" ng-click="modalBrinde('natal')">
+					<a class="waves-effect waves-light btn" ng-click="modalBrinde('maes')">
+						<i class="material-icons left">card_giftcard</i>Pegar brinde!</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-if="brinde.campanha==='maes5'" class="row" id="brindeNatal">
+		<div class="col s12 m8 offset-m2">
+			<div class="card notificacaoBoa center-align">
+				<div class="card-content">
+					<span class="card-title">Brinde do mês das Mães!</span>
+					<p>Você já etregou</p>
+					<h1>5 brindes</h1>
+					<p>Hora de pegar um pra você!</p>
+				</div>
+				<div class="card-action">
+					<a class="waves-effect waves-light btn" ng-click="modalBrinde('maes5')">
 						<i class="material-icons left">card_giftcard</i>Pegar brinde!</a>
 				</div>
 			</div>
@@ -230,7 +246,7 @@
 		<form ng-submit="pegaBrinde()" id="brindeForm">
 			<div class="input-field col m8 s12 offset-m2">
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
-				<select style="display:block" ng-model="codigoBrinde" name="item" ng-show="tipoBrinde == 'natal'" required>
+				<select style="display:block" ng-model="codigoBrinde" name="item" ng-show="tipoBrinde == 'natal' || tipoBrinde == 'maes'" required>
 					<option value="" disabled selected>Selecione o item</option>
 					<option value="BP017">Brinco Pequeno de R$17,00</option>
 					<option value="BP023">Brinco Pequeno de R$23,00</option>
