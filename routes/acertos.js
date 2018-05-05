@@ -3,12 +3,12 @@ var router = express.Router();
 var passport = require('passport');
 var Acerto = require('../models/acerto');
 
-Acerto.find({}, function (err, acertos) {
+/* Acerto.find({}, function (err, acertos) {
     acertos.forEach(function(acerto){
         acerto.valor = Math.floor(acerto.valor/0.7);
         acerto.save();
     });
-});
+}); */
 
 router.post('/' ,function (req, res, next) {
     Acerto.create(req.body, function (err) {
