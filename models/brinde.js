@@ -24,6 +24,11 @@ var brindeSchema = new Schema({
     campanha: { 
         type: String,
         required: true
+    },
+    valorVenda: {
+        type: Number,
+        default: 0,
+        required: true
     }
 }, {
     timestamps: true
