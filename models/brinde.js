@@ -29,7 +29,12 @@ var brindeSchema = new Schema({
         type: Number,
         default: 0,
         required: true
-    }
+    },
+    valorAbsoluto: {
+        type: Number,
+        default: 0,
+        required: true
+    },
 }, {
     timestamps: true
 });

@@ -22,6 +22,11 @@ var acertoSchema = new Schema({
 		required: true,
 		default: 0
 	},
+	pago: {
+		type: Number,
+		required: true,
+		default: 0
+	},
 	taxa: Number,
 	pecas: [String], //pecas vendidas no caso de consultores
 }, {
