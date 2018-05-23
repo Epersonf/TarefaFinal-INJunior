@@ -141,7 +141,7 @@
 						</span>
 					</div>
 					<div class="row marker-container" ng-if="maxAbsoluto==0">
-						<span ng-repeat="cBrinde in usuario.brindesEntregues" ng-if="cBrinde.valorAbsoluto - vendidoHistorico > 0">
+						<span ng-repeat="cBrinde in usuario.brindesEntregues" ng-if="(cBrinde.valorAbsoluto - vendidoHistorico) > 0">
 							<div class="speech-bubble textoAmarelo" style="left:{{(cBrinde.valorAbsoluto - vendidoHistorico)*90/maxRelativo}}%">
 								<i class="material-icons">{{cBrinde.campanha == 'maleta' ? 'business_center' : 'card_giftcard'}}</i>
 								<label>{{cBrinde.valorAbsoluto - vendidoHistorico}}</label>
