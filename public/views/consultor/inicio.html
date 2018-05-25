@@ -104,11 +104,19 @@
 				<div class="card-content">
 					<div class="row">
 						<h1>{{usuario.nome}}</h1>
-						<strong>{{nivelConsultor}}</strong>
+						<div class="medalha">
+							<object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg" type="image/svg+xml"></object>
+							<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg" type="image/svg+xml"></object>
+							<object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
+
+
+						</div>
+						<strong>Consultor {{nivelConsultor}} - {{porcentagem}}</strong>
 					</div>
 					<div class="row" ng-if="maxAbsoluto!=0">
 						<div id="timeline">
 							<p class="progresso">{{(vendidoHistorico + usuario.totalVendido) | currency:'R$'}}</p>
+							<small class="progresso">(total vendido absoluto)</small>
 							<div class="dot accomplished" style="left:{{(vendidoHistorico + usuario.totalVendido)*100/maxAbsoluto}}%">
 								<span></span>
 							</div>
@@ -122,6 +130,7 @@
 					<div class="row" ng-if="maxAbsoluto==0">
 						<div id="timeline">
 							<p class="progresso">{{usuario.totalVendido | currency:'R$'}}</p>
+							<small class="progresso">(total vendido na temporada)</small>
 							<div class="dot accomplished" style="left:{{usuario.totalVendido*100/maxRelativo}}%">
 								<span></span>
 							</div>
@@ -149,12 +158,12 @@
 						</span>
 
 					</div>
-					<!-- <div class="row">
+					<div class="row">
 						<div class="chip left score">
 							<i class="material-icons left">card_giftcard</i>
-							<label>12 Brindes de R$1000</label>
+							<label>{{usuario.brindesEntregues.length}} brindes entregues</label>
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -322,4 +331,15 @@
 	</div>
 </div>
 
-<troca-modal></troca-modal>
+<div id="avancoNivel" class="modal notificacaoBoa">
+	<div class="modal-content  center-align">
+		<h4>Parabéns!</br>A partir de agora você é consultora <strong>{{nivelConsultor}}</strong>.</br>
+			Sua nova comissão é <big>{{porcentagem}}</big>
+		</h4>
+	</div>
+	<div class="modal-footer center-align">
+		<a href="#!" style="float:none;" class="modal-close waves-effect btn">Entendi!</a>
+	</div>
+</div>
+
+<troca-modal></troca-modal> -->
