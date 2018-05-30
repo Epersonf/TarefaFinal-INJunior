@@ -120,7 +120,7 @@
 					<div class="row" ng-if="maxAbsoluto!=0">
 						<div id="timeline">
 							<p class="progresso">{{(vendidoHistorico + usuario.totalVendido) | currency:'R$'}}</p>
-							<small class="progresso">(total vendido absoluto)</small>
+							<small class="progresso">(total vendido acumulado)</small>
 							<div class="dot accomplished" style="left:{{(vendidoHistorico + usuario.totalVendido)*100/maxAbsoluto}}%">
 								<span></span>
 							</div>
@@ -149,7 +149,7 @@
 						<span ng-repeat="cBrinde in usuario.brindesEntregues" ng-if="cBrinde.valorAbsoluto>0">
 							<div class="speech-bubble textoAmarelo" style="left:{{(cBrinde.valorAbsoluto)*90/maxAbsoluto}}%">
 								<i class="material-icons">{{cBrinde.campanha == 'maleta' ? 'business_center' : 'card_giftcard'}}</i>
-								<label>{{cBrinde.valorAbsoluto}}</label>
+								<label>{{cBrinde.valorAbsoluto | currency:'R$'}}</label>
 							</div>
 						</span>
 					</div>
@@ -157,7 +157,7 @@
 						<span ng-repeat="cBrinde in usuario.brindesEntregues" ng-if="(cBrinde.valorAbsoluto - vendidoHistorico) > 0">
 							<div class="speech-bubble textoAmarelo" style="left:{{(cBrinde.valorAbsoluto - vendidoHistorico)*90/maxRelativo}}%">
 								<i class="material-icons">{{cBrinde.campanha == 'maleta' ? 'business_center' : 'card_giftcard'}}</i>
-								<label>{{cBrinde.valorAbsoluto - vendidoHistorico}}</label>
+								<label>{{cBrinde.valorAbsoluto - vendidoHistorico | currency:'R$'}}</label>
 							</div>
 						</span>
 
@@ -165,7 +165,7 @@
 					<div class="row">
 						<div class="chip left score">
 							<i class="material-icons left">card_giftcard</i>
-							<label>{{usuario.brindesEntregues.length}} brindes entregues</label>
+							<label>{{usuario.brindesEntregues.length}} brinde(s) entregue(s)</label>
 						</div>
 					</div>
 				</div>
