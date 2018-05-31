@@ -163,10 +163,22 @@
 
 					</div>
 					<div class="row">
-						<div class="chip left score">
+						<div class="chip left score" ng-show="usuario.brindesMil.length>0">
+							<i class="material-icons left">card_giftcard</i>
+							<label>{{usuario.brindesMil.length}} brinde(s) de R$1000 em vendas</label>
+						</div>
+						<div class="chip left score" ng-show="usuario.brindesMaes.length>0">
+							<i class="material-icons left">card_giftcard</i>
+							<label>{{usuario.brindesMaes.length}} brinde(s) do Dia das Mães</label>
+						</div>
+						<div class="chip left score" ng-show="usuario.brindesNatal.length>0">
+							<i class="material-icons left">card_giftcard</i>
+							<label>{{usuario.brindesNatal.length}} brinde(s) de Natal</label>
+						</div>
+						<!-- <div class="chip left score">
 							<i class="material-icons left">card_giftcard</i>
 							<label>{{usuario.brindesEntregues.length}} brinde(s) entregue(s)</label>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
