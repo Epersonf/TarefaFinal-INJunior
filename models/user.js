@@ -61,6 +61,11 @@ var User = new Schema({
         ref: 'User'
         //required: true
     },
+    indicador: {
+        type: ObjectId,
+        ref: 'User'
+        //required: true
+    },
     porcentagem: {
 		type: Number
 		//required: true,
@@ -78,6 +83,7 @@ var User = new Schema({
     totalVendido: Number,
     tipoTaxa: String,//vista, primeiro, parcelado
     taxa: Number,
+    desconto: Number,
     state: String
 
 }, {
