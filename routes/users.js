@@ -83,6 +83,12 @@ router.get('/consultores/:supervisorId', function(req, res, next) { //por superv
         res.json(user);
     });
 });
+router.get('/consultores/:indicadorId', function(req, res, next) { //por indicador
+    User.find({tipo:"Consultor", indicador:req.params.indicadorId}, function (err, user) {
+          if (err) throw err;
+          res.json(user);
+      });
+  });
 
 
 //todos
