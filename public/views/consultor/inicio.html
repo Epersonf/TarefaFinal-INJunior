@@ -37,7 +37,9 @@
 	<div ng-if="usuario.brindesPendentes[0].campanha==='mil'" class="row" id="brindeMil">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
-					<p><span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span></p>
+				<p>
+					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+				</p>
 				<div class="card-content">
 					<span class="card-title">Parabéns!</span>
 					<p>Você altingiu</p>
@@ -54,7 +56,9 @@
 	<div ng-if="usuario.brindesPendentes[0].campanha==='maleta'" class="row" id="brindeMaleta">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
-					<p><span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span></p>
+				<p>
+					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+				</p>
 				<div class="card-content">
 					<span class="card-title">Parabéns!</span>
 					<p>Você altingiu</p>
@@ -71,7 +75,9 @@
 	<div ng-if="usuario.brindesPendentes[0].campanha==='maes'" class="row" id="brindeNatal">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
-					<p><span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span></p>
+				<p>
+					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+				</p>
 				<div class="card-content">
 					<span class="card-title">Brinde do mês das Mães!</span>
 					<p>Venda com um valor maior que</p>
@@ -88,7 +94,9 @@
 	<div ng-if="usuario.brindesPendentes[0].campanha==='maes5'" class="row" id="brindeNatal">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
-					<p><span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span></p>
+				<p>
+					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+				</p>
 				<div class="card-content">
 					<span class="card-title">Brinde do mês das Mães!</span>
 					<p>Você já etregou</p>
@@ -201,84 +209,84 @@
 	</div>
 	<div class="row" ng-show="encomendasPendentes.length>0">
 		<div class="col s12 m8 offset-m2">
-			<div class="card center-align fundoAmarelo">
+			<div class="card fundoAmarelo">
 				<div class="card-content">
 					<span class="card-title">Personalizados</span>
-					<div class="row">
-						<div class="col s12 m3" ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:filtroStatus as encomendasPendentes">
-							<div class="card center-align z-depth-5">
-								<div class="card-content">
-									<span class="card-title">{{encomenda.detalhes}}
-										<br>
-										<div class="chip tooltipped">
-											{{encomenda.createdAt | date: "d/MM/yy"}} (Data do Pedido)</span>
-									</div>
-									<button class="btn" ng-click="vendaPersonalizado(encomenda)" ng-disabled="encomenda.status!='Enviada'">Entregar</button>
-</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-	<div class="col s12 m8 offset-m2">
-		<div class="card center-align fundoAmarelo">
-			<div class="card-content">
-				<span class="card-title">Vendas</span>
-				<h4></h4>
-				<h1>{{usuario.totalVendido | currency: 'R$'}}</h1>
-				<div class="row">
-					<div class="col s12 m6">
-						<div class="card center-align fundoAmarelo">
-							<div class="card-content">
-								<span class="card-title">Minha parte</span>
-								<h4>{{(valores.minhaParte) | currency: 'R$'}}</h4>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m6">
-						<div class="card center-align fundoAmarelo">
-							<div class="card-content">
-								<span class="card-title">A pagar</span>
-								<h4>{{valores.devido | currency: 'R$'}}</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<h5>Próximo Acerto em {{ faltamDias(usuario.proxAcerto)}} dias!
-					<br> {{usuario.proxAcerto | date: "d/MM/yy"}}
-				</h5>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col s12 m8 offset-m2">
-		<div class="card center-align fundoAmarelo ">
-			<div class="card-content">
-				<span class="card-title">Meu supervisor</span>
-				<table class="responsive-table">
-					<thead>
-						<tr>
-							<th data-field="nome">Nome</th>
-							<th data-field="whatsapp">Whatsapp</th>
-						</tr>
-					</thead>
+					<ul class="collection">
+						<li class="textoPreto collection-item avatar row" ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:filtroStatus as encomendasPendentes">
+							<i class="material-icons circle">star</i>
+							<p>
+								<span class="title strong">{{encomenda.detalhes}}</span>
+								<br>
+								<div class="chip">
+									{{encomenda.createdAt | date: "d/MM/yy"}} (Data do Pedido)
+								</div>
+								<br>
+								<button class="btn" ng-click="vendaPersonalizado(encomenda)" ng-disabled="encomenda.status!='Enviada'">Entregar</button>
 
-					<tbody>
-						<tr>
-							<td>{{supervisor.nome}}</td>
-							<td>{{supervisor.whatsapp}}</td>
-						</tr>
-					</tbody>
-				</table>
+							</p>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+	<div class="row">
+		<div class="col s12 m8 offset-m2">
+			<div class="card center-align fundoAmarelo">
+				<div class="card-content">
+					<span class="card-title">Vendas</span>
+					<h4></h4>
+					<h1>{{usuario.totalVendido | currency: 'R$'}}</h1>
+					<div class="row">
+						<div class="col s12 m6">
+							<div class="card center-align fundoAmarelo">
+								<div class="card-content">
+									<span class="card-title">Minha parte</span>
+									<h4>{{(valores.minhaParte) | currency: 'R$'}}</h4>
+								</div>
+							</div>
+						</div>
+						<div class="col s12 m6">
+							<div class="card center-align fundoAmarelo">
+								<div class="card-content">
+									<span class="card-title">A pagar</span>
+									<h4>{{valores.devido | currency: 'R$'}}</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+					<h5>Próximo Acerto em {{ faltamDias(usuario.proxAcerto)}} dias!
+						<br> {{usuario.proxAcerto | date: "d/MM/yy"}}
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12 m8 offset-m2">
+			<div class="card center-align fundoAmarelo ">
+				<div class="card-content">
+					<span class="card-title">Meu supervisor</span>
+					<table class="responsive-table">
+						<thead>
+							<tr>
+								<th data-field="nome">Nome</th>
+								<th data-field="whatsapp">Whatsapp</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr>
+								<td>{{supervisor.nome}}</td>
+								<td>{{supervisor.whatsapp}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </span>
 
@@ -349,8 +357,10 @@
 
 <div id="avancoNivel" class="modal notificacaoBoa">
 	<div class="modal-content  center-align">
-		<h4>Parabéns!</br>A partir de agora você é consultora <strong>{{nivelConsultor}}</strong>.</br>
-			Sua nova comissão é <big>{{porcentagem}}</big>
+		<h4>Parabéns!</br>A partir de agora você é consultora
+			<strong>{{nivelConsultor}}</strong>.</br>
+			Sua nova comissão é
+			<big>{{porcentagem}}</big>
 		</h4>
 	</div>
 	<div class="modal-footer center-align">

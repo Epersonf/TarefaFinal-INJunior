@@ -83,7 +83,10 @@ var User = new Schema({
     totalVendido: Number,
     tipoTaxa: String,//vista, primeiro, parcelado
     taxa: Number,
-    desconto: Number,
+    desconto:{
+        type: Number,
+        default: 0
+    } ,
     state: String
 
 }, {

@@ -7,6 +7,7 @@
 <body ng-app="ambaya" ng-controller="BaseController" class="fundoPreto">
     <ul id="navegacaoLateral" class="side-nav fundoAmarelo textoPreto" >
         <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
+        <li><a href="" ng-click="sair()" class="textoPreto "hide-on-med-and-down""><i class="material-icons left">exit_to_app</i> Sair</a></li>
     </ul>
     <div class="navbar-fixed">
         <nav class="fundoAmarelo black-text">
@@ -16,7 +17,7 @@
                 <a href="#" class="brand-logo"><img src="img/logo_barra.png" height="100%"></a>
                 <ul id="nav-mobile" class="right" ng-show="logado">
                     <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto hide-on-med-and-down"><i class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
-                    <li><a href="" ng-click="sair()" class="textoPreto"><i class="material-icons left">exit_to_app</i> <span class="hide-on-med-and-down">Sair</span></a></li>
+                    <li><a href="" ng-click="sair()" class="textoPreto hide-on-med-and-down"><i class="material-icons left">exit_to_app</i> Sair</a></li>
                 </ul>
             </div>
         </nav>
@@ -26,7 +27,7 @@
     <footer class="page-footer fundoAmarelo">
         <div class="footer-copyright textoPreto">
             <div class="container">
-            © 2017 Ambaya Semijoias
+            © 2018 Ambaya Semijoias
             <a class="textoPreto right" href="#!">by WebDrops</a>
             </div>
         </div>
@@ -37,6 +38,6 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>-->
-<script src="scripts/main-3096d3922d.js"></script>
+<script src="scripts/main-dff12718b9.js"></script>
 </body>
 </html>
