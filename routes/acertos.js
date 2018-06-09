@@ -30,6 +30,13 @@ router.get('/usuario/:id' ,function (req, res, next) {
     });
 });
 
+router.get('/usuario/:id/total' ,function (req, res, next) {
+    Acerto.find({userId:req.params.id}).count(function (err, acerto) {
+        if (err) throw err;
+        res.json(acerto);
+    });
+});
+
 router.delete('/:id', function (req, res, next) {
      Acerto.remove({_id:req.params.id}, function (err, resp) {
         if (err) throw err;
@@ -49,6 +56,7 @@ router.post('/total' ,function (req, res, next) {
         res.json(resp);
     });
 });
+
 
 
 module.exports = router;
