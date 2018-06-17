@@ -6,15 +6,27 @@
 				<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
 					{{consultor.status}}
 					<i class="right material-icons clicavel" ng-click="desaprovar()" ng-show="consultor.status==='Aprovado'">close</i>
-				</div>
+                </div>
+                <div class="chip">
+                        Total vendido absoluto: {{vendidoHistorico | currency:'R$'}}
+                    </div>
 				<div class="card center-align fundoAmarelo">
-					<div class="card-content">
-					<span class="card-title">Próximo Acerto</span>
-						<h5>{{consultor.proxAcerto | date: "d/MM/yy"}}</h5>		
-						<h5>Faltam {{ faltamDias(consultor.proxAcerto)}} dias</h5>
-						<h5>Valor devido: {{consultor.porcentagem*consultor.totalVendido/100 | currency: 'R$'}}</h5>
-					</div>
-				</div>
+                        <div class="card-content">
+                            <div class="medalha" style="position:relative">
+                                <object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg" type="image/svg+xml"></object>
+                                <object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg" type="image/svg+xml"></object>
+                                <object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
+    
+    
+                            </div>
+                            <br>
+                            <span class="card-title">Próximo Acerto</span>
+                            <h5>{{consultor.proxAcerto | date: "d/MM/yy"}}</h5>
+                            <h5>Faltam {{ faltamDias(consultor.proxAcerto)}} dias</h5>
+                            <h5>Valor devido: {{valores.devido | currency: 'R$'}}</h5>
+                            <h5>Total vendido: {{consultor.totalVendido | currency: 'R$'}}</h5>
+                        </div>
+                    </div>
 				<div class="row center-align" ng-show="consultor.status!=='Aprovado'">
 					<a class="waves-effect waves-light btn" ng-click="aprovar()">Aprovar</a> 
 				</div>
