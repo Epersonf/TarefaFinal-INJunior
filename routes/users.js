@@ -85,16 +85,12 @@ router.get('/consultores/:supervisorId', function (req, res, next) { //por super
     });
 });
 router.get('/consultores/indicados/:indicadorId', function (req, res, next) { //por indicador
-    console.log(req.params.indicadorId);
-    User.find({ tipo: "Consultor", indicador: req.params.indicadorId }, function (err, user) {
+    User.find({indicador:"5b075d8fb85f220cfe24cb02"}).populate({
+        path: 'supervisor',
+        select: 'nome _id'
+    }).exec(function (err, user) {
         if (err) throw err;
-        console.log(user);
         res.json(user);
-        /* Acerto.find({ userId: user._id }).count(function (err, acertos) {
-            if (err) throw err;
-            user.totalAcertos = acertos;
-            res.json(user);
-        }); */
     });
 });
 
