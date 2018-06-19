@@ -40,7 +40,7 @@
                         <input type="text" ng-model="form.cpf" name="cpf" class="cpf" required>
                     </div>
                     <div class="input-field">
-                        <select style="display:block !important; background-color:#ffd44c; border-color:#997500;" ng-model="form.cidade" required>
+                        <!-- <select style="display:block !important; background-color:#ffd44c; border-color:#997500;" ng-model="form.cidade" required>
                             <option value="" disabled selected>Selecione a Cidade</option>
                             <option value="Barbacena">Barbacena</option>
                             <option value="Barroso">Barroso</option>
@@ -58,7 +58,9 @@
                             <option value="Santa Cruz de Minas">Santa Cruz de Minas</option>
                             <option value="São João del Rei">São João del Rei</option>
                             <option value="Senhora dos Remédios">Senhora dos Remédios</option>
-                        </select>
+                        </select> -->
+                        <label for="cidade">Cidade</label>
+                        <input type="text" ng-model="form.cidade" name="cidade" required>
                     </div>
                     <div class="input-field">
                         <label for="endereco">Endereço</label>
