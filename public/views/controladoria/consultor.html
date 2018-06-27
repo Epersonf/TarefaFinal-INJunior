@@ -28,7 +28,7 @@
                         </div>
                     </div>
 				<div class="row center-align" ng-show="consultor.status!=='Aprovado'">
-					<a class="waves-effect waves-light btn" ng-click="aprovar()">Aprovar</a> 
+					<a class="waves-effect waves-light btn" ng-click="indicacao()">Aprovar</a> 
 				</div>
 				<table class="responsive-table white">
 					<thead>
@@ -192,6 +192,34 @@
     </div>
     <div class="modal-footer">
       <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="excluir()">Excluir</a>
+	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
+    </div>
+  </div>
+
+  <div id="indicacao" class="modal">
+    <div class="modal-content">
+      <h4>Indicação</h4>
+      <p>Indicado por alguem?</p>
+      <div class="row">
+        <select style="display:block" ng-model="indicado" class="col m6 s12">
+                <option value="Não">Não</option>
+                <option value="Sim">Sim</option>
+        </select>
+    </div>
+      <div class="row" ng-show="indicado == 'Sim'">
+        <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
+                <option value="" disabled selected>Selecione o supervisor</option>
+                <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{supervisor.nome}} - {{supervisor.cidade}}</option>
+        </select>
+        <select style="display:block" ng-model="indicador" class="col m6 s12" ng-show="consultores.length>0">
+                <option value="" disabled selected>Selecione o consultor</option>
+                <option value="">Nenhum</option>
+                <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome}}</option>
+        </select>
+    </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="aprovar()">Concluir</a>
 	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
     </div>
   </div>

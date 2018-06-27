@@ -85,12 +85,18 @@ router.get('/consultores/:supervisorId', function (req, res, next) { //por super
     });
 });
 router.get('/consultores/indicados/:indicadorId', function (req, res, next) { //por indicador
-    User.find({indicador:"5b075d8fb85f220cfe24cb02"}).populate({
+    User.find({indicador:req.params.indicadorId}).populate({
         path: 'supervisor',
         select: 'nome _id'
-    }).exec(function (err, user) {
+    }).exec(function (err, users) {
         if (err) throw err;
-        res.json(user);
+        res.json(users);
+    });
+});
+router.post('/consultores/maisdesconto', function (req, res, next) { 
+    User.update({ "_id": req.body._id }, {$inc: req.body.inc }, function (err, consultor) {
+        if (err) throw err;
+        res.json(consultor);
     });
 });
 
