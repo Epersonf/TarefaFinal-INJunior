@@ -70,7 +70,7 @@ router.get('/consultores', function (req, res, next) {
     });
 });
 router.get('/consultores/num', function (req, res, next) {
-    User.find({ tipo: "Consultor" }).count(function (err, user) {
+    User.find({ tipo: "Consultor", status: "Aprovado" }).count(function (err, user) {
         if (err) throw err;
         res.json(user);
     });

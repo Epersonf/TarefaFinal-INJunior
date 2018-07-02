@@ -257,6 +257,7 @@
 					<p ng-show="valores.vinte > 0">Valor a 20%: {{valores.vinte | currency: 'R$'}} (20% de {{valores.vinteBase | currency: 'R$'}})</p>
 					<p ng-show="valores.vinteCinco > 0">Valor a 25%: {{valores.vinteCinco | currency: 'R$'}} (25% de {{valores.vinteCincoBase | currency: 'R$'}})</p>
 					<p ng-show="valores.trinta > 0">Valor a 30%: {{valores.trinta | currency: 'R$'}} (30% de {{valores.trintaBase | currency: 'R$'}})</p>
+					<p ng-show="consultor.desconto != 0">Indicações: {{consultor.desconto | currency: 'R$'}}</p>
 					<br>
 					<p>Valor ganho pela consultora: {{valores.minhaParte | currency: 'R$'}}</p>
 					<h5>Total a ser pago: {{valores.devido | currency: 'R$'}}</h5>

@@ -244,6 +244,7 @@
 								<div class="card-content">
 									<span class="card-title">Minha parte</span>
 									<h4>{{(valores.minhaParte) | currency: 'R$'}}</h4>
+									<p ng-show="usuario,.desconto != 0">(Indicação: {{usuario.desconto | currency:'R$'}})</p>
 								</div>
 							</div>
 						</div>
@@ -252,6 +253,7 @@
 								<div class="card-content">
 									<span class="card-title">A pagar</span>
 									<h4>{{valores.devido | currency: 'R$'}}</h4>
+									<br ng-show="usuario,.desconto != 0">
 								</div>
 							</div>
 						</div>
