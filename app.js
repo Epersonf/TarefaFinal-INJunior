@@ -97,9 +97,7 @@ var port = 3030;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-    // we're connected!
     console.log("Connected correctly to server");
-	//app.listen(port, hostname, function(){
   app.listen(process.env.PORT || 8080, function(){
 		console.log(`Server running at port 8080`);
 	});
