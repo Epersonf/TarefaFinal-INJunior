@@ -84,7 +84,7 @@
 				<input placeholder="Quantidade" type="number" min="1" ng-model="form.quantidade" name="quantidade" required>
 			</div>
 			<div class="input-field" ng-show="form.item==='Personalizada'">
-				<select ng-model="form.consultor" ng-options="consultor.nome for consultor in consultores">
+				<select ng-model="form.consultor" ng-options="consultor.nome + ' ' + consultor.sobrenome for consultor in consultores">
 					<option value=""  selected>Selecione o consultor</option>
 				</select>
 			</div>
