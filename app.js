@@ -7,11 +7,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
 var config = require('./config')
-
 var Verify = require('./routes/verify');
-
 var login = require('./routes/login');
 var users = require('./routes/users');
 var historico = require('./routes/historico');
@@ -22,12 +19,14 @@ var trocas = require('./routes/trocas');
 var logs = require('./routes/logs');
 var api = require('./routes/api');
 var kits = require('./routes/kits');
+var secure = require('express-force-https');
 
 var app = express();
 
+
 mongoose.connect(config.mongoUrl);
 var db = mongoose.connection;
-
+app.use(secure);
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger('dev'));
 app.use(bodyParser.json());

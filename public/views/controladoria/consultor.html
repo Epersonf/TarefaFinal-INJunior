@@ -55,12 +55,28 @@
 				</table>
 			</div>
 		</div>
-	</div>
-	<div class="fixed-action-btn botaoAlto">
-		<a class="btn-floating btn-large botaoAmarelo tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="del()">
-			<i class="large material-icons red">delete_sweep</i>
+    </div>
+    <div class="fixed-action-btn horizontal click-to-toggle botaoAlto">
+		<a class="btn-floating btn-large botaoAmarelo">
+			<i class="material-icons">menu</i>
 		</a>
-  </div>
+		<ul>
+			<li>
+				<a class="btn-floating fundoBranco tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="del()">
+					<i class="large material-icons textoVermelho">delete_sweep</i>
+				</a>
+				<li>
+					<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Editar" ng-click="modalEditar()">
+						<i class="material-icons textoAmarelo">create</i>
+					</a>
+				</li>
+				<li>
+					<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Recuperar Senha" ng-click="recoverPassword()">
+						<i class="material-icons textoAmarelo">autorenew</i>
+					</a>
+				</li>
+		</ul>
+	</div>
 </div>
 <div class="row">
 	<div class="col s12 m12">
@@ -220,6 +236,22 @@
     </div>
     <div class="modal-footer">
       <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="aprovar()">Concluir</a>
+	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
+    </div>
+  </div>
+
+
+
+  <div id="editar" class="modal">
+    <div class="modal-content">
+      <h4>Editar</h4>
+        <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
+                <option value="" disabled ng-selected="!selectedSupervisor" Selecione o supervisor</option>
+                <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}" ng-selected="consultor.supervisor == selectedSupervisor">{{supervisor.nome}} - {{supervisor.cidade}}</option>
+        </select>
+    </div>
+    <div class="modal-footer">
+      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="salvar()">Concluir</a>
 	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
     </div>
   </div>

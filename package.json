@@ -10,6 +10,8 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "^4.13.4",
+    "express-force-https": "^1.0.0",
+    "express-force-ssl": "^0.3.2",
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.5.9",
     "mongoose-currency": "^0.2.0",
