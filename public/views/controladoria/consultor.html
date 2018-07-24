@@ -230,7 +230,7 @@
         <select style="display:block" ng-model="indicador" class="col m6 s12" ng-show="consultores.length>0">
                 <option value="" disabled selected>Selecione o consultor</option>
                 <option value="">Nenhum</option>
-                <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome}}</option>
+                <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome + " " + consultor.sobrenome}}</option>
         </select>
     </div>
     </div>
@@ -246,8 +246,8 @@
     <div class="modal-content">
       <h4>Editar</h4>
         <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
-                <option value="" disabled ng-selected="!selectedSupervisor" Selecione o supervisor</option>
-                <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}" ng-selected="consultor.supervisor == selectedSupervisor">{{supervisor.nome}} - {{supervisor.cidade}}</option>
+                <option value="" disabled ng-selected="!selectedSupervisor">Selecione o supervisor</option>
+                <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}" ng-selected="consultor.supervisor == selectedSupervisor">{{supervisor.nome + " " + supervisor.sobrenome}} - {{supervisor.cidade}}</option>
         </select>
     </div>
     <div class="modal-footer">
