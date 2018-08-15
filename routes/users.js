@@ -11,17 +11,17 @@ var Verify = require('./verify');
 router.get('/', function (req, res, next) {
     User.find({}, function (err, user) {
         User.register(new User({
-            "username": "controlador",
+            "username": "estoque",
             "password": "webdrops",
             "status": "Ativo",
-            "nome": "Controlador",
+            "nome": "Estoque",
             "sobrenome": "WebDrops",
             "whatsapp": "(32)98866-2823",
             "cpf": "000000000",
             "cidade": "Barbacena",
             "endereco": "-",
             "cep": "-",
-            "tipo": "Controladoria",
+            "tipo": "Estoque",
             "sexo": "masculino",
             "estoque": [],
             "vendas": []
