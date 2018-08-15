@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
                 "estoque": [],
                 "vendas": []
             }
-        ));
+        ), webdrops);
         if (err) throw err;
         res.json(user);
     });
