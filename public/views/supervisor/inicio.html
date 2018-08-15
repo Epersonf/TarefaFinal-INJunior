@@ -8,16 +8,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="col s12 m6">
-		<div class="card small center-align fundoAmarelo">
-			<div class="card-content">
-			<span class="card-title">Próximo Acerto</span>
-				<h1>{{usuario.proxAcerto | date: "d/MM/yy"}}</h1>		
-				<h5>Faltam {{faltamDias(usuario.proxAcerto)}} dias</h5>
-				<h5>Valor devido: {{usuario.totalVendido*(100 - usuario.porcentagem - 30)/100 | currency: 'R$'}}</h5>
-			</div>
-		</div>
-	</div>
 </div>
 <div class="row center-align"><a class="waves-effect waves-light btn" ui-sref="Estoque">Ver Estoque</a> <a class="waves-effect waves-light btn" ui-sref="Consultores">Ver Consultores</a></div>
 <div class="row">
