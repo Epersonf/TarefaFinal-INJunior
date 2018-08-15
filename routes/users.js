@@ -2,19 +2,20 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var User = require('../models/user');
+var Acerto = require('../models/acerto');
 var PecaLog = require('../models/pecalog');
+var Verify = require('./verify');
 
 
 /* GET users listing. */
-/* router.get('/', function (req, res, next) {
+router.get('/', function (req, res, next) {
     User.find({}, function (err, user) {
         if (err) throw err;
         res.json(user);
     });
-}); */
+});
 
 router.post('/register', function (req, res) {
-    console.log(req.body);
     User.register(new User(req.body),
         req.body.password, function (err, user) {
             if (err) {
@@ -29,12 +30,12 @@ router.post('/register', function (req, res) {
         });
 });
 
-/* router.get('/logout', function (req, res) {
+router.get('/logout', function (req, res) {
     req.logout();
     res.status(200).json({
         status: 'Até mais!'
     });
-}); */
+});
 
 /*router.delete('/', function (req, res, next) {
      User.remove({}, function (err, resp) {
@@ -43,7 +44,7 @@ router.post('/register', function (req, res) {
     });
 });*/
 
-/* 
+
 //supervisores
 router.get('/supervisores', function (req, res, next) {
     User.find({ tipo: "Supervisor" }, function (err, user) {
@@ -180,6 +181,6 @@ router.post('/estorno', function (req, res, next) {
             res.json("Estorno efetivado");
         });
     });
-}); */
+});
 
 module.exports = router;
