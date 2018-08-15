@@ -10,26 +10,33 @@ var Verify = require('./verify');
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     User.find({}, function (err, user) {
-        User.register(new User(
-            {
-                "username": "controlador",
-                "password": "webdrops",
-                "status": "Ativo",
-                "nome": "Controlador",
-                "sobrenome": "WebDrops",
-                "whatsapp": "(32)98866-2823",
-                "cpf": "000000000",
-                "cidade": "Barbacena",
-                "endereco": "-",
-                "cep": "-",
-                "tipo": "Controladoria",
-                "sexo": "masculino",
-                "estoque": [],
-                "vendas": []
+        User.register(new User({
+            "username": "controlador",
+            "password": "webdrops",
+            "status": "Ativo",
+            "nome": "Controlador",
+            "sobrenome": "WebDrops",
+            "whatsapp": "(32)98866-2823",
+            "cpf": "000000000",
+            "cidade": "Barbacena",
+            "endereco": "-",
+            "cep": "-",
+            "tipo": "Controladoria",
+            "sexo": "masculino",
+            "estoque": [],
+            "vendas": []
+        }),
+        "webdrops", function (err, user) {
+            if (err) {
+                return res.status(500).json({ err: err });
             }
-        ), webdrops);
-        if (err) throw err;
-        res.json(user);
+            //console.log(user);
+            //criacaoo de configuracoes de consultor e supervisor
+
+            passport.authenticate('local')(req, res, function () {
+                return res.status(200).json({ status: 'Usuário registrado', id: user._id });
+            });
+        });
     });
 });
 
