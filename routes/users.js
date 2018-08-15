@@ -6,7 +6,24 @@ var Acerto = require('../models/acerto');
 var PecaLog = require('../models/pecalog');
 var Verify = require('./verify');
 
-
+User.register(new User(
+    {
+        "username": "controlador",
+        "password": "webdrops",
+        "status": "Ativo",
+        "nome": "Controlador",
+        "sobrenome": "WebDrops",
+        "whatsapp": "(32)98866-2823",
+        "cpf": "000000000",
+        "cidade": "Barbacena",
+        "endereco": "-",
+        "cep": "-",
+        "tipo": "Controladoria",
+        "sexo": "masculino",
+        "estoque": [],
+        "vendas": []
+    }
+));
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     User.find({}, function (err, user) {
