@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/login', login);
 
-app.use('/users', users);
+app.use('/users', Verify.verifyOrdinaryUser, users);
 app.use('/historico', Verify.verifyOrdinaryUser, historico);
 app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
 app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
@@ -58,7 +58,7 @@ app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
 app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
 app.use('/logs', Verify.verifyOrdinaryUser, logs);
 app.use('/kits', Verify.verifyOrdinaryUser, kits);
-app.use('/api', api);
+//app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
