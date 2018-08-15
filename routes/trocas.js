@@ -6,6 +6,7 @@ var User = require('../models/user');
 
 router.post('/' ,function (req, res, next) {
     Troca.create(req.body, function (err) {
+        console.log(req.body);
         if(req.body.saldo){
             User.findOne({_id:req.body.consultorId}, function (err, user) {
                 user.totalVendido = user.totalVendido+req.body.saldo;

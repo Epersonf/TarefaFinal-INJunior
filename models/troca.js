@@ -27,7 +27,8 @@ var trocaSchema = new Schema({
     },
     saldo: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     obs: String
 }, {
