@@ -2,9 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var User = require('../models/user');
-var Acerto = require('../models/acerto');
 var PecaLog = require('../models/pecalog');
-var Verify = require('./verify');
 
 
 /* GET users listing. */
@@ -16,6 +14,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/register', function (req, res) {
+    console.log(req.body);
     User.register(new User(req.body),
         req.body.password, function (err, user) {
             if (err) {
