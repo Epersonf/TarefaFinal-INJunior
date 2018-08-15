@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/login', login);
 
-app.use('/users', Verify.verifyOrdinaryUser, users);
+app.use('/users', users);
 app.use('/historico', Verify.verifyOrdinaryUser, historico);
 app.use('/encomendas', Verify.verifyOrdinaryUser, encomendas);
 app.use('/acertos', Verify.verifyOrdinaryUser, acertos);
