@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Minha Ambaya</title>
-<link rel="stylesheet" href="styles/main-975ac57043.css"/>
+<link rel="stylesheet" href="styles/main-4fed97c7aa.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body ng-app="ambaya" ng-controller="BaseController" class="fundoPreto">
@@ -12,7 +12,7 @@
     <div class="navbar-fixed">
         <nav class="fundoAmarelo black-text">
             <div class="nav-wrapper">
-                <a href="#" ng-hide="$state.is('Início')" class="textoPreto left" onclick="history.back()" style="padding-right: 20px;"> <i class="material-icons">arrow_back</i> </a>
+                <a href="#" ng-class="$state.is('Início') ? 'invisible' : ''" class="textoPreto left" onclick="history.back()" style="padding-right: 20px;"> <i class="material-icons">arrow_back</i> </a>
                 <a href="#" ng-show="logado" class="button-collapse textoPreto right" data-activates="navegacaoLateral"><i class="material-icons">menu</i></a>
                 <a href="#" class="brand-logo"><img src="img/logo_barra.png" height="100%"></a>
                 <ul id="nav-mobile" class="right" ng-show="logado">
@@ -38,6 +38,6 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>-->
-<script src="scripts/main-b2722369b4.js"></script>
+<script src="scripts/main-456e8a4d54.js"></script>
 </body>
 </html>
