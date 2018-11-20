@@ -19,10 +19,21 @@ var trocas = require('./routes/trocas');
 var logs = require('./routes/logs');
 var api = require('./routes/api');
 var kits = require('./routes/kits');
+var notification = require('./routes/v1/notification');
 var secure = require('express-force-https');
+
 
 var app = express();
 
+var server = require('http').Server(app);
+
+
+var io = require('socket.io')(server);
+
+io.on('connection', socket => {
+  socket.join(socket.handshake.query.user);
+  console.log('user conected');
+});
 
 mongoose.connect(config.mongoUrl);
 var db = mongoose.connection;
@@ -58,7 +69,24 @@ app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
 app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
 app.use('/logs', Verify.verifyOrdinaryUser, logs);
 app.use('/kits', Verify.verifyOrdinaryUser, kits);
+app.use('/v1/notification', notification);
 //app.use('/api', api);
+
+//captando notificações para broadcast e adição no usuário
+app.post('/v1/notification', async (req, res) => {
+  let notification = req.notification;
+  io.sockets.to(notification.to).emit('notification', notification);
+  try{
+    let user = await User.findById(notification.to);
+  user.notificacoes.push(notification._id);
+  user.save();
+  }
+  catch(e){
+    console.log(e);
+  }
+  
+  res.status(200).json(notification);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -91,13 +119,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var hostname = '0.0.0.0';
-var port = 3030;
-
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log("Connected correctly to server");
-  app.listen(process.env.PORT || 8080, function(){
+  server.listen(process.env.PORT || 80, function(){
 		console.log(`Server running at port 8080`);
 	});
 });

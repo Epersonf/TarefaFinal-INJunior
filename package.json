@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "start:dev": "nodemon app"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -23,9 +24,11 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.0.0",
     "serve-favicon": "~2.3.0",
+    "socket.io": "^2.1.1",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "gulp-exec": "^3.0.1"
+    "gulp-exec": "^3.0.1",
+    "nodemon": "^1.18.6"
   }
 }

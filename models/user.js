@@ -87,7 +87,12 @@ var User = new Schema({
         type: Number,
         default: 0
     } ,
-    state: String
+    state: String,
+    notificacoes: {
+        type: [ObjectId], 
+        ref: 'Notification',
+        default: []
+    }
 
 }, {
     timestamps: true
