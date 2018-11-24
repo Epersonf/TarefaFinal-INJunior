@@ -21,6 +21,7 @@ var api = require('./routes/api');
 var kits = require('./routes/kits');
 var notification = require('./routes/v1/notification');
 var secure = require('express-force-https');
+var Notification = require('./models/notification');
 
 
 var app = express();
@@ -30,9 +31,21 @@ var server = require('http').Server(app);
 
 var io = require('socket.io')(server);
 
-io.on('connection', socket => {
-  socket.join(socket.handshake.query.user);
-  console.log('user conected');
+var user;
+
+io.on('connection', async socket => {
+  let userId = socket.handshake.query.user;
+  user = await User.findById(userId);
+  if(!user){
+    console.log('no user,', socket.handshake.query);
+    socket.send('User invalid');
+    return;
+  }
+  let notifications = await Notification.find({status: 'Pending', to:userId}).exec();
+  socket.emit('notifications', notifications);
+  socket.join(userId);
+  console.log('user conected => ', user.nome);
+  console.log('id: ', user._id);
 });
 
 mongoose.connect(config.mongoUrl);
@@ -75,11 +88,10 @@ app.use('/v1/notification', notification);
 //captando notificações para broadcast e adição no usuário
 app.post('/v1/notification', async (req, res) => {
   let notification = req.notification;
-  io.sockets.to(notification.to).emit('notification', notification);
+  console.log('notification sent to ', notification.to);
+  io.sockets.to(notification.to).emit('notifications', [notification]);
   try{
-    let user = await User.findById(notification.to);
-  user.notificacoes.push(notification._id);
-  user.save();
+    await User.updateOne({'_id': notification.to}, {$set: {notificacoes: notification._id}});
   }
   catch(e){
     console.log(e);

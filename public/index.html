@@ -2,7 +2,7 @@
 
 <head>
     <title>Minha Ambaya</title>
-    <link rel="stylesheet" href="styles/main-4fed97c7aa.css"/>
+    <link rel="stylesheet" href="styles/main-3f350382af.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
@@ -10,7 +10,7 @@
     <ul id="navegacaoLateral" class="side-nav fundoAmarelo textoPreto">
         <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i class="material-icons left">{{link.icone}}</i>
                 {{link.nome}}</a></li>
-        <li><a href="" ng-click="sair()" class="textoPreto " hide-on-med-and-down""><i class="material-icons left">exit_to_app</i>
+        <li><a href="" ng-click="sair()" class="textoPreto " hide-on-med-and-down><i class="material-icons left">exit_to_app</i>
                 Sair</a></li>
     </ul>
     <div class="navbar-fixed">
@@ -22,7 +22,6 @@
                         class="material-icons">menu</i></a>
                 <a href="#" class="brand-logo"><img src="img/logo_barra.png" height="100%"></a>
                 <ul id="nav-mobile" class="right" ng-show="logado">
-                    <li><a class="dropdown-button textoPreto" href="#!" data-activates="notificacoes"><i class="material-icons left">notifications</i> <span class="new badge" data-badge-caption="novas">4</span></a></li>
                     <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto hide-on-med-and-down"><i
                                 class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
                     <li><a href="" ng-click="sair()" class="textoPreto hide-on-med-and-down"><i class="material-icons left">exit_to_app</i>
@@ -31,12 +30,6 @@
             </div>
         </nav>
     </div>
-    <ul id="notificacoes" class="dropdown-content">
-        <li><a href="#!">one</a></li>
-        <li><a href="#!">two</a></li>
-        <li class="divider"></li>
-        <li><a href="#!">three</a></li>
-    </ul>
     <main ui-view="{{tipo}}">
     </main>
     <footer class="page-footer fundoAmarelo">
@@ -53,7 +46,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>-->
-    <script src="scripts/main-150c1b3607.js"></script>
+    <script src="scripts/main-43dea6a7d8.js"></script>
 </body>
 
 </html>

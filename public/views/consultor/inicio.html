@@ -1,6 +1,6 @@
 <div class="fixed-action-btn venda">
-	<a ng-click="modalVenda()" class="btn-floating btn-large fundoBranco waves-effect waves-light tooltipped " data-position="left"
-	 data-delay="100" data-tooltip="Vender!">
+	<a ng-click="modalVenda()" class="btn-floating btn-large fundoBranco waves-effect waves-light tooltipped "
+	 data-position="left" data-delay="100" data-tooltip="Vender!">
 		<i class="large material-icons textoAmarelo">attach_money</i>
 	</a>
 </div>
@@ -115,10 +115,15 @@
 			<div class="card center-align fundoAmarelo">
 				<div class="card-content">
 					<div class="row">
+						<a class="activator clicavel notification">
+							<i class="material-icons right" title="Notificações()">notifications</i>
+							<span ng-if="notifications.length!=0" class="badge">{{notifications.length}}</span>
+						</a>
 						<h1>{{usuario.nome}}</h1>
 						<div class="medalha">
 							<object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg" type="image/svg+xml"></object>
-							<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg" type="image/svg+xml"></object>
+							<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg"
+							 type="image/svg+xml"></object>
 							<object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
 
 
@@ -188,6 +193,19 @@
 							<label>{{usuario.brindesEntregues.length}} brinde(s) entregue(s)</label>
 						</div> -->
 					</div>
+				</div>
+				<div class="card-reveal notifications">
+					<span class="card-title grey-text text-darken-4">Notificações({{notifications.length}})<i class="material-icons right">close</i></span>
+					<ul class="collection">
+						<li class="collection-item avatar" ng-repeat="notification in notifications | orderBy: 'createdAt':true track by notification._id">
+							<i class="material-icons circle">folder</i>
+							<span class="title">Tipo de notificação: {{notification.type}}<span class='bagde'></span></span>
+							<p>This is a simple notification.</p>
+							<p>{{notification.content.toString()}}</p>
+							<p>{{notification.createdAt}}</p>
+							<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -346,8 +364,8 @@
 					<option value="PN023">Pingente de R$23,00</option>
 					<option value="PN027">Pingente de R$27,00</option>
 				</select>
-				<input ng-show="tipoBrinde == 'mil'" placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde" style="text-transform:uppercase"
-				 pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
+				<input ng-show="tipoBrinde == 'mil'" placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde"
+				 style="text-transform:uppercase" pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
 				<br>
 				<button type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo">
 					<i class="material-icons">card_giftcard</i>
