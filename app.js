@@ -21,7 +21,7 @@ var api = require('./routes/api');
 var kits = require('./routes/kits');
 var notification = require('./routes/v1/notification');
 var secure = require('express-force-https');
-var Notification = require('./models/notification');
+var NotificationHelper = require('./helpers/notification.helper');
 
 
 var app = express();
@@ -41,9 +41,15 @@ io.on('connection', async socket => {
     socket.send('User invalid');
     return;
   }
-  let notifications = await Notification.find({status: 'Pending', to:userId}).exec();
-  socket.emit('notifications', notifications);
+  let notifications = await NotificationHelper.getAutomaticNotifications(user);
+  console.log(notifications.length)
   socket.join(userId);
+  if(user.tipo=="Estoque"){
+    socket.join('estoque');
+    let newKits = await NotificationHelper.getEstoqueAutomaticNotifications(user)
+    notifications = [...newKits, ...notifications];
+  }
+  socket.emit('notificationsInit', notifications);
   console.log('user conected => ', user.nome);
   console.log('id: ', user._id);
 });
@@ -83,7 +89,7 @@ app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
 app.use('/logs', Verify.verifyOrdinaryUser, logs);
 app.use('/kits', Verify.verifyOrdinaryUser, kits);
 app.use('/v1/notification', notification);
-//app.use('/api', api);
+app.use('/api', api);
 
 //captando notificações para broadcast e adição no usuário
 app.post('/v1/notification', async (req, res) => {

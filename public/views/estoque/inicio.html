@@ -3,11 +3,17 @@
         <div class="col s12 m6 offset-m3">
             <div class="card center-align fundoAmarelo">
                 <div class="card-content">
-                    <span class="card-title">Encomendas</span>
-                    <h1>{{encomendas}}</h1>                    
-                </div>
-                <div class=card-action>
-                    <a class="waves-effect waves-light btn" ui-sref="Encomendas">Ver Todas</a>
+                    <span class="card-title grey-text text-darken-4">Notificações({{notifications.length}})</span>
+					<ul class="collection">
+						<a ui-sref="Kits({consultorId: '{{notification.userId}}', supervisorId: '{{notification.userSupervisor}}'})" ng-if="notifications.length>0" class="collection-item avatar dismissable" ng-repeat="notification in notifications track by notification.userId" ng-if="notification.type=='NewKit'" ng-click="dismissNotification($index)">
+							<i class="material-icons circle">work</i>
+							<span class="title">Kit para ser montado</span>
+							<p>Você deve montar um kit para <b>{{notification.userName}}</b></p>
+                        </a>
+                        <li ng-if="notifications.length==0" class="collection-item">
+                            Você não tem novas notificações!
+                        </li>
+					</ul>                   
                 </div>
             </div>
         </div>

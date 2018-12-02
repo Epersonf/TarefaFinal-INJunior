@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app",
-    "start:dev": "nodemon app"
+    "start:dev": "node app"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
