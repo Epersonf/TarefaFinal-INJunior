@@ -9,7 +9,9 @@ router.route('/')
         try{
             let newNotification = await Notification.create(notification); 
             req.notification = newNotification;
+            console.log('API: ', notification);
             next(); 
+            //res.status(200).json(notification);
         } 
         catch (error) {
             res.status(404).json({error});
@@ -49,7 +51,6 @@ router.route('/')
         if (id) {
             try{
                 let remove = await Notification.deleteOne({'_id': id});
-                console.log('delete');
                 res.json(remove);
             }
             catch(error){

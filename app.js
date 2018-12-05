@@ -19,17 +19,15 @@ var trocas = require('./routes/trocas');
 var logs = require('./routes/logs');
 var api = require('./routes/api');
 var kits = require('./routes/kits');
-var notification = require('./routes/v1/notification');
+var v1 = require('./routes/v1/');
 var secure = require('express-force-https');
 var NotificationHelper = require('./helpers/notification.helper');
 
+var connection = require('./connection');
 
-var app = express();
-
-var server = require('http').Server(app);
-
-
-var io = require('socket.io')(server);
+var app = connection.app;
+var io = connection.io;
+var server = connection.server;
 
 var user;
 
@@ -37,12 +35,10 @@ io.on('connection', async socket => {
   let userId = socket.handshake.query.user;
   user = await User.findById(userId);
   if(!user){
-    console.log('no user,', socket.handshake.query);
     socket.send('User invalid');
     return;
   }
   let notifications = await NotificationHelper.getAutomaticNotifications(user);
-  console.log(notifications.length)
   socket.join(userId);
   if(user.tipo=="Estoque"){
     socket.join('estoque');
@@ -88,23 +84,11 @@ app.use('/brindes', Verify.verifyOrdinaryUser, brindes);
 app.use('/trocas', Verify.verifyOrdinaryUser, trocas);
 app.use('/logs', Verify.verifyOrdinaryUser, logs);
 app.use('/kits', Verify.verifyOrdinaryUser, kits);
-app.use('/v1/notification', notification);
+app.use('/v1', v1);
 app.use('/api', api);
 
 //captando notificações para broadcast e adição no usuário
-app.post('/v1/notification', async (req, res) => {
-  let notification = req.notification;
-  console.log('notification sent to ', notification.to);
-  io.sockets.to(notification.to).emit('notifications', [notification]);
-  try{
-    await User.updateOne({'_id': notification.to}, {$set: {notificacoes: notification._id}});
-  }
-  catch(e){
-    console.log(e);
-  }
-  
-  res.status(200).json(notification);
-});
+app.use(NotificationHelper.notifyUser);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
