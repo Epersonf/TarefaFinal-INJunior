@@ -1,15 +1,17 @@
 var express = require('express');
 var router = express.Router();
-var Notification = require('../../models/notification');
+var Gift = require('../../models/brinde');
 
 router.route('/')
     //create
     .post(async (req, res, next) => {
-        let notification = req.body;
+        let gift = req.body;
         try{
-            let newNotification = await Notification.create(notification); 
-            req.notification = newNotification;
-            next(); 
+            let newGift = await Gift.create(gift); 
+            /* req.gift = newGift;
+            console.log('API: ', gift);
+            next();  */
+            res.status(200).json(newGift);
         } 
         catch (error) {
             res.status(404).json({error});
@@ -19,21 +21,21 @@ router.route('/')
     .get(async (req, res) => {
         let { id } = req.query;
         if (id) {
-            let notification = await Notification.findById(id);
-            res.json(notification);
+            let gift = await Gift.findById(id);
+            res.json(gift);
         } else {
-            let notifications = await Notification.find({}).exec();
-            res.json(notifications);
+            let gifts = await Gift.find({}).exec();
+            res.json(gifts);
         }
     })
     //update
     .put(async (req, res) => {
         let { id } = req.query;
-        let notification = req.body;
+        let gift = req.body;
         if (id) {
             try{
-                let newNotification = await Notification.updateOne({'_id': id}, {'$set': notification});
-                res.json(newNotification);
+                let newGift = await Gift.updateOne({'_id': id}, {'$set': gift});
+                res.json(newGift);
             }
             catch(error){
                 res.status(404).json({error});
@@ -48,7 +50,7 @@ router.route('/')
         let { id } = req.query;
         if (id) {
             try{
-                let remove = await Notification.deleteOne({'_id': id});
+                let remove = await Gift.deleteOne({'_id': id});
                 res.json(remove);
             }
             catch(error){
