@@ -19,12 +19,12 @@ router.route('/')
     })
     //retrieve
     .get(async (req, res) => {
-        let { id } = req.query;
+        let { id, ...otherParams } = req.query;
         if (id) {
             let payment = await Payment.findById(id);
             res.json(payment);
         } else {
-            let payments = await Payment.find({}).exec();
+            let payments = await Payment.find(otherParams).exec();
             res.json(payments);
         }
     })

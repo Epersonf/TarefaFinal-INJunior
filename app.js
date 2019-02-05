@@ -22,6 +22,7 @@ var kits = require('./routes/kits');
 var v1 = require('./routes/v1/');
 var secure = require('express-force-https');
 var NotificationHelper = require('./helpers/notification.helper');
+var cors = require('cors')
 
 var connection = require('./connection');
 
@@ -66,11 +67,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(function(req, res, next) {
+/* app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-});
+}); */
+
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
