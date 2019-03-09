@@ -22,7 +22,7 @@ var kits = require('./routes/kits');
 var v1 = require('./routes/v1/');
 var secure = require('express-force-https');
 var NotificationHelper = require('./helpers/notification.helper');
-var cors = require('cors')
+var cors = require('cors');
 
 var connection = require('./connection');
 
@@ -124,10 +124,11 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-  server.listen(process.env.PORT || 8080, function(){
-		console.log(`Server running at port 8080`);
+  server.listen(config.PORT, function(){
+		console.log(`Server running at port ${config.PORT}`);
 	});
 });
 
