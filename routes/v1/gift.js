@@ -54,7 +54,7 @@ router.route('/')
                 res.json(remove);
             }
             catch(error){
-                console.log('error');
+                //console.log('error');
                 res.status(404).json(error);
             }
             

@@ -6,25 +6,38 @@ router.route('/')
     //create
     .post(async (req, res, next) => {
         let order = req.body;
-        try{
-            let newOrder = await Order.create(order); 
+        try {
+            let newOrder = await Order.create(order);
             /* req.order = newOrder;
             console.log('API: ', order);
             next();  */
             res.status(200).json(newOrder);
-        } 
+        }
         catch (error) {
-            res.status(404).json({error});
-        }        
+            res.status(404).json({ error });
+        }
     })
     //retrieve
     .get(async (req, res) => {
-        let { id } = req.query;
+        let { id, sort, skip, limit, ...otherParams } = req.query;
         if (id) {
             let order = await Order.findById(id);
             res.json(order);
         } else {
-            let orders = await Order.find({}).exec();
+            let query = Order.find(otherParams)
+                .populate(
+                    { 'path': 'donoId', 
+                    'select': '_id nome sobrenome whatsapp endereco cidade cep cpf' });
+            sort ?
+                query = query.sort(sort) :
+                null;
+            limit ?
+                query = query.limit(Number(limit)) :
+                null;
+            skip ?
+                query = query.limit(Number(skip)) :
+                null
+            let orders = await query.exec();
             res.json(orders);
         }
     })
@@ -33,14 +46,14 @@ router.route('/')
         let { id } = req.query;
         let order = req.body;
         if (id) {
-            try{
-                let newOrder = await Order.updateOne({'_id': id}, {'$set': order});
+            try {
+                let newOrder = await Order.updateOne({ '_id': id }, { '$set': order });
                 res.json(newOrder);
             }
-            catch(error){
-                res.status(404).json({error});
+            catch (error) {
+                res.status(404).json({ error });
             }
-            
+
         } else {
             res.status(400).json({ error: 'Missing ID' });
         }
@@ -49,15 +62,15 @@ router.route('/')
     .delete(async (req, res) => {
         let { id } = req.query;
         if (id) {
-            try{
-                let remove = await Order.deleteOne({'_id': id});
+            try {
+                let remove = await Order.deleteOne({ '_id': id });
                 res.json(remove);
             }
-            catch(error){
+            catch (error) {
                 console.log('error');
                 res.status(404).json(error);
             }
-            
+
         } else {
             res.status(400).json({ error: 'Missing ID' });
         }

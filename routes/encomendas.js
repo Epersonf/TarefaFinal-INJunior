@@ -9,11 +9,13 @@ router.post('/' ,function (req, res, next) {
         res.json("Encomenda realizada!");
     });
 });
-router.get('/' ,function (req, res, next) {
-    Encomenda.find({}, function (err, encomenda) {
+router.get('/' , async function (req, res, next) {
+    /* Encomenda.find({}, function (err, encomenda) {
         if (err) throw err;
         res.json(encomenda);
-    });
+    }); */
+    let orders = await Encomenda.find({}).populate({'path':'donoId', 'select':'_id nome sobrenome whatsapp endereco cidade cep cpf'}).exec();
+            res.json(orders);
 });
 
 router.get('/supervisor/:id' ,function (req, res, next) {

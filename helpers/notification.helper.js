@@ -71,13 +71,13 @@ const notifyUser = async (req, res, next) => {
         next();
     }
 
-    console.log('notification sent to ', notification.to);
+    //console.log('notification sent to ', notification.to);
     io.sockets.to(notification.to).emit('notification', notification);
     try{
       await User.updateOne({'_id': notification.to}, {$set: {notificacoes: notification._id}});
     }
     catch(e){
-      console.log(e);
+      //console.log(e);
     }
     
     res.status(200).json(notification);

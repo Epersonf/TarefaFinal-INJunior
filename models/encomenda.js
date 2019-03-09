@@ -7,24 +7,34 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var encomendaSchema = new Schema({
 	item: {
 		type: String,		
-        required: true
+        required: false
 	},
     status: {
         type: String,
         required: true,
         default: "Pendente"
     },
+    tipo: {
+        type: String,
+        required: true,
+        default: "simples" // simples, enxoval, catalogo
+    },
 	quantidade: {
 		type: Number,
-		required: true
+		required: false
 	},
 	donoNome:{
         type: String,
-        required: true
+        required: false
     },
     donoId:{ 
         type: ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
+    },
+    pagamento:{
+        type: ObjectId,
+        ref: 'Acerto'
     },
     consultorNome: String,
     consultorId: ObjectId,

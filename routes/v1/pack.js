@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var Exchange = require('../../models/troca');
+var Pack = require('../../models/pack');
 
 router.route('/')
     //create
     .post(async (req, res, next) => {
-        let exchange = req.body;
+        let pack = req.body;
         try{
-            let newExchange = await Exchange.create(exchange); 
-            /* req.exchange = newExchange;
+            let newPack = await Pack.create(pack); 
+            /* req.pack = newPack;
             next(); */ 
-            res.status(200).json(newExchange);
+            res.status(200).json(newPack);
         } 
         catch (error) {
             res.status(404).json({error});
@@ -18,23 +18,23 @@ router.route('/')
     })
     //retrieve
     .get(async (req, res) => {
-        let { id } = req.query;
+        let { id, filter } = req.query;
         if (id) {
-            let exchange = await Exchange.findById(id);
-            res.json(exchange);
+            let pack = await Pack.findById(id);
+            res.json(pack);
         } else {
-            let exchanges = await Exchange.find({}).exec();
-            res.json(exchanges);
+            let packs = await Pack.find(filter).exec();
+            res.json(packs);
         }
     })
     //update
     .put(async (req, res) => {
         let { id } = req.query;
-        let exchange = req.body;
+        let pack = req.body;
         if (id) {
             try{
-                let newExchange = await Exchange.updateOne({'_id': id}, {'$set': exchange});
-                res.json(newExchange);
+                let newPack = await Pack.updateOne({'_id': id}, {'$set': pack});
+                res.json(newPack);
             }
             catch(error){
                 res.status(404).json({error});
@@ -49,7 +49,7 @@ router.route('/')
         let { id } = req.query;
         if (id) {
             try{
-                let remove = await Exchange.deleteOne({'_id': id});
+                let remove = await Pack.deleteOne({'_id': id});
                 res.json(remove);
             }
             catch(error){

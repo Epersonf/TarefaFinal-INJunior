@@ -8,6 +8,8 @@ var notification = require('./notification')
 var order = require('./order')
 var payment = require('./payment')
 var user = require('./user')
+var pack = require('./pack')
+var packItem = require('./packItem')
 
 var api = express.Router();
 
@@ -20,5 +22,7 @@ api.use('/notification', notification);
 api.use('/order', order);
 api.use('/payment', payment);
 api.use('/user', user);
+api.use('/pack', pack);
+api.use('/packItem', packItem);
 
 module.exports = api;
