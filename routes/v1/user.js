@@ -54,12 +54,20 @@ router.route('/')
         }
     })
     //update
-    .put(async (req, res) => {
-        let { id } = req.query;
+    .put(async (req, res, next) => {
+        let { id, status } = req.query;
         let user = req.body;
         if (id) {
             try {
                 let newUser = await User.updateOne({ '_id': id }, { '$set': user });
+                if (status) {
+                    req.notification = {
+                        to: id,
+                        type: "STATUS_CHANGED",
+                        content: [status]
+                    }
+                    next();
+                }
                 res.json(newUser);
             }
             catch (error) {

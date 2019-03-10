@@ -6,23 +6,23 @@ router.route('/')
     //create
     .post(async (req, res, next) => {
         let notification = req.body;
-        try{
-            let newNotification = await Notification.create(notification); 
+        try {
+            let newNotification = await Notification.create(notification);
             req.notification = newNotification;
-            next(); 
-        } 
+            next();
+        }
         catch (error) {
-            res.status(404).json({error});
-        }        
+            res.status(404).json({ error });
+        }
     })
     //retrieve
     .get(async (req, res) => {
-        let { id } = req.query;
+        let { id, ...otherParams } = req.query;
         if (id) {
             let notification = await Notification.findById(id);
             res.json(notification);
         } else {
-            let notifications = await Notification.find({}).exec();
+            let notifications = await Notification.find(otherParams).exec();
             res.json(notifications);
         }
     })
@@ -31,14 +31,14 @@ router.route('/')
         let { id } = req.query;
         let notification = req.body;
         if (id) {
-            try{
-                let newNotification = await Notification.updateOne({'_id': id}, {'$set': notification});
+            try {
+                let newNotification = await Notification.updateOne({ '_id': id }, { '$set': notification });
                 res.json(newNotification);
             }
-            catch(error){
-                res.status(404).json({error});
+            catch (error) {
+                res.status(404).json({ error });
             }
-            
+
         } else {
             res.status(400).json({ error: 'Missing ID' });
         }
@@ -47,15 +47,15 @@ router.route('/')
     .delete(async (req, res) => {
         let { id } = req.query;
         if (id) {
-            try{
-                let remove = await Notification.deleteOne({'_id': id});
+            try {
+                let remove = await Notification.deleteOne({ '_id': id });
                 res.json(remove);
             }
-            catch(error){
+            catch (error) {
                 console.log('error');
                 res.status(404).json(error);
             }
-            
+
         } else {
             res.status(400).json({ error: 'Missing ID' });
         }

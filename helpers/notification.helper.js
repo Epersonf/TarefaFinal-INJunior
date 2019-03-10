@@ -1,7 +1,6 @@
 var User = require('../models/user');
 var Notification = require('../models/notification');
 var Acerto = require('../models/acerto');
-var io = require('socket.io')();
 var connection = require('../connection');
 
 var io = connection.io;
@@ -17,8 +16,9 @@ const createNewKitNotification = user => {
 }
 
 const getAutomaticNotifications = async user => {
-    let { tipo, _id: id } = user;
-    let notifications = await Notification.find({ status: 'Pending', to: id }).exec();
+    let { tipo } = user;
+    console.log('user id', user._id)
+    let notifications = await Notification.find({ status: 'Pending', to: user._id }).exec();
     switch (tipo) {
         case 'Consultor':
             notifications.concat(getConsultorAutomaticNotifications(user));
@@ -50,12 +50,12 @@ const getControladorAutomaticNotifications = (user) => {
 
 const getEstoqueAutomaticNotifications = async (user) => {
     //montar kit para novos usuários
-    let approvedUsers = await User.find({status: "Aprovado"}).where('supervisor').exists().exec();
+    let approvedUsers = await User.find({ status: "Aprovado" }).where('supervisor').exists().exec();
     var notifications = [];
-    for(let i=0; i<approvedUsers.length; i++){
+    for (let i = 0; i < approvedUsers.length; i++) {
         //procurar por kits e nao por acertos !!!!
-        let acertos = await Acerto.find({userId: approvedUsers[i]._id}).exec();
-        if(acertos.length==0){
+        let acertos = await Acerto.find({ userId: approvedUsers[i]._id }).exec();
+        if (acertos.length == 0) {
             let notification = createNewKitNotification(approvedUsers[i]);
             //console.log(notification);
             notifications.push(notification);
@@ -65,23 +65,27 @@ const getEstoqueAutomaticNotifications = async (user) => {
 }
 
 const notifyUser = async (req, res, next) => {
-    let notification = req.notification;
+    let notification = await Notification.create(req.notification);
 
-    if(!notification){
+    if (!notification) {
         next();
     }
 
-    //console.log('notification sent to ', notification.to);
-    io.sockets.to(notification.to).emit('notification', notification);
-    try{
-      await User.updateOne({'_id': notification.to}, {$set: {notificacoes: notification._id}});
+    console.log('notification sent to ', notification.to);
+
+
+    try {
+        //io.to(`/${notification.to}`).emit('notification', notification);
+        //console.log(io.sockets.adapter.rooms);
+        io.sockets.to(`user${notification.to}`).emit('notification', notification);
+        await User.updateOne({ '_id': notification.to }, { $set: { notificacoes: notification._id } });
     }
-    catch(e){
-      //console.log(e);
+    catch (e) {
+        console.log(e);
     }
-    
+
     res.status(200).json(notification);
-  }
+}
 
 module.exports = {
     getAutomaticNotifications,

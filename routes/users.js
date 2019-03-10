@@ -85,7 +85,7 @@ router.get('/consultores/:supervisorId', function (req, res, next) { //por super
     });
 });
 router.get('/consultores/indicados/:indicadorId', function (req, res, next) { //por indicador
-    User.find({indicador:req.params.indicadorId}).populate({
+    User.find({ indicador: req.params.indicadorId }).populate({
         path: 'supervisor',
         select: 'nome _id'
     }).exec(function (err, users) {
@@ -93,8 +93,8 @@ router.get('/consultores/indicados/:indicadorId', function (req, res, next) { //
         res.json(users);
     });
 });
-router.post('/consultores/maisdesconto', function (req, res, next) { 
-    User.update({ "_id": req.body._id }, {$inc: req.body.inc }, function (err, consultor) {
+router.post('/consultores/maisdesconto', function (req, res, next) {
+    User.update({ "_id": req.body._id }, { $inc: req.body.inc }, function (err, consultor) {
         if (err) throw err;
         res.json(consultor);
     });
@@ -113,7 +113,18 @@ router.get('/estoqueId/', function (req, res, next) { //por supervisor
 router.post('/atualizar', function (req, res, next) {
     User.update({ "_id": req.body._id }, { $set: req.body.update }, function (err, consultor) {
         if (err) throw err;
-        res.json(consultor);
+        if (req.body.update.status) {
+            req.notification = {
+                to: req.body._id,
+                type: "STATUS_CHANGED",
+                content: [req.body.update.status]
+            }
+            next();
+        }
+        else {
+            res.json(consultor);
+        }
+
     });
 });
 
