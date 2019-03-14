@@ -89,11 +89,12 @@
 							<h3>Pecas Totais</h3>
 							<div class="row">
 								<div class="col s12" style="overflow-x:auto">
+									<p><b>Total vendido:{{totalVendido | currency:'R$'}}</b></p>
 									<tabela-totais-pecas pecas="pecasTotais"></tabela-totais-pecas>
 								</div>
 							</div>
 						</li>
-						<li class="collection-item avatar" ng-repeat="acerto in acertosFiltrados">
+						<li class="collection-item avatar" ng-repeat="acerto in acertosFiltrados | orderBy:'-total'">
 							<i class="material-icons circle">person</i>
 							<div class="row">
 								<div class="col s12"><b>{{acerto.consultor.nome}} -
@@ -104,6 +105,7 @@
 									<p>{{acerto.consultor.proxAcerto | date: "d/MM/yy"}}</p>
 								</div>
 								<div class="col s12 m10" style="overflow-x:auto">
+									<p><b>Total vendido:{{acerto.total | currency:'R$'}}</b></p>
 									<tabela-totais-pecas pecas="acerto.pecas"></tabela-totais-pecas>
 								</div>
 							</div>
