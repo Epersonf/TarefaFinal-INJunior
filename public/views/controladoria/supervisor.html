@@ -30,9 +30,10 @@
 						<a class="waves-effect waves-light btn btn-small" ng-click="add()">Adicionar consultor</a>
 						<br>
 						<div class="collection">
-							<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" ng-repeat="consultor in consultores">
+							<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}"
+								ng-repeat="consultor in consultores">
 								<i class="material-icons circle">person</i>
-								<span class="title">{{consultor.nome}}</span>
+								<span class="title">{{consultor.nome}} {{consultor.sobrenome}}</span>
 								<p>
 									Usuário: {{consultor.username}}
 									<br> {{consultor.totalVendido | currency: 'R$'}} vendidos
@@ -51,14 +52,16 @@
 		</a>
 		<ul>
 			<li>
-				<a class="btn-floating fundoBranco tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="del()">
+				<a class="btn-floating fundoBranco tooltipped" data-position="left" data-delay="100"
+					data-tooltip="Excluir" ng-click="del()">
 					<i class="large material-icons textoVermelho">delete_sweep</i>
 				</a>
-				<li>
-					<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Editar" ng-click="modalEditar()">
-						<i class="material-icons textoAmarelo">create</i>
-					</a>
-				</li>
+			<li>
+				<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Editar"
+					ng-click="modalEditar()">
+					<i class="material-icons textoAmarelo">create</i>
+				</a>
+			</li>
 		</ul>
 	</div>
 </div>

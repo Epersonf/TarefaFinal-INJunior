@@ -2,8 +2,9 @@
 	<div class="col s12 m12">
 		<div class="card fundoAmarelo">
 			<div class="card-content">
-				<span class="card-title">{{consultor.nome}}</span>
-				<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
+				<span class="card-title">{{consultor.nome}} {{consultor.sobrenome}}</span>
+				<div class="chip"
+					ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
 					{{consultor.status}}
 				</div>
 				<div class="chip">
@@ -12,8 +13,10 @@
 				<div class="card center-align fundoAmarelo">
 					<div class="card-content">
 						<div class="medalha" style="position:relative">
-							<object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg" type="image/svg+xml"></object>
-							<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg" type="image/svg+xml"></object>
+							<object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg"
+								type="image/svg+xml"></object>
+							<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata"
+								data="../../img/sol_prata.svg" type="image/svg+xml"></object>
 							<object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
 
 
@@ -30,7 +33,8 @@
 					<a class="waves-effect waves-light btn" ng-click="modalAcerto()">Realizar acerto</a>
 					<a class="waves-effect waves-light btn" ng-click="modalEncomenda()">Alocar peças</a>
 					<a class="waves-effect waves-light btn" ng-click="modalEstorno()">Estorno de venda</a>
-					<a ng-hide="consultor.estoque.length==0" class="waves-effect waves-light btn" ng-click="recolherPecas()">Recolher kit</a>
+					<a ng-hide="consultor.estoque.length==0" class="waves-effect waves-light btn"
+						ng-click="recolherPecas()">Recolher kit</a>
 					<!--<a class="waves-effect waves-light btn">Troca de peça</a>-->
 				</div>
 
@@ -66,14 +70,16 @@
 		</a>
 		<ul>
 			<li>
-				<a class="btn-floating fundoBranco tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="del()">
+				<a class="btn-floating fundoBranco tooltipped" data-position="left" data-delay="100"
+					data-tooltip="Excluir" ng-click="del()">
 					<i class="large material-icons textoVermelho">delete_sweep</i>
 				</a>
-				<li>
-					<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Editar" ng-click="modalProxAcerto()">
-						<i class="material-icons textoAmarelo">create</i>
-					</a>
-				</li>
+			<li>
+				<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Editar"
+					ng-click="modalProxAcerto()">
+					<i class="material-icons textoAmarelo">create</i>
+				</a>
+			</li>
 		</ul>
 	</div>
 </div>
@@ -98,21 +104,26 @@
 						</ul>
 					</div>
 					<div class="collection">
-						<a class="textoPreto collection-item avatar" ng-repeat="kit in kits | orderBy:'-createdAt' | filter:filtroStatus">
+						<a class="textoPreto collection-item avatar"
+							ng-repeat="kit in kits | orderBy:'-createdAt' | filter:filtroStatus">
 							<i class="material-icons circle">work</i>
 							<div class="row">
 								<div class="col s6">
 									<span class="title">{{kit.createdAt | date:'dd/MM/yyyy'}}</span>
 									</br>
-									<div class="chip tooltipped" ng-class="{'orange': kit.status==='Pendente', 'green': kit.status==='Entregue'}">
+									<div class="chip tooltipped"
+										ng-class="{'orange': kit.status==='Pendente', 'green': kit.status==='Entregue'}">
 										{{kit.status}}
 									</div>
 								</div>
 								<div class="col s6">
-									<button ng-show="kit.status=='Pendente'" class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="enviaKit(kit)">
+									<button ng-show="kit.status=='Pendente'"
+										class="btn-floating btn waves-effect waves-light botaoAmarelo right"
+										ng-click="enviaKit(kit)">
 										<i class="material-icons">send</i>
 									</button>
-									<button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="mostraTabelaPecas(kit)">
+									<button class="btn-floating btn waves-effect waves-light botaoAmarelo right"
+										ng-click="mostraTabelaPecas(kit)">
 										<i class="material-icons" title="Ver peças">assignment</i>
 									</button>
 								</div>
@@ -180,7 +191,8 @@
 		<p>Tem certeza que deseja excluir o Consultor?</p>
 	</div>
 	<div class="modal-footer">
-		<a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="desaprovar()">Excluir</a>
+		<a href="" class=" modal-action modal-close waves-effect waves-green btn-flat"
+			ng-click="desaprovar()">Excluir</a>
 		<a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
 	</div>
 </div>
@@ -191,7 +203,8 @@
 		<div class="center-align">
 			<h3>Alocação de Peças</h3>
 			<div class="input-field">
-				<select style="display:block !important" id="item" ng-model="codigo" ng-options="peca.val as peca.label for peca in opcoesPecas">
+				<select style="display:block !important" id="item" ng-model="codigo"
+					ng-options="peca.val as peca.label for peca in opcoesPecas">
 
 				</select>
 			</div>
@@ -205,7 +218,7 @@
 				<div class="col m6">
 					<div class="chip">
 						<i class="material-icons left">person</i>
-						{{consultor.nome}}
+						{{consultor.nome}} {{consultor.sobrenome}}
 					</div>
 				</div>
 			</div>
@@ -215,7 +228,9 @@
 						<div class="card-content">
 							<span class="card-title">{{encomenda.item}}
 							</span>
-							<div class="chip green clicavel" ng-repeat="peca in estoqueTemp| orderBy:extraiPreco | filter:porItem track by $index " ng-click="enviado(peca)">
+							<div class="chip green clicavel"
+								ng-repeat="peca in estoqueTemp| orderBy:extraiPreco | filter:porItem track by $index "
+								ng-click="enviado(peca)">
 								{{extraiPreco(peca) | currency: 'R$'}}
 							</div>
 						</div>
@@ -226,7 +241,9 @@
 						<div class="card-content">
 							<span class="card-title">{{encomenda.item}}
 							</span>
-							<div class="chip red clicavel" ng-repeat="peca in pecasEnviadas| orderBy:extraiPreco | filter:porItem track by $index " ng-click="devolvido(peca)">
+							<div class="chip red clicavel"
+								ng-repeat="peca in pecasEnviadas| orderBy:extraiPreco | filter:porItem track by $index "
+								ng-click="devolvido(peca)">
 								{{extraiPreco(peca) | currency: 'R$'}}
 							</div>
 						</div>
@@ -249,9 +266,12 @@
 			<p class="red">Atenção! Essa ação não pode ser desfeita</p>
 			<div class="row">
 				<div class="col s12">
-					<p ng-show="valores.vinte > 0">Valor a 20%: {{valores.vinte | currency: 'R$'}} (20% de {{valores.vinteBase | currency: 'R$'}})</p>
-					<p ng-show="valores.vinteCinco > 0">Valor a 25%: {{valores.vinteCinco | currency: 'R$'}} (25% de {{valores.vinteCincoBase | currency: 'R$'}})</p>
-					<p ng-show="valores.trinta > 0">Valor a 30%: {{valores.trinta | currency: 'R$'}} (30% de {{valores.trintaBase | currency: 'R$'}})</p>
+					<p ng-show="valores.vinte > 0">Valor a 20%: {{valores.vinte | currency: 'R$'}} (20% de
+						{{valores.vinteBase | currency: 'R$'}})</p>
+					<p ng-show="valores.vinteCinco > 0">Valor a 25%: {{valores.vinteCinco | currency: 'R$'}} (25% de
+						{{valores.vinteCincoBase | currency: 'R$'}})</p>
+					<p ng-show="valores.trinta > 0">Valor a 30%: {{valores.trinta | currency: 'R$'}} (30% de
+						{{valores.trintaBase | currency: 'R$'}})</p>
 					<p ng-show="consultor.desconto != 0">Indicações: {{consultor.desconto | currency: 'R$'}}</p>
 					<br>
 					<p>Valor ganho pela consultora: {{valores.minhaParte | currency: 'R$'}}</p>
@@ -275,7 +295,8 @@
 		</div>
 	</div>
 	<div class="modal-footer center-align">
-		<a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="novoAcerto();">Confirmar</a>
+		<a href="" class=" modal-action modal-close waves-effect waves-green btn-flat"
+			ng-click="novoAcerto();">Confirmar</a>
 		<a href="" class=" modal-close waves-effect waves-red btn-flat" ng-click="">Cancelar</a>
 	</div>
 </div>
@@ -287,8 +308,8 @@
 		<form ng-submit="novoProxAcerto()" name="formEdit" id="formEdit">
 			<div class="input-field">
 				<label for="proxAcerto">Data de acerto</label>
-				<input type="date" class="datepicker" ng-model="novo.proxAcerto" name="proxAcerto" ng-model-options="{timezone:'UTC-3'}"
-				 required>
+				<input type="date" class="datepicker" ng-model="novo.proxAcerto" name="proxAcerto"
+					ng-model-options="{timezone:'UTC-3'}" required>
 			</div>
 		</form>
 	</div>

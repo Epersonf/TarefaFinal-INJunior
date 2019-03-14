@@ -7,7 +7,8 @@
 					<div class="col s12 m12">
 						<div class="card center-align white">
 							<div class="card-content">
-								<p>A adição de revendedoras deve ser feita em seu respectivo <a ui-sref="Supervisores">Supervisor</a></p>                 
+								<p>A adição de revendedoras deve ser feita em seu respectivo <a
+										ui-sref="Supervisores">Supervisor</a></p>
 							</div>
 						</div>
 					</div>
@@ -17,31 +18,36 @@
 					<input type="text" class="validate" placeholder="Filtrar" ng-model="filtro" />
 				</div>
 				<div class="collection">
-						<ul class="tabs">
-								<li class="tab col m3 s6"><a class="active clicavel" ng-click="status=['Aprovado', 'Pendente', 'Inativo']">Todos</a></li>
-								<li class="tab col m3 s6"><a class="clicavel" ng-click="status=['Pendente']">Pendentes</a></li>
-								<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Aprovado']" >Aprovados</a></li>
-								<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Inativo']">Inativos</a></li>	
-							</ul>
-					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" style="overflow-y:overlay" ng-repeat="consultor in revendedoras | orderBy:'proxAcerto' | filter:filtroStatus |filter:filtro">
+					<ul class="tabs">
+						<li class="tab col m3 s6"><a class="active clicavel"
+								ng-click="status=['Aprovado', 'Pendente', 'Inativo']">Todos</a></li>
+						<li class="tab col m3 s6"><a class="clicavel" ng-click="status=['Pendente']">Pendentes</a></li>
+						<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Aprovado']">Aprovados</a></li>
+						<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Inativo']">Inativos</a></li>
+					</ul>
+					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}"
+						style="overflow-y:overlay"
+						ng-repeat="consultor in revendedoras | orderBy:'proxAcerto' | filter:filtroStatus |filter:filtro">
 						<i class="material-icons circle">person</i>
-						<div class="col s12"><b>{{consultor.nome}} - ({{consultor.supervisor ? consultor.supervisor.nome : 'Nenhum'}})</b></div>
-							<div class="col s12 m2">
-									<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
-											{{consultor.status}}
-										</div>
-								<br>
-								<p>Próximo Acerto</p>
-								<p>{{consultor.proxAcerto | date: "d/MM/yy"}}</p>
+						<div class="col s12"><b>{{consultor.nome}} {{consultor.sobrenome}} -
+								({{consultor.supervisor ? consultor.supervisor.nome : 'Nenhum'}})</b></div>
+						<div class="col s12 m2">
+							<div class="chip"
+								ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
+								{{consultor.status}}
 							</div>
-							<div class="col s12 m10" style="overflow-x:auto">
-								<p><b>Total vendido:{{consultor.totalVendido | currency:'R$'}}</b></p>
-								<tabela-totais-pecas pecas="consultor.vendido"></tabela-totais-pecas>
-							</div>
+							<br>
+							<p>Próximo Acerto</p>
+							<p>{{consultor.proxAcerto | date: "d/MM/yy"}}</p>
 						</div>
-					</a>
-				</div>                 
+						<div class="col s12 m10" style="overflow-x:auto">
+							<p><b>Total vendido:{{consultor.totalVendido | currency:'R$'}}</b></p>
+							<tabela-totais-pecas pecas="consultor.vendido"></tabela-totais-pecas>
+						</div>
+				</div>
+				</a>
 			</div>
 		</div>
 	</div>
+</div>
 </div>

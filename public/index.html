@@ -8,27 +8,23 @@
 
 <body ng-app="ambaya" ng-controller="BaseController" class="fundoPreto">
     <ul id="navegacaoLateral" class="side-nav fundoAmarelo textoPreto">
-        <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i
-                    class="material-icons left">{{link.icone}}</i>
+        <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i class="material-icons left">{{link.icone}}</i>
                 {{link.nome}}</a></li>
-        <li><a href="" ng-click="sair()" class="textoPreto " hide-on-med-and-down><i
-                    class="material-icons left">exit_to_app</i>
+        <li><a href="" ng-click="sair()" class="textoPreto " hide-on-med-and-down><i class="material-icons left">exit_to_app</i>
                 Sair</a></li>
     </ul>
     <div class="navbar-fixed">
         <nav class="fundoAmarelo black-text">
             <div class="nav-wrapper">
-                <a href="#" ng-class="$state.is('Início') ? 'invisible' : ''" class="textoPreto left"
-                    onclick="history.back()" style="padding-right: 20px;"> <i class="material-icons">arrow_back</i> </a>
-                <a href="#" ng-show="logado" class="button-collapse textoPreto right"
-                    data-activates="navegacaoLateral"><i class="material-icons">menu</i></a>
+                <a href="#" ng-class="$state.is('Início') ? 'invisible' : ''" class="textoPreto left" onclick="history.back()"
+                    style="padding-right: 20px;"> <i class="material-icons">arrow_back</i> </a>
+                <a href="#" ng-show="logado" class="button-collapse textoPreto right" data-activates="navegacaoLateral"><i
+                        class="material-icons">menu</i></a>
                 <a href="#" class="brand-logo"><img src="img/logo_barra.png" height="100%"></a>
                 <ul id="nav-mobile" class="right" ng-show="logado">
-                    <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active"
-                            class="textoPreto hide-on-med-and-down"><i class="material-icons left">{{link.icone}}</i>
-                            {{link.nome}}</a></li>
-                    <li><a href="" ng-click="sair()" class="textoPreto hide-on-med-and-down"><i
-                                class="material-icons left">exit_to_app</i>
+                    <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto hide-on-med-and-down"><i
+                                class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
+                    <li><a href="" ng-click="sair()" class="textoPreto hide-on-med-and-down"><i class="material-icons left">exit_to_app</i>
                             Sair</a></li>
                 </ul>
             </div>
@@ -48,10 +44,9 @@
     <!-- JavaScript for: jQuery, angular, materialize, and angular-materialize. All of which are needed. -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>-->
-    <script src="scripts/main-9203fba669.js"></script>
+    <script src="scripts/main-5b09445856.js"></script>
 </body>
 
 </html>

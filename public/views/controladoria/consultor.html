@@ -1,84 +1,91 @@
 <div class="row">
-	<div class="col s12 m12">
-		<div class="card fundoAmarelo">
-			<div class="card-content">
-				<span class="card-title">{{consultor.nome}}</span>
-				<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
-					{{consultor.status}}
-					<i class="right material-icons clicavel" ng-click="desaprovar()" ng-show="consultor.status==='Aprovado'">close</i>
+    <div class="col s12 m12">
+        <div class="card fundoAmarelo">
+            <div class="card-content">
+                <span class="card-title">{{consultor.nome}} {{consultor.sobrenome}}</span>
+                <div class="chip"
+                    ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
+                    {{consultor.status}}
+                    <i class="right material-icons clicavel" ng-click="desaprovar()"
+                        ng-show="consultor.status==='Aprovado'">close</i>
                 </div>
                 <div class="chip">
-                        Total vendido absoluto: {{vendidoHistorico | currency:'R$'}}
-                    </div>
-				<div class="card center-align fundoAmarelo">
-                        <div class="card-content">
-                            <div class="medalha" style="position:relative">
-                                <object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg" type="image/svg+xml"></object>
-                                <object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg" type="image/svg+xml"></object>
-                                <object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
-    
-    
-                            </div>
-                            <br>
-                            <span class="card-title">Próximo Acerto</span>
-                            <h5>{{consultor.proxAcerto | date: "d/MM/yy"}}</h5>
-                            <h5>Faltam {{ faltamDias(consultor.proxAcerto)}} dias</h5>
-                            <h5>Valor devido: {{valores.devido | currency: 'R$'}}</h5>
-                            <h5>Total vendido: {{consultor.totalVendido | currency: 'R$'}}</h5>
-                        </div>
-                    </div>
-				<div class="row center-align" ng-show="consultor.status!=='Aprovado'">
-					<a class="waves-effect waves-light btn" ng-click="indicacao()">Aprovar</a> 
-				</div>
-				<table class="responsive-table white">
-					<thead>
-					<tr>
-						<th data-field="cpf">CPF</th>
-						<th data-field="email">Email</th>
-						<th data-field="cidade">Cidade</th>
-						<th data-field="whatsapp">Whatsapp</th>
-                        <th data-field="endereco">Endereço</th>
-                        <th ng-show="consultor.indicador" data-field="indicador">Indicado por</th>
-						<th data-field="cep">Cep</th>
-					</tr>
-					</thead>
+                    Total vendido absoluto: {{vendidoHistorico | currency:'R$'}}
+                </div>
+                <div class="card center-align fundoAmarelo">
+                    <div class="card-content">
+                        <div class="medalha" style="position:relative">
+                            <object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg"
+                                type="image/svg+xml"></object>
+                            <object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata"
+                                data="../../img/sol_prata.svg" type="image/svg+xml"></object>
+                            <object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
 
-					<tbody>
-					<tr>
-						<td>{{consultor.cpf}}</td>
-						<td>{{consultor.email}}</td>
-						<td>{{consultor.cidade}}</td>
-						<td>{{consultor.whatsapp}}</td>
-						<td>{{consultor.endereco}}</td>
-						<td ng-show="consultor.indicador">{{consultor.indicador.nome}}</td>
-						<td>{{consultor.cep}}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+
+                        </div>
+                        <br>
+                        <span class="card-title">Próximo Acerto</span>
+                        <h5>{{consultor.proxAcerto | date: "d/MM/yy"}}</h5>
+                        <h5>Faltam {{ faltamDias(consultor.proxAcerto)}} dias</h5>
+                        <h5>Valor devido: {{valores.devido | currency: 'R$'}}</h5>
+                        <h5>Total vendido: {{consultor.totalVendido | currency: 'R$'}}</h5>
+                    </div>
+                </div>
+                <div class="row center-align" ng-show="consultor.status!=='Aprovado'">
+                    <a class="waves-effect waves-light btn" ng-click="indicacao()">Aprovar</a>
+                </div>
+                <table class="responsive-table white">
+                    <thead>
+                        <tr>
+                            <th data-field="cpf">CPF</th>
+                            <th data-field="email">Email</th>
+                            <th data-field="cidade">Cidade</th>
+                            <th data-field="whatsapp">Whatsapp</th>
+                            <th data-field="endereco">Endereço</th>
+                            <th ng-show="consultor.indicador" data-field="indicador">Indicado por</th>
+                            <th data-field="cep">Cep</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{consultor.cpf}}</td>
+                            <td>{{consultor.email}}</td>
+                            <td>{{consultor.cidade}}</td>
+                            <td>{{consultor.whatsapp}}</td>
+                            <td>{{consultor.endereco}}</td>
+                            <td ng-show="consultor.indicador">{{consultor.indicador.nome}}</td>
+                            <td>{{consultor.cep}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="fixed-action-btn horizontal click-to-toggle botaoAlto">
-		<a class="btn-floating btn-large botaoAmarelo">
-			<i class="material-icons">menu</i>
-		</a>
-		<ul>
-			<li>
-				<a class="btn-floating fundoBranco tooltipped" data-position="left" data-delay="100" data-tooltip="Excluir" ng-click="del()">
-					<i class="large material-icons textoVermelho">delete_sweep</i>
-				</a>
-				<li>
-					<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Editar" ng-click="modalEditar()">
-						<i class="material-icons textoAmarelo">create</i>
-					</a>
-				</li>
-				<li>
-					<a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Recuperar Senha" ng-click="recoverPassword()">
-						<i class="material-icons textoAmarelo">autorenew</i>
-					</a>
-				</li>
-		</ul>
-	</div>
+        <a class="btn-floating btn-large botaoAmarelo">
+            <i class="material-icons">menu</i>
+        </a>
+        <ul>
+            <li>
+                <a class="btn-floating fundoBranco tooltipped" data-position="left" data-delay="100"
+                    data-tooltip="Excluir" ng-click="del()">
+                    <i class="large material-icons textoVermelho">delete_sweep</i>
+                </a>
+            <li>
+                <a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Editar"
+                    ng-click="modalEditar()">
+                    <i class="material-icons textoAmarelo">create</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating fundoBranco tooltipped" data-position="bottom" data-tooltip="Recuperar Senha"
+                    ng-click="recoverPassword()">
+                    <i class="material-icons textoAmarelo">autorenew</i>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
 <div class="row">
     <div class="col s12 m12">
@@ -89,18 +96,20 @@
                     Desconto no próximo acerto: {{consultor.desconto | currency:'R$'}}
                 </div>
                 <ul class="collection">
-                    <li class="textoPreto collection-item avatar" ng-repeat="indicado in indicados | orderBy:'-createdAt'">
+                    <li class="textoPreto collection-item avatar"
+                        ng-repeat="indicado in indicados | orderBy:'-createdAt'">
                         <i class="material-icons circle">person</i>
                         <span class="title strong">{{indicado.nome}}</span>
                         <p>
                             <span ng-show="indicado.totalAcertos <= 3">
-                                    Próximo acerto: {{indicado.totalVendido | currency:'R$'}} ({{indicado.proxAcerto | date: "d/MM/yy"}})
-                                    <br> Minha Parte: {{indicado.totalVendido*0.05 | currency:'R$'}}
+                                Próximo acerto: {{indicado.totalVendido | currency:'R$'}}
+                                ({{indicado.proxAcerto | date: "d/MM/yy"}})
+                                <br> Minha Parte: {{indicado.totalVendido*0.05 | currency:'R$'}}
                             </span>
                             <span ng-show="indicado.totalAcertos > 3">
-                                    Finalizado
+                                Finalizado
                             </span>
-                            
+
                             <br> Total de acertos realizados: {{indicado.totalAcertos}}
                         </p>
                     </li>
@@ -110,179 +119,244 @@
     </div>
 </div>
 <div class="row">
-	<div class="col s12 m12">
-		<div class="card fundoAmarelo">
-			<div class="card-content">
-				<span class="card-title">Acertos</span>
-				<div class="chip white">
-					Vendido no ano: {{vendidoAno | currency:'R$'}}
-				</div>
-				<div class="collection">
-					<a class="textoPreto collection-item avatar" ng-repeat="acerto in acertos | orderBy:'-createdAt'">
-						<i class="material-icons circle green">done</i>
-						<span class="title strong">Data: {{acerto.createdAt | date: "d/MM/yy"}}</span>
-						<div class="row">
-							<div class="col s6 m4">
-								<p>
+    <div class="col s12 m12">
+        <div class="card fundoAmarelo">
+            <div class="card-content">
+                <span class="card-title">Acertos</span>
+                <div class="chip white">
+                    Vendido no ano: {{vendidoAno | currency:'R$'}}
+                </div>
+                <div class="collection">
+                    <a class="textoPreto collection-item avatar" ng-repeat="acerto in acertos | orderBy:'-createdAt'">
+                        <i class="material-icons circle green">done</i>
+                        <span class="title strong">Data: {{acerto.createdAt | date: "d/MM/yy"}}</span>
+                        <div class="row">
+                            <div class="col s6 m4">
+                                <p>
                                     </br>
-									Valor pago:{{acerto.valor | currency:'R$'}}
-								</p>
-							</div>
-						</div>
-					</a>
-				</div>                 
-			</div>
-		</div>
-	</div>
+                                    Valor pago:{{acerto.valor | currency:'R$'}}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
-        <div class="col s12 m12">
-            <div class="card center-align fundoAmarelo">
-                <div class="card-content">
-                    <div class="row">
-                        <div class="col m5 s12">
-                            <h3>Estoque</h3>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Anéis</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.aneis"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos P</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.brincosP"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos G</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.brincosG"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Fem.</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.cordoesF"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Masc.</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.cordoesM"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Pingentes</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.pingentes"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Fem.</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.pulseirasF"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Masc.</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.pulseirasM"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Tornozeleiras</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.tornozeleiras"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Escapulários</b></li>
-                                <li class="collection-item" ng-repeat="peca in pecas.escapularios"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                        </div>
-                        <div class="col m5 s12 offset-m1">
-                            <h3>Vendido</h3>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Anéis</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.aneis"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos P</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.brincosP"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Brincos G</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.brincosG"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Fem.</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.cordoesF"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Cordões Masc.</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.cordoesM"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Pingentes</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.pingentes"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Fem.</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.pulseirasF"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Pulseiras Masc.</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.pulseirasM"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Tornozeleiras</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.tornozeleiras"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Escapulários</b></li>
-                                <li class="collection-item" ng-repeat="peca in vendidas.escapularios"><span class="badge">{{peca.tot}}</span><div>{{peca.val | currency: 'R$'}}</div></li>
-                            </ul>
-                        </div>
+    <div class="col s12 m12">
+        <div class="card center-align fundoAmarelo">
+            <div class="card-content">
+                <div class="row">
+                    <div class="col m5 s12">
+                        <h3>Estoque</h3>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Anéis</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.aneis"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Brincos P</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.brincosP"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Brincos G</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.brincosG"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Cordões Fem.</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.cordoesF"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Cordões Masc.</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.cordoesM"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pingentes</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.pingentes"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pulseiras Fem.</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.pulseirasF"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pulseiras Masc.</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.pulseirasM"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Tornozeleiras</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.tornozeleiras"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Escapulários</b></li>
+                            <li class="collection-item" ng-repeat="peca in pecas.escapularios"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col m5 s12 offset-m1">
+                        <h3>Vendido</h3>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Anéis</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.aneis"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Brincos P</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.brincosP"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Brincos G</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.brincosG"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Cordões Fem.</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.cordoesF"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Cordões Masc.</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.cordoesM"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pingentes</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.pingentes"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pulseiras Fem.</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.pulseirasF"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Pulseiras Masc.</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.pulseirasM"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Tornozeleiras</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.tornozeleiras"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>Escapulários</b></li>
+                            <li class="collection-item" ng-repeat="peca in vendidas.escapularios"><span
+                                    class="badge">{{peca.tot}}</span>
+                                <div>{{peca.val | currency: 'R$'}}</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <div id="excluir" class="modal">
     <div class="modal-content">
-      <h4>Excluir</h4>
-      <p>Tem certeza que deseja excluir o Supervisor?</p>
+        <h4>Excluir</h4>
+        <p>Tem certeza que deseja excluir o Supervisor?</p>
     </div>
     <div class="modal-footer">
-      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="excluir()">Excluir</a>
-	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="excluir()">Excluir</a>
+        <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
     </div>
-  </div>
+</div>
 
-  <div id="indicacao" class="modal">
+<div id="indicacao" class="modal">
     <div class="modal-content">
-      <h4>Indicação</h4>
-      <p>Indicado por alguem?</p>
-      <div class="row">
-        <select style="display:block" ng-model="indicado" class="col m6 s12">
+        <h4>Indicação</h4>
+        <p>Indicado por alguem?</p>
+        <div class="row">
+            <select style="display:block" ng-model="indicado" class="col m6 s12">
                 <option value="Não">Não</option>
                 <option value="Sim">Sim</option>
-        </select>
-    </div>
-      <div class="row" ng-show="indicado == 'Sim'">
-        <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
+            </select>
+        </div>
+        <div class="row" ng-show="indicado == 'Sim'">
+            <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12"
+                ng-change="carregaConsultores()">
                 <option value="" disabled selected>Selecione o supervisor</option>
-                <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{supervisor.nome}} - {{supervisor.cidade}}</option>
-        </select>
-        <select style="display:block" ng-model="indicador" class="col m6 s12" ng-show="consultores.length>0">
+                <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{supervisor.nome}} -
+                    {{supervisor.cidade}}</option>
+            </select>
+            <select style="display:block" ng-model="indicador" class="col m6 s12" ng-show="consultores.length>0">
                 <option value="" disabled selected>Selecione o consultor</option>
                 <option value="">Nenhum</option>
-                <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome + " " + consultor.sobrenome}}</option>
-        </select>
-    </div>
+                <option ng-repeat="consultor in consultores" value="{{consultor._id}}">
+                    {{consultor.nome + " " + consultor.sobrenome}}</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
-      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="aprovar()">Concluir</a>
-	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="aprovar()">Concluir</a>
+        <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
     </div>
-  </div>
+</div>
 
 
 
-  <div id="editar" class="modal">
+<div id="editar" class="modal">
     <div class="modal-content">
-      <h4>Editar</h4>
+        <h4>Editar</h4>
         <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
-                <option value="" disabled ng-selected="!selectedSupervisor">Selecione o supervisor</option>
-                <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}" ng-selected="consultor.supervisor == selectedSupervisor">{{supervisor.nome + " " + supervisor.sobrenome}} - {{supervisor.cidade}}</option>
+            <option value="" disabled ng-selected="!selectedSupervisor">Selecione o supervisor</option>
+            <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}"
+                ng-selected="consultor.supervisor == selectedSupervisor">
+                {{supervisor.nome + " " + supervisor.sobrenome}} - {{supervisor.cidade}}</option>
         </select>
     </div>
     <div class="modal-footer">
-      <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="salvar()">Concluir</a>
-	  <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        <a href="" class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="salvar()">Concluir</a>
+        <a href="" class=" modal-close waves-effect waves-red btn-flat">Cancelar</a>
     </div>
-  </div>
+</div>
