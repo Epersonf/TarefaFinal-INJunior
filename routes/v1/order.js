@@ -11,6 +11,7 @@ router.route('/')
             /* req.order = newOrder;
             console.log('API: ', order);
             next();  */
+            newOrder = await newOrder.populate({'path': 'pagamento'}).execPopulate();
             res.status(200).json(newOrder);
         }
         catch (error) {
