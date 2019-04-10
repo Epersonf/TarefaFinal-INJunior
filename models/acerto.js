@@ -29,10 +29,8 @@ var acertoSchema = new Schema({
 	},
 	taxa: Number,
 	boletoUrl: String,
-	boletoCode: String,
-	transactionId: Number,
+	transactionId: String,
 	status: String,
-	boletoExpirationDate: Date,
 	pecas: [String], //pecas vendidas no caso de consultores
 }, {
     timestamps: true

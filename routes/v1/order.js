@@ -26,8 +26,14 @@ router.route('/')
         } else {
             let query = Order.find(otherParams)
                 .populate(
-                    { 'path': 'donoId', 
-                    'select': '_id nome sobrenome whatsapp endereco cidade cep cpf' });
+                    {
+                        'path': 'donoId',
+                        'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
+                    })
+                .populate(
+                    {
+                        'path': 'pagamento'
+                    });
             sort ?
                 query = query.sort(sort) :
                 null;
