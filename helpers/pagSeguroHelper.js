@@ -31,11 +31,12 @@ const newBoleto = (payment, user, senderHash) => {
         notificationURL: config.pagseguroNotificationUrl,
         reference: user._id,
         senderName: user.nome + " " + user.sobrenome,
-        //senderCPF: user.cpf,
-        senderCPF: '00000000000',
+        senderCPF: user.cpf,
+        //senderCPF: '00000000000',
         senderAreaCode: user.whatsapp.slice(0, 2),
         senderPhone: user.whatsapp.slice(2),
-        senderEmail: 'c52285184118243909843@sandbox.pagseguro.com.br',
+        //senderEmail: 'c52285184118243909843@sandbox.pagseguro.com.br',
+        senderEmail: user.email,
         senderHash: senderHash,
         shippingAddressRequired: 'false'
     }
@@ -51,19 +52,28 @@ const newTransaction = async (transaction) => {
     }
     let requestBody = jsonToQuery(transaction);
 
-    let response = await fetch(url, {
-        body: requestBody,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        method: "POST"
-    })
+    try{
+        let response = await fetch(url, {
+            body: requestBody,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            method: "POST"
+        })
+    
+        const resultString = await response.text();
+    
+        const result = await xml2js(resultString);
 
-    const resultString = await response.text();
-
-    const result = await xml2js(resultString);
-
-    return result.transaction;
+        console.log({resultString});
+    
+        return result.transaction;
+    }
+    catch(error){
+        console.log('error_transacrion', error)
+        throw(error);
+    }
+    
 }
 
 const getNotification = async (transaction) => {
