@@ -65,11 +65,11 @@ const getEstoqueAutomaticNotifications = async (user) => {
 }
 
 const notifyUser = async (req, res, next) => {
-    let notification = await Notification.create(req.notification);
-
-    if (!notification) {
+    if (!req.notification) {
         next();
     }
+
+    let notification = await Notification.create(req.notification);
 
     console.log('notification sent to ', notification.to);
 

@@ -32,13 +32,16 @@ const newBoleto = (payment, user, senderHash) => {
         reference: user._id,
         senderName: user.nome + " " + user.sobrenome,
         senderCPF: user.cpf,
-        //senderCPF: '00000000000',
         senderAreaCode: user.whatsapp.slice(0, 2),
         senderPhone: user.whatsapp.slice(2),
-        //senderEmail: 'c52285184118243909843@sandbox.pagseguro.com.br',
         senderEmail: user.email,
         senderHash: senderHash,
         shippingAddressRequired: 'false'
+    }
+
+    if(config.useSandbox){
+        boleto.senderEmail = 'c52285184118243909843@sandbox.pagseguro.com.br';
+        boleto.senderCPF = '00000000000';
     }
     return boleto;
 }
@@ -64,8 +67,6 @@ const newTransaction = async (transaction) => {
         const resultString = await response.text();
     
         const result = await xml2js(resultString);
-
-        console.log({resultString});
     
         return result.transaction;
     }
@@ -76,21 +77,19 @@ const newTransaction = async (transaction) => {
     
 }
 
-const getNotification = async (transaction) => {
+const getNotification = async (notificationCode) => {
     var url;
     if (config.useSandbox) {
-        url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagseguroSandboxToken}`
+        url = `https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/${notificationCode}?email=${config.pagseguroEmail}&token=${config.pagseguroSandboxToken}`
     } else {
-        url = `https://ws.pagseguro.uol.com.br/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagSeguroToken}`
+        url = `https://ws.pagseguro.uol.com.br/v3/transactions/notifications/${notificationCode}?email=${config.pagseguroEmail}&token=${config.pagSeguroToken}`
     }
-    let requestBody = jsonToQuery(transaction);
 
     let response = await fetch(url, {
-        body: requestBody,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        method: "POST"
+        method: "GET"
     })
 
     const resultString = await response.text();
@@ -100,7 +99,8 @@ const getNotification = async (transaction) => {
     return result.transaction;
 }
 
-jsonToQuery = (object) => {
+
+const jsonToQuery = (object) => {
     let encodedString = Object.keys(object).reduce(
         (queryString, key) => {
             return `${queryString}${key}=${encodeURIComponent(object[key])}&`;

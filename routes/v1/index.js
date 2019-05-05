@@ -1,19 +1,20 @@
-var express = require('express');
-var Verify = require('../verify');
+const express = require('express');
+const Verify = require('../verify');
 
-var exchange = require('./exchange')
-var gift = require('./gift')
-var history = require('./history')
-var kit = require('./kit')
-var log = require('./log')
-var notification = require('./notification')
-var order = require('./order')
-var payment = require('./payment')
-var user = require('./user')
-var pack = require('./pack')
-var packItem = require('./packItem')
+const exchange = require('./exchange')
+const gift = require('./gift')
+const history = require('./history')
+const kit = require('./kit')
+const log = require('./log')
+const notification = require('./notification')
+const order = require('./order')
+const payment = require('./payment')
+const user = require('./user')
+const pack = require('./pack')
+const packItem = require('./packItem')
+const paypalWebhook = require('./paypalWebhook')
 
-var api = express.Router();
+const api = express.Router();
 
 api.use('/exchange', Verify.verifyOrdinaryUser, exchange);
 api.use('/gift', Verify.verifyOrdinaryUser, gift);
@@ -26,5 +27,6 @@ api.use('/payment', Verify.verifyOrdinaryUser, payment);
 api.use('/user', user);
 api.use('/pack', Verify.verifyOrdinaryUser, pack);
 api.use('/packItem', Verify.verifyOrdinaryUser, packItem);
+api.use('/paypal-webhook', paypalWebhook );
 
 module.exports = api;

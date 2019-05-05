@@ -75,12 +75,6 @@ router.route('/')
         }
     })
 
-//not rest anymore
-router.route('/notification')
-    .post(async (req, res) => {
-        console.log(req);
-    })
-
 router.route('/session-id')
     .get(async (req, res) => {
         try {

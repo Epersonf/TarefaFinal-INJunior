@@ -7,6 +7,6 @@ module.exports = {
     'pagseguroEmail': 'ambayasemijoias@gmail.com',
     'pagseguroSandboxToken': '4B600F906F9C49EFA0520D94ADFA1AEE',
     'pagSeguroToken': '5E7E5D7822FB4367BCDF1CCD4188B08A',
-    'pagseguroNotificationUrl': 'https://webhook.site/5d6544c8-9b83-422a-a9f6-278f4ad73c68',
-    'useSandbox': false
+    'pagseguroNotificationUrl': process.env.PAYPAL_WEBHOOK || 'https://webhook.site/88ac3f22-0347-43a2-88b7-48aa4603b890',
+    'useSandbox': true
 }
