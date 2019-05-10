@@ -65,14 +65,8 @@ const newTransaction = async (transaction) => {
         })
     
         const resultString = await response.text();
-        console.log({resultString});
-        const result = await xml2js(resultString);
-        console.log({result});
-
-        if(result.error){
-            throw new Error(result.error);
-        }
-    
+        const result = await xml2js(resultString);   
+        //TODO -> Tratar o erro aqui 
         return result.transaction;
     }
     catch(error){
