@@ -68,6 +68,10 @@ const newTransaction = async (transaction) => {
         console.log({resultString});
         const result = await xml2js(resultString);
         console.log({result});
+
+        if(result.error){
+            throw new Error(result.error);
+        }
     
         return result.transaction;
     }
