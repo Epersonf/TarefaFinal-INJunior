@@ -14,6 +14,7 @@ router.route('/')
             switch (payment.tipo) {
                 case 'boleto':
                     transaction = pagSeguroHelper.newBoleto(payment, user, senderHash)
+                    console.log({transaction});
                     break;
             }
             transactionResult = await pagSeguroHelper.newTransaction(transaction);

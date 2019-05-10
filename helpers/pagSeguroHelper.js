@@ -65,8 +65,9 @@ const newTransaction = async (transaction) => {
         })
     
         const resultString = await response.text();
-    
+        console.log({resresultStringult});
         const result = await xml2js(resultString);
+        console.log({result});
     
         return result.transaction;
     }
