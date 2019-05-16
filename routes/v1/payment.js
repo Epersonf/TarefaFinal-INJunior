@@ -17,6 +17,7 @@ router.route('/')
                     break;
             }
             transactionResult = await pagSeguroHelper.newTransaction(transaction);
+            console.info({transactionResult});
             let newPayment = await Payment.create({
                 transactionId: transactionResult.code[0],
                 boletoUrl: transactionResult.paymentLink[0],

@@ -5,9 +5,9 @@ var Exchange = require('../../models/troca');
 router.route('/')
     //create
     .post(async (req, res, next) => {
-        let exchange = req.body;
+        const exchange = req.body;
         try{
-            let newExchange = await Exchange.create(exchange); 
+            const newExchange = await Exchange.create(exchange); 
             /* req.exchange = newExchange;
             next(); */ 
             res.status(200).json(newExchange);
@@ -18,22 +18,22 @@ router.route('/')
     })
     //retrieve
     .get(async (req, res) => {
-        let { id } = req.query;
+        const { id } = req.query;
         if (id) {
-            let exchange = await Exchange.findById(id);
+            const exchange = await Exchange.findById(id);
             res.json(exchange);
         } else {
-            let exchanges = await Exchange.find({}).exec();
+            const exchanges = await Exchange.find({}).exec();
             res.json(exchanges);
         }
     })
     //update
     .put(async (req, res) => {
-        let { id } = req.query;
-        let exchange = req.body;
+        const { id } = req.query;
+        const exchange = req.body;
         if (id) {
             try{
-                let newExchange = await Exchange.updateOne({'_id': id}, {'$set': exchange});
+                const newExchange = await Exchange.updateOne({'_id': id}, {'$set': exchange});
                 res.json(newExchange);
             }
             catch(error){
