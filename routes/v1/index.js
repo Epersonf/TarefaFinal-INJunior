@@ -10,8 +10,12 @@ const notification = require('./notification')
 const order = require('./order')
 const payment = require('./payment')
 const user = require('./user')
-const pack = require('./pack')
-const packItem = require('./packItem')
+const collection = require('./collection')
+const product = require('./product')
+const tag = require('./tag')
+/* const pack = require('./pack')
+const packItem = require('./packItem') */
+
 const paypalWebhook = require('./paypalWebhook')
 
 const api = express.Router();
@@ -25,8 +29,11 @@ api.use('/notification', Verify.verifyOrdinaryUser, notification);
 api.use('/order', Verify.verifyOrdinaryUser, order);
 api.use('/payment', Verify.verifyOrdinaryUser, payment);
 api.use('/user', user);
-api.use('/pack', Verify.verifyOrdinaryUser, pack);
-api.use('/packItem', Verify.verifyOrdinaryUser, packItem);
+api.use('/collection', Verify.verifyOrdinaryUser, collection);
+api.use('/product', Verify.verifyOrdinaryUser, product);
+api.use('/tag', Verify.verifyOrdinaryUser, tag);
+/* api.use('/pack', Verify.verifyOrdinaryUser, pack);
+api.use('/packItem', Verify.verifyOrdinaryUser, packItem); */
 api.use('/paypal-webhook', paypalWebhook );
 
 module.exports = api;
