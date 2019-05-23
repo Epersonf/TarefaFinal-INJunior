@@ -34,6 +34,10 @@ var user;
 
 io.on('connection', async socket => {
   let userId = socket.handshake.query.user;
+  if(userId === undefined){
+    console.error('Falha ao conectar');
+    return;
+  }
   user = await User.findById(userId);
   if (!user) {
     socket.send('User invalid');

@@ -13,6 +13,7 @@ const user = require('./user')
 const collection = require('./collection')
 const product = require('./product')
 const tag = require('./tag')
+const upload = require('./upload')
 /* const pack = require('./pack')
 const packItem = require('./packItem') */
 
@@ -32,6 +33,7 @@ api.use('/user', user);
 api.use('/collection', Verify.verifyOrdinaryUser, collection);
 api.use('/product', Verify.verifyOrdinaryUser, product);
 api.use('/tag', Verify.verifyOrdinaryUser, tag);
+api.use('/upload', Verify.verifyOrdinaryUser, upload);
 /* api.use('/pack', Verify.verifyOrdinaryUser, pack);
 api.use('/packItem', Verify.verifyOrdinaryUser, packItem); */
 api.use('/paypal-webhook', paypalWebhook );
