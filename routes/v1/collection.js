@@ -22,7 +22,9 @@ router.route('/')
     .get(async (req, res) => {
         let { id, sort, skip, limit, ...otherParams } = req.query;
         if (id) {
-            let collection = await Collection.findById(id);
+            let collection = await Collection.findById(id)
+                .populate('products')
+                .populate('tags');
             res.json(collection);
         } else {
             let query = Collection.find(otherParams)

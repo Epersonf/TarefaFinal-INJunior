@@ -4,34 +4,36 @@ var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var productSchema = new Schema({
-	name: {
-		type: String,		
+    name: {
+        type: String,
         required: true
     },
     code: {
         type: String,
-        index: true
+        required: true
     },
     price: {
         type: Number,
         required: true,
-
     },
     image: {
+        type: String
+    },
+    imageId: {
         type: String
     },
     features: {
         type: [String]
     },
     tags: {
-        type: [ObjectId],
-        ref: 'Tag',
-        index: true,
-        unique: true,
+        type: [{
+            type: ObjectId,
+            ref: 'Tag'
+        }],
     }
 }, {
-    timestamps: true
-});
+        timestamps: true
+    });
 
 // the schema is useless so far
 // we need to create a model using it

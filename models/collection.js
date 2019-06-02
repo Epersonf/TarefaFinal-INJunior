@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var collectionSchema = new Schema({
-	name: {
-		type: String,		
+    name: {
+        type: String,
         required: true
     },
     status: {
@@ -14,10 +14,15 @@ var collectionSchema = new Schema({
         default: 'Pending'
     },
     products: {
-        type: [ObjectId],
-        ref: 'Product'
+        type: [{
+            type: ObjectId,
+            ref: 'Product'
+        }],
     },
     image: {
+        type: String
+    },
+    imageId: {
         type: String
     },
     activationDate: {
@@ -30,14 +35,14 @@ var collectionSchema = new Schema({
         type: [String]
     },
     tags: {
-        type: [ObjectId],
-        ref: 'Tag',
-        index: true,
-        unique: true,
+        type: [{
+            type: ObjectId,
+            ref: 'Tag'
+        }],
     }
 }, {
-    timestamps: true
-});
+        timestamps: true
+    });
 
 // the schema is useless so far
 // we need to create a model using it
