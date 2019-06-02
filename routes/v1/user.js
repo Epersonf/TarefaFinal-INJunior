@@ -55,20 +55,28 @@ router.route('/')
     })
     //update
     .put(async (req, res, next) => {
-        let { id, status } = req.query;
-        let user = req.body;
+        const { id, status } = req.query;
+        const user = req.body;
+        console.log(user);
         if (id) {
             try {
-                let newUser = await User.updateOne({ '_id': id }, { '$set': user });
-                if (status) {
-                    req.notification = {
-                        to: id,
-                        type: "STATUS_CHANGED",
-                        content: [status]
+                if (user.password) {
+                    const userToChange = await User.findById(id);
+                    await userToChange.setPassword(user.password);
+                    await userToChange.save();
+                    res.status(200).json({msg: 'Password changed'});
+                } else {
+                    let newUser = await User.updateOne({ '_id': id }, { '$set': user });
+                    if (status) {
+                        req.notification = {
+                            to: id,
+                            type: "STATUS_CHANGED",
+                            content: [status]
+                        }
+                        next();
                     }
-                    next();
+                    res.json(newUser);
                 }
-                res.json(newUser);
             }
             catch (error) {
                 res.status(404).json({ error });
