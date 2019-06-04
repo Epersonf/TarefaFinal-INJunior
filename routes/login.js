@@ -9,7 +9,7 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   host: 'smtp.weblink.com.br',
   port: 587,
-  secure: true, // upgrade later with STARTTLS
+  secure: false, // upgrade later with STARTTLS
   auth: {
     user: 'equipe@ambaya.com.br',
     pass: 'ambaya2014'
