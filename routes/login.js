@@ -7,9 +7,9 @@ var uuid = require('uuid');
 var nodemailer = require('nodemailer');
 
 var transporter = nodemailer.createTransport({
-  host: 'mx1.weblink.com.br',
+  host: 'smtp.weblink.com.br',
   port: 587,
-  secure: false, // upgrade later with STARTTLS
+  secure: true, // upgrade later with STARTTLS
   auth: {
     user: 'equipe@ambaya.com.br',
     pass: 'ambaya2014'
@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport({
 })
 
 
-router.post('/', 
+router.post('/',
   passport.authenticate('local'),
   function (req, res) {
     var token = Verify.getToken(req.user);
@@ -55,16 +55,11 @@ router.post('/esqueci-senha', function (req, res, next) {
   );
 });
 
-router.post('/nova-senha', function (req, res, next) {
-  User.findOne({ state: req.body.state },
-    function (err, user) {
-      user.setPassword(req.body.senha, function (error) {
-        user.state = "";
-        user.save();
-      });
-      res.json(user);
-    }
-  );
+router.post('/nova-senha', async  (req, res, next) => {
+  const userToChange = await User.findOne({ state: req.body.state });
+  await userToChange.setPassword(user.password);
+  await userToChange.save();
+  res.status(200).json({ msg: 'Password changed' });
 });
 
 module.exports = router;
