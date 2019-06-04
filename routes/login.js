@@ -56,7 +56,7 @@ router.post('/esqueci-senha', function (req, res, next) {
 });
 
 router.post('/nova-senha', async  (req, res, next) => {
-  const userToChange = await User.findOne({ state: req.body.state });
+  const userToChange = await User.findOne({ state: req.body.state }).exec();
   await userToChange.setPassword(user.password);
   await userToChange.save();
   res.status(200).json({ msg: 'Password changed' });
