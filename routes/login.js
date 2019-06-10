@@ -1,12 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var User = require('../models/user');
-var Verify = require('./verify');
-var uuid = require('uuid');
-var nodemailer = require('nodemailer');
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const User = require('../models/user');
+const Verify = require('./verify');
+const uuid = require('uuid');
+const nodemailer = require('nodemailer');
+const emailHelper = require('../helpers/emailHelper').default;
 
-var transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: 'smtp.weblink.com.br',
   port: 465,
   secure: true, // upgrade later with STARTTLS
@@ -31,8 +32,18 @@ router.post('/',
 );
 
 //Password Recovery
+
+//TODO: tratar requisição vinda do app
 router.post('/esqueci-senha', function (req, res, next) {
-  var state = uuid();
+  const state = uuid();
+  const { login, email, origin} = req.body;
+  let returnUrl;
+  switch(origin){
+    case 'app':
+      returnUrl = 'https://app.ambaya.com.br/nova-senha';
+    default:
+      returnUrl = 'http://minha.ambaya.com.br/#/recuperar-senha/';
+  }
   User.update({ username: req.body.login, email: req.body.email },
     {
       $set: {
@@ -44,7 +55,7 @@ router.post('/esqueci-senha', function (req, res, next) {
         from: '"Equipe Ambaya" <equipe@ambaya.com.br>',
         to: req.body.email,
         subject: 'Recuperação de Senha',
-        html: '<p>Para recuperar sua senha <a href="http://minha.ambaya.com.br/#/recuperar-senha/' + state + '">clique aqui</a></p>' // html body
+        html: emailHelper.getForgottenPasswordEmail(returnUrl, state)
       };
 
       // send mail with defined transport object
