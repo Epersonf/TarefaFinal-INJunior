@@ -5,7 +5,7 @@ const User = require('../models/user');
 const Verify = require('./verify');
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
-const emailHelper = require('../helpers/emailHelper').default;
+const emailHelper = require('../helpers/emailHelper');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.weblink.com.br',
@@ -44,7 +44,7 @@ router.post('/esqueci-senha', function (req, res, next) {
     default:
       returnUrl = 'http://minha.ambaya.com.br/#/recuperar-senha/';
   }
-  User.update({ username: req.body.login, email: req.body.email },
+  User.update({ username: login, email: email },
     {
       $set: {
         state: state
