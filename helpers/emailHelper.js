@@ -14,7 +14,6 @@ const getForgottenPasswordEmail = (returnUrl, state) => {
             <img src="https://minha.ambaya.com.br/img/logo_barra.png" alt="Ambaya Semijoias"  style=" max-width: 50%;" />
             <div style="background-color: white;padding: 20px 100px;margin: 10px 15px 30px 15px;text-align: center;border-radius: 3px;box-shadow: 0px 6px 5px 0px rgba(0, 0, 0, 0.75);">
                 <h1 style="font-weight: 300;">Esqueceu a senha?</h1>
-                <p style="font-size: 3em;">🤔</p>
                 <p>Não tem problema, basta clicar no botão abaixo para configurar uma nova senha!</p>
                 </br>
                 <a style="background-color: #E6B000;text-decoration: none;padding: 7px 25px;border-radius: 3px;text-transform: uppercase;color: #ffffff;box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.75);"
