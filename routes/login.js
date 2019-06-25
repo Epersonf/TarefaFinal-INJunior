@@ -42,7 +42,7 @@ router.post('/esqueci-senha', function (req, res, next) {
     case 'app':
       returnUrl = 'https://app.ambaya.com.br/nova-senha';
     default:
-      returnUrl = 'http://minha.ambaya.com.br/#/recuperar-senha/';
+      returnUrl = 'http://minha.ambaya.com.br/#/recuperar-senha';
   }
   User.update({ username: login, email: email },
     {
