@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var Order = require('../../models/encomenda');
+const express = require('express');
+const router = express.Router();
+const Order = require('../../models/encomenda');
+const frete = require('frete');
 
 router.route('/')
     //create
@@ -11,7 +12,7 @@ router.route('/')
             /* req.order = newOrder;
             console.log('API: ', order);
             next();  */
-            newOrder = await newOrder.populate({'path': 'pagamento'}).execPopulate();
+            newOrder = await newOrder.populate({ 'path': 'pagamento' }).execPopulate();
             res.status(200).json(newOrder);
         }
         catch (error) {
@@ -81,6 +82,29 @@ router.route('/')
         } else {
             res.status(400).json({ error: 'Missing ID' });
         }
+    })
+
+router.route('/shippMentPrice')
+    .post(async (req, res, next) => {
+        let { cep, value } = req.body;
+        frete()
+            .cepOrigem('36204632')
+            .peso(1)
+            .formato(1)
+            .comprimento(16)
+            .altura(2)
+            .largura(11)
+            .diametro(1)
+            .maoPropria('N')
+            .valorDeclarado(value)
+            .avisoRecebimento('S')
+            .servico(frete.codigos.pac)
+            .preco(cep, function (err, results) {
+                if(results.erro){
+                    res.status(400).json({ msg: results.msgErro });
+                }
+                res.json(results);
+            });
     })
 
 module.exports = router;
