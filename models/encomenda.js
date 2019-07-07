@@ -39,6 +39,7 @@ var encomendaSchema = new Schema({
     consultorNome: String,
     consultorId: ObjectId,
     detalhes: String, 
+    shipmentCode: String,
     enviados: [String],
     products: {
         type: [{
