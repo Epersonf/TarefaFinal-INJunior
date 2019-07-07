@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../../models/encomenda');
+const Collection = require('../../models/collection');
+const Payment = require('../../models/acerto');
+const ArrayHelper = require('../../helpers/arrayHelper');
+const PagseguroHelper = require('../../helpers/pagSeguroHelper');
 const frete = require('frete');
 
 router.route('/')
@@ -100,11 +104,54 @@ router.route('/shippMentPrice')
             .avisoRecebimento('S')
             .servico(frete.codigos.pac)
             .preco(cep, function (err, results) {
-                if(results.erro){
+                if (results.erro) {
                     res.status(400).json({ msg: results.msgErro });
                 }
                 res.json(results);
             });
+    })
+
+router.route('/orderFromCollection')
+    .post(async (req, res, next) => {
+        const { collectionId, costumer, products, values, senderHash } = req.body;
+        try {
+            let collection = await Collection.findById(collectionId);
+            const collectionProducts = collection.toJSON().products;
+            const removalResult = ArrayHelper.removeFromArray(collectionProducts.map(c => `${c}`), products);
+            if (removalResult.status === 'done') {
+                collection.products = removalResult.items;
+                await collection.save();
+                const transaction = PagseguroHelper.collectionBoleto(values, costumer, senderHash);
+                const transactionResult = await PagseguroHelper.newTransaction(transaction);
+                const payment = await Payment.create({
+                    transactionId: transactionResult.code[0],
+                    boletoUrl: transactionResult.paymentLink[0],
+                    status: 'WaitingForPayment',
+                    userNome: costumer.nome,
+                    userId: costumer._id,
+                    tipo: 'Reseller',
+                    valor: values.products,
+                    frete: values.shipment,
+                    total: values.total,
+                });
+                await Order.create({
+                    item: collection.name,
+                    tipo: 'catalogo',
+                    donoNome: costumer.nome,
+                    donoId: costumer._id,
+                    pagamento: payment._id,
+                    products,
+                })
+                res.status(200).json({
+                    collection,
+                });
+            }
+            res.status(400).json({
+                error: 'Peças não encontradas',
+            });
+        } catch (error) {
+            res.status(500).json({ error });
+        }
     })
 
 module.exports = router;

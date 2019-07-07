@@ -39,7 +39,13 @@ var encomendaSchema = new Schema({
     consultorNome: String,
     consultorId: ObjectId,
     detalhes: String, 
-    enviados: [String]
+    enviados: [String],
+    products: {
+        type: [{
+            type: ObjectId,
+            ref: 'Product'
+        }],
+    },
 }, {
     timestamps: true
 });

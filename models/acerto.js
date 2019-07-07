@@ -22,6 +22,16 @@ var acertoSchema = new Schema({
 		required: true,
 		default: 0
 	},
+	frete: {
+		type: Number,
+		required: true,
+		default: 0
+	},
+	total:{
+		type: Number,
+		required: true,
+		default: 0
+	},
 	pago: {
 		type: Number,
 		required: true,
