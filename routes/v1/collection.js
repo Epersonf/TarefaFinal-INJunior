@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Collection = require('../../models/collection');
+var Verify = require('../verify');
 
 router.route('/')
     //create
-    .post(async (req, res, next) => {
+    .post(Verify.verifyOrdinaryUser, async (req, res, next) => {
         let collection = req.body;
         try {
             let newCollection = await Collection.create(collection);
@@ -44,7 +45,7 @@ router.route('/')
         }
     })
     //update
-    .put(async (req, res) => {
+    .put(Verify.verifyOrdinaryUser, async (req, res) => {
         let { id } = req.query;
         let collection = req.body;
         if (id) {
@@ -61,7 +62,7 @@ router.route('/')
         }
     })
     //delete
-    .delete(async (req, res) => {
+    .delete(Verify.verifyOrdinaryUser, async (req, res) => {
         let { id } = req.query;
         if (id) {
             try {

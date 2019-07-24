@@ -30,7 +30,7 @@ api.use('/notification', Verify.verifyOrdinaryUser, notification);
 api.use('/order', Verify.verifyOrdinaryUser, order);
 api.use('/payment', Verify.verifyOrdinaryUser, payment);
 api.use('/user', user);
-api.use('/collection', Verify.verifyOrdinaryUser, collection);
+api.use('/collection', collection);
 api.use('/product', Verify.verifyOrdinaryUser, product);
 api.use('/tag', Verify.verifyOrdinaryUser, tag);
 api.use('/upload', Verify.verifyOrdinaryUser, upload);
