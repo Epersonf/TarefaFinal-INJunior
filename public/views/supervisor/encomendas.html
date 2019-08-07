@@ -1,0 +1,101 @@
+<div class="fixed-action-btn botaoAlto">
+	<a class="btn-floating btn-large botaoAmarelo tooltipped waves-effect waves-light" data-position="left" data-delay="100" data-tooltip="Adicionar" ng-click="add()">
+		<i class="large material-icons">add</i>
+	</a>
+</div>
+
+<div class="row">
+	<div class="col s12 m12">
+		<div class="card fundoAmarelo">
+			<div class="card-content">
+				<span class="card-title">Encomendas</span>
+				<div class="row fundoBranco">
+					<div class="col s12">
+						<ul class="tabs">
+							<li class="tab col m3 s6"><a class="active clicavel" ng-click="status=['Aprovada', 'Enviada', 'Pendente', 'Cancelada']">Todas</a></li>
+							<li class="tab col m3 s6"><a class="clicavel" ng-click="status=['Aprovada']" >Aprovadas</a></li>
+							<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Enviada']">Enviadas</a></li>
+							<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Pendente']">Pendentes</a></li>
+							<li class="tab col m2 s6"><a class="clicavel" ng-click="status=['Cancelada']">Canceladas</a></li>
+						</ul>
+					</div>
+					<div class="col s6 m3" ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:filtroStatus">
+						<div class="card medium center-align z-depth-5" >
+							<div class="card-content">
+								<span class="card-title">{{encomenda.item}}<br>
+									<div class="chip tooltipped" ng-class="{'orange': encomenda.status==='Pendente', 'red': encomenda.status==='Cancelada', 'green': encomenda.status==='Aprovada' || encomenda.status==='Enviada'}" >
+										{{encomenda.status}}
+									</div>
+								</span>
+								<h1 ng-if="encomenda.status==='Pendente' | encomenda.status==='Cancelada' | encomenda.status==='Aprovada'">{{encomenda.quantidade}}</h1>
+								<h1 ng-if="encomenda.status==='Enviada'">{{encomenda.enviados.length}}</h1>
+								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
+								<div class="chip" ng-if="encomenda.consultorNome">
+									<i class="material-icons left">person</i>
+									{{encomenda.consultorNome}}
+								</div>
+							</div>
+							<div ng-if="encomenda.status==='Enviada'" class="card-reveal">
+								<span class="card-title grey-text text-darken-4">Peças enviadas<i class="material-icons right">close</i></span>
+								<table class="bordered">
+									<tbody>
+									<tr ng-repeat="cod in encomenda.enviados track by $index">
+										<td>{{cod}}</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="card-action">
+								<a ng-show="encomenda.status==='Pendente'"  class="waves-effect waves-light btn btn-small botaoVermelho" ng-click="cancelar(encomenda._id)"><i class="material-icons">close</i></a>
+								<span ng-show="encomenda.status==='Enviada'">Data de envio: {{encomenda.updatedAt | date: "d/MM/yy"}} <a class="activator clicavel"><i class="material-icons right" title="Ver peças">list</i></a></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="adicionar" class="modal modal-fixed-footer" >
+	<div class="modal-content">
+		<h4>Fazer encomenda</h4>
+		<form ng-submit="novo()" name="formulario" id="formulario">
+			<div class="input-field">
+				<select ng-model="form.item" name="item" required>
+					<option value="" disabled selected>Selecione o item</option>
+					<option value="Personalizada">Personalizada</option>
+					<option value="Anel">Anel</option>
+					<option value="Brinco Pequeno">Brinco Pequeno</option>
+					<option value="Brinco Grande">Brinco Grande</option>
+					<option value="Cordão Feminino">Cordão Feminino</option>
+					<option value="Cordão Masculino">Cordão Masculino</option>
+					<option value="Pingente">Pingente</option>
+					<option value="Pulseira Feminina">Pulseira Feminina</option>
+					<option value="Pulseira Masculina">Pulseira Masculina</option>
+					<option value="Escapulário">Escapulário</option>
+					<option value="Tornozeleira">Tornozeleira</option>
+					<!--<option value="Reposição padrão">Reposição padrão</option>-->
+				</select>
+			</div>									
+			<div class="input-field">
+				<label  for="quantidade">Quantidade</label>
+				<input placeholder="Quantidade" type="number" min="1" ng-model="form.quantidade" name="quantidade" required>
+			</div>
+			<div class="input-field" ng-show="form.item==='Personalizada'">
+				<select ng-model="form.consultor" ng-options="consultor.nome + ' ' + consultor.sobrenome for consultor in consultores">
+					<option value=""  selected>Selecione o consultor</option>
+				</select>
+			</div>
+			<div class="input-field" ng-if="form.item==='Personalizada'">
+				<label  for="detalhes">Detalhes</label>
+				<input  type="text" ng-model="form.detalhes" name="detalhes" required>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<input class="waves-effect waves-green btn-flat" type="submit" form="formulario" value="Pronto!"/>
+		<a class="modal-close waves-effect waves-red btn-flat" >Cancelar</a>
+	</div>
+</div>
