@@ -36,6 +36,10 @@ var encomendaSchema = new Schema({
         type: ObjectId,
         ref: 'Acerto'
     },
+    collection:{
+        type: ObjectId,
+        ref: 'Collection'
+    },
     consultorNome: String,
     consultorId: ObjectId,
     detalhes: String, 
