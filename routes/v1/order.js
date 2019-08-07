@@ -27,7 +27,16 @@ router.route('/')
     .get(async (req, res) => {
         let { id, sort, skip, limit, ...otherParams } = req.query;
         if (id) {
-            let order = await Order.findById(id);
+            let order = await Order.findById(id)
+                .populate(
+                    {
+                        'path': 'donoId',
+                        'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
+                    })
+                .populate(
+                    {
+                        'path': 'products'
+                    });
             res.json(order);
         } else {
             let query = Order.find(otherParams)
