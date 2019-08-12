@@ -122,6 +122,7 @@ router.route('/shippMentPrice')
 
 router.route('/orderFromCollection')
     .post(async (req, res, next) => {
+        console.log('body', req.body);
         const { collectionId, costumer, products, values, senderHash } = req.body;
         try {
             let collection = await Collection.findById(collectionId);
@@ -129,9 +130,10 @@ router.route('/orderFromCollection')
             const removalResult = ArrayHelper.removeFromArray(collectionProducts.map(c => `${c}`), products);
             if (removalResult.status === 'done') {
                 collection.products = removalResult.items;
-                await collection.save();
                 const transaction = PagseguroHelper.collectionBoleto(values, costumer, senderHash);
+                console.log({transaction});
                 const transactionResult = await PagseguroHelper.newTransaction(transaction);
+                console.log({transactionResult});
                 const payment = await Payment.create({
                     transactionId: transactionResult.code[0],
                     boletoUrl: transactionResult.paymentLink[0],
@@ -151,6 +153,7 @@ router.route('/orderFromCollection')
                     pagamento: payment._id,
                     products,
                 })
+                await collection.save();
                 res.status(200).json({
                     collection,
                 });

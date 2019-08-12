@@ -1,19 +1,14 @@
-
 var config = require('../config');
 const fetch = require("node-fetch");
 var xml2js = require('xml2js-es6-promise');
 
 const authenticate = async () => {
-    var url;
-    if (config.useSandbox) {
-        url = `https://ws.sandbox.pagseguro.uol.com.br/v2/sessions?email=${config.pagseguroEmail}&token=${config.pagseguroSandboxToken}`
-    } else {
-        url = `https://ws.pagseguro.uol.com.br/v2/sessions?email=${config.pagseguroEmail}&token=${config.pagSeguroToken}`
-    }
+    const url = `${config.pagSeguroUrl}/v2/sessions?email=${config.pagseguroEmail}&token=${config.pagseguroToken}`;
+    console.log({url});
     const response = await fetch(url, { method: 'POST' });
     const sessionString = await response.text();
     const session = await xml2js(sessionString);
-    console.info(`Authenticated:`, session)
+    //console.info(`Authenticated:`, session)
     return session;
 }
 
@@ -39,7 +34,7 @@ const newBoleto = (payment, user, senderHash) => {
         shippingAddressRequired: 'false'
     }
 
-    if (config.useSandbox) {
+    if (config.appEnv === 'test') {
         boleto.senderEmail = 'c52285184118243909843@sandbox.pagseguro.com.br';
         boleto.senderCPF = '00000000000';
     }
@@ -77,22 +72,16 @@ const collectionBoleto = (values, user, senderHash) => {
         }
     }
 
-    if (config.useSandbox) {
-        boleto.senderEmail = 'c52285184118243909843@sandbox.pagseguro.com.br';
+    if (config.appEnv === 'test') {
+        boleto.senderEmail = 'tester@sandbox.pagseguro.com.br';
         boleto.senderCPF = '00000000000';
     }
     return boleto;
 }
 
 const newTransaction = async (transaction) => {
-    var url;
-    if (config.useSandbox) {
-        url = `https://ws.sandbox.pagseguro.uol.com.br/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagseguroSandboxToken}`
-    } else {
-        url = `https://ws.pagseguro.uol.com.br/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagSeguroToken}`
-    }
-    let requestBody = jsonToQuery(transaction);
-
+    const url = `${config.pagSeguroUrl}/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagseguroToken}`;
+    const requestBody = jsonToQuery(transaction);
     try {
         let response = await fetch(url, {
             body: requestBody,
@@ -101,7 +90,7 @@ const newTransaction = async (transaction) => {
             },
             method: "POST"
         })
-
+        console.log({response});
         const resultString = await response.text();
         console.log({ resultString });
         const result = await xml2js(resultString);
@@ -116,12 +105,7 @@ const newTransaction = async (transaction) => {
 }
 
 const getNotification = async (notificationCode) => {
-    var url;
-    if (config.useSandbox) {
-        url = `https://ws.sandbox.pagseguro.uol.com.br/v3/transactions/notifications/${notificationCode}?email=${config.pagseguroEmail}&token=${config.pagseguroSandboxToken}`
-    } else {
-        url = `https://ws.pagseguro.uol.com.br/v3/transactions/notifications/${notificationCode}?email=${config.pagseguroEmail}&token=${config.pagSeguroToken}`
-    }
+    const url = `${config.pagSeguroUrl}/v3/transactions/notifications/${notificationCode}?email=${config.pagseguroEmail}&token=${config.pagseguroToken}`;
 
     let response = await fetch(url, {
         headers: {
