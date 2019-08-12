@@ -131,9 +131,7 @@ router.route('/orderFromCollection')
             if (removalResult.status === 'done') {
                 collection.products = removalResult.items;
                 const transaction = PagseguroHelper.collectionBoleto(values, costumer, senderHash);
-                console.log({transaction});
                 const transactionResult = await PagseguroHelper.newTransaction(transaction);
-                console.log({transactionResult});
                 const payment = await Payment.create({
                     transactionId: transactionResult.code[0],
                     boletoUrl: transactionResult.paymentLink[0],

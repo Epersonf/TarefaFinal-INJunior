@@ -81,6 +81,7 @@ const collectionBoleto = (values, user, senderHash) => {
 
 const newTransaction = async (transaction) => {
     const url = `${config.pagSeguroUrl}/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagseguroToken}`;
+    console.log({url});
     const requestBody = jsonToQuery(transaction);
     try {
         let response = await fetch(url, {
@@ -90,7 +91,6 @@ const newTransaction = async (transaction) => {
             },
             method: "POST"
         })
-        console.log({response});
         const resultString = await response.text();
         console.log({ resultString });
         const result = await xml2js(resultString);
