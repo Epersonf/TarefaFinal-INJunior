@@ -31,7 +31,7 @@ router.route('/')
                 .populate(
                     {
                         'path': 'donoId',
-                        'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
+                        'select': '_id nome sobrenome whatsapp endereco cidade cep cpf estoque'
                     })
                 .populate(
                     {
