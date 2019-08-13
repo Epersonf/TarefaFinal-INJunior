@@ -5,10 +5,10 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 var encomendaSchema = new Schema({
-	item: {
-		type: String,		
+    item: {
+        type: String,
         required: false
-	},
+    },
     status: {
         type: String,
         required: true,
@@ -19,26 +19,26 @@ var encomendaSchema = new Schema({
         required: true,
         default: "simples" // simples, enxoval, catalogo
     },
-	quantidade: {
-		type: Number,
-		required: false
-	},
-	donoNome:{
+    quantidade: {
+        type: Number,
+        required: false
+    },
+    donoNome: {
         type: String,
         required: false
     },
-    donoId:{ 
+    donoId: {
         type: ObjectId,
         required: true,
         ref: 'User'
     },
-    pagamento:{
+    pagamento: {
         type: ObjectId,
         ref: 'Acerto'
     },
     consultorNome: String,
     consultorId: ObjectId,
-    detalhes: String, 
+    detalhes: String,
     shipmentCode: String,
     enviados: [String],
     products: {
@@ -47,9 +47,13 @@ var encomendaSchema = new Schema({
             ref: 'Product'
         }],
     },
+    catalog: {
+        type: ObjectId,
+        ref: 'Collection'
+    }
 }, {
-    timestamps: true
-});
+        timestamps: true
+    });
 
 // the schema is useless so far
 // we need to create a model using it

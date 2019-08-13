@@ -122,7 +122,6 @@ router.route('/shippMentPrice')
 
 router.route('/orderFromCollection')
     .post(async (req, res, next) => {
-        console.log('body', req.body);
         const { collectionId, costumer, products, values, senderHash } = req.body;
         try {
             let collection = await Collection.findById(collectionId);
@@ -155,12 +154,15 @@ router.route('/orderFromCollection')
                 res.status(200).json({
                     collection,
                 });
+                return;
             }
             res.status(400).json({
                 error: 'Peças não encontradas',
             });
+            return;
         } catch (error) {
             res.status(500).json({ error });
+            return;
         }
     })
 

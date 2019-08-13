@@ -39,7 +39,20 @@ var collectionSchema = new Schema({
             type: ObjectId,
             ref: 'Tag'
         }],
-    }
+    },
+    history: [
+        {
+            product: {
+                type: ObjectId,
+                ref: 'Product'
+            },
+            date: Date,
+            buyer: {
+                type: ObjectId,
+                ref: 'User'
+            }
+        }
+    ]
 }, {
         timestamps: true
     });

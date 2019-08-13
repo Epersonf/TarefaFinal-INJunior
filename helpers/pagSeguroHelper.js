@@ -4,7 +4,7 @@ var xml2js = require('xml2js-es6-promise');
 
 const authenticate = async () => {
     const url = `${config.pagSeguroUrl}/v2/sessions?email=${config.pagseguroEmail}&token=${config.pagseguroToken}`;
-    console.log({url});
+    console.log({ url });
     const response = await fetch(url, { method: 'POST' });
     const sessionString = await response.text();
     const session = await xml2js(sessionString);
@@ -62,6 +62,28 @@ const collectionBoleto = (values, user, senderHash) => {
         senderHash: senderHash,
         shippingAddressRequired: 'false'
     }
+
+    if (config.appEnv === 'test') {
+        boleto = {
+            paymentMode: 'default',
+            paymentMethod: 'boleto',
+            receiverEmail: config.pagseguroEmail,
+            notificationURL: config.pagseguroNotificationUrl,
+            currency: 'BRL',
+            extraAmount: '0.00',
+            itemId1: '01',
+            itemDescription1: 'Pecas',
+            itemAmount1: values.products.toFixed(2),
+            itemQuantity1: 1,
+            senderName: 'User Tester',
+            senderCPF: '00000000000',
+            senderAreaCode: '31',
+            senderPhone: '973607172',
+            senderEmail: 'tester@sandbox.pagseguro.com.br',
+            shippingAddressRequired: 'false',
+        }
+    }
+
     if (values.shipment > 0) {
         boleto = {
             ...boleto,
@@ -72,16 +94,12 @@ const collectionBoleto = (values, user, senderHash) => {
         }
     }
 
-    if (config.appEnv === 'test') {
-        boleto.senderEmail = 'tester@sandbox.pagseguro.com.br';
-        boleto.senderCPF = '00000000000';
-    }
     return boleto;
 }
 
 const newTransaction = async (transaction) => {
     const url = `${config.pagSeguroUrl}/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagseguroToken}`;
-    console.log({url});
+    console.log({ url });
     const requestBody = jsonToQuery(transaction);
     try {
         let response = await fetch(url, {

@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const pagSeguroHelper = require('../../helpers/pagSeguroHelper');
 const Payment = require('../../models/acerto');
+const User = require('../../models/user');
+const Order = require('../../models/encomenda');
+const Collection = require('../../models/collection');
 
 const paymentStatusList = {
     "1": "WationgForPayment",
@@ -21,11 +24,28 @@ router.route('/')
 
         const transactionId = pagseguroNotification.code[0];
         const paymentStatus = paymentStatusList[pagseguroNotification.status[0]];
-        //atualizar o payment
+        
         try {
             let payment = await Payment.findOne({ transactionId });
             payment.status = paymentStatus;
             payment = await payment.save();
+            if(paymentStatus==="Payed"){
+                const reseller = User.findById(payment.userId);
+                if(reseller.supervisor){
+                    const supervisor = User.findById(reseller.supervisor);
+                    supervisor.totalVendido += payment.total;
+                    supervisor.desconto += supervisor.porcentagem * payment.total;
+                    supervisor.save();
+                }
+            } else if(paymentStatus==="Canceled"){
+                const order = Order.findOne({pagamento: payment._id});
+                const collection = Collection.findById(order.catalog);
+                order.status = 'Cancelada';
+                order.save();
+                collection.products = [...collection.products, ...order.products];
+                // TODO: update collectio history
+                collection.save();
+            }
             //notificar usuário
             const notification = {
                 to: pagseguroNotification.reference[0],
