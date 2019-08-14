@@ -28,7 +28,7 @@ router.route('/')
         try {
             let payment = await Payment.findOne({ transactionId });
             payment.status = paymentStatus;
-            payment = await payment.save();
+            payment = await payment.save();/* 
             if(paymentStatus==="Payed"){
                 const reseller = User.findById(payment.userId);
                 if(reseller.supervisor){
@@ -37,7 +37,7 @@ router.route('/')
                     supervisor.desconto += supervisor.porcentagem * payment.total;
                     supervisor.save();
                 }
-            } else if(paymentStatus==="Canceled"){
+            } else  */if(paymentStatus==="Canceled"){
                 const order = Order.findOne({pagamento: payment._id});
                 const collection = Collection.findById(order.catalog);
                 order.status = 'Cancelada';
