@@ -92,7 +92,13 @@ var User = new Schema({
         type: [ObjectId], 
         ref: 'Notification',
         default: []
-    }
+    },
+    receivedOrders: {
+        type: [{
+            type: ObjectId,
+            ref: 'Encomenda'
+        }],
+    },
 
 }, {
     timestamps: true
