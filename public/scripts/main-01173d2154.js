@@ -26288,9 +26288,9 @@ angular.module('ambaya')
                 valores.vinteBase = 2000 - historico;
             }
             if (vendido + historico >= 2000) {
-                valores.vinteCinco = (vendido + historico - 2000)*0.30;
+                valores.vinteCinco = (vendido + historico - 2000)*0.25;
                 valores.vinteCincoBase = vendido + historico - 2000;
-                valores.vinte = (2000-historico)*0.25;
+                valores.vinte = (2000-historico)*0.20;
                 valores.vinteBase = 2000 - historico;
             } else {
                 valores.vinte = vendido * 0.20;
