@@ -160,7 +160,7 @@ const collectionCard = (values, user, senderHash) => {
             installmentValue: values.installments.amount.toFixed(2),
             noInterestInstallmentQuantity: 2,
             creditCardHolderName: 'User Tester',
-            creditCardHolderCPF: 00000000000,
+            creditCardHolderCPF: '00000000000',
             creditCardHolderBirthDate: '31/07/1992',
             creditCardHolderAreaCode: '31',
             creditCardHolderPhone: '973607172',
