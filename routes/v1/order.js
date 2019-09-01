@@ -122,18 +122,25 @@ router.route('/shippMentPrice')
 
 router.route('/orderFromCollection')
     .post(async (req, res, next) => {
-        const { collectionId, costumer, products, values, senderHash } = req.body;
+        const { collectionId, costumer, products, values, senderHash, type } = req.body;
         try {
             let collection = await Collection.findById(collectionId);
             const collectionProducts = collection.toJSON().products;
             const removalResult = ArrayHelper.removeFromArray(collectionProducts.map(c => `${c}`), products);
             if (removalResult.status === 'done') {
                 collection.products = removalResult.items;
-                const transaction = PagseguroHelper.collectionBoleto(values, costumer, senderHash);
+                let transaction;
+                if(type === 'boleto') {
+                    transaction =  PagseguroHelper.collectionBoleto(values, costumer, senderHash);
+                } else if(type === 'credito') {
+                    transaction =  PagseguroHelper.collectionCard(values, costumer, senderHash);
+                } else {
+                    throw new Error('Tipo de transação inválido');
+                }
+                console.log({transaction});
                 const transactionResult = await PagseguroHelper.newTransaction(transaction);
                 const payment = await Payment.create({
                     transactionId: transactionResult.code[0],
-                    boletoUrl: transactionResult.paymentLink[0],
                     status: 'WaitingForPayment',
                     userNome: costumer.nome,
                     userId: costumer._id,
@@ -142,6 +149,9 @@ router.route('/orderFromCollection')
                     frete: values.shipment,
                     total: values.total,
                 });
+                if(type === 'boleto') {                    
+                    payment.boletoUrl = transactionResult.paymentLink[0];
+                }
                 await Order.create({
                     item: collection.name,
                     tipo: 'catalogo',
@@ -161,6 +171,7 @@ router.route('/orderFromCollection')
             });
             return;
         } catch (error) {
+            console.error(error);
             res.status(500).json({ error });
             return;
         }

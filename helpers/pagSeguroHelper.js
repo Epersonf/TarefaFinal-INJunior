@@ -97,10 +97,102 @@ const collectionBoleto = (values, user, senderHash) => {
     return boleto;
 }
 
+const collectionCard = (values, user, senderHash) => {
+    console.log(values);
+    let card = {
+        paymentMode: 'default',
+        paymentMethod: 'creditCard',
+        receiverEmail: config.pagseguroEmail,
+        currency: 'BRL',
+        extraAmount: '0.00',
+        itemId1: '01',
+        itemDescription1: 'Pecas',
+        itemAmount1: values.products.toFixed(2),
+        itemQuantity1: 1,
+        notificationURL: config.pagseguroNotificationUrl,
+        reference: user._id,
+        senderName: user.nome + " " + user.sobrenome,
+        senderCPF: user.cpf,
+        senderAreaCode: user.whatsapp.slice(0, 2),
+        senderPhone: user.whatsapp.slice(2),
+        senderEmail: user.email,
+        senderHash: senderHash,
+        shippingAddressRequired: 'false',
+        creditCardToken: values.cardToken,
+        installmentQuantity: values.installments.quantity,
+        installmentValue: values.installments.amount.toFixed(2),
+        noInterestInstallmentQuantity: 2,
+        creditCardHolderName: user.nome + " " + user.sobrenome,
+        creditCardHolderCPF: user.cpf,
+        creditCardHolderBirthDate: '31/07/1992',
+        creditCardHolderAreaCode: user.whatsapp.slice(0, 2),
+        creditCardHolderPhone: user.whatsapp.slice(2),
+        billingAddressStreet: "Rua São Joaquim",
+        billingAddressNumber: 257,
+        billingAddressComplement: "casa",
+        billingAddressDistrict: "Santo Antônio",
+        billingAddressPostalCode: 36204632,
+        billingAddressCity: "Barbacena",
+        billingAddressState: "MG",
+        billingAddressCountry: "BRA",
+    }
+
+    if (config.appEnv === 'test') {
+        card = {
+            paymentMode: 'default',
+            paymentMethod: 'creditCard',
+            receiverEmail: config.pagseguroEmail,
+            notificationURL: config.pagseguroNotificationUrl,
+            currency: 'BRL',
+            extraAmount: '0.00',
+            itemId1: '01',
+            itemDescription1: 'Pecas',
+            itemAmount1: values.products.toFixed(2),
+            itemQuantity1: 1,
+            senderName: 'User Tester',
+            senderCPF: '00000000000',
+            senderAreaCode: '31',
+            senderPhone: '973607172',
+            senderEmail: 'tester@sandbox.pagseguro.com.br',
+            shippingAddressRequired: 'false',
+            creditCardToken: values.cardToken,
+            installmentQuantity: values.installments.quantity,
+            installmentValue: values.installments.amount.toFixed(2),
+            noInterestInstallmentQuantity: 2,
+            creditCardHolderName: user.nome + " " + user.sobrenome,
+            creditCardHolderCPF: user.cpf,
+            creditCardHolderBirthDate: '31/07/1992',
+            creditCardHolderAreaCode: user.whatsapp.slice(0, 2),
+            creditCardHolderPhone: user.whatsapp.slice(2),
+            billingAddressStreet: "Rua São Joaquim",
+            billingAddressNumber: 257,
+            billingAddressComplement: "casa",
+            billingAddressDistrict: "Santo Antônio",
+            billingAddressPostalCode: 36204632,
+            billingAddressCity: "Barbacena",
+            billingAddressState: "MG",
+            billingAddressCountry: "BRA",
+        }
+    }
+
+    if (values.shipment > 0) {
+        card = {
+            ...card,
+            itemId2: '02',
+            itemDescription2: 'Frete',
+            itemAmount2: values.shipment.toFixed(2),
+            itemQuantity2: 1,
+        }
+    }
+
+    return card;
+}
+
 const newTransaction = async (transaction) => {
     const url = `${config.pagSeguroUrl}/v2/transactions?email=${config.pagseguroEmail}&token=${config.pagseguroToken}`;
     console.log({ url });
     const requestBody = jsonToQuery(transaction);
+    console.log({ requestBody });
     try {
         let response = await fetch(url, {
             body: requestBody,
@@ -157,4 +249,5 @@ module.exports = {
     newBoleto,
     collectionBoleto,
     getNotification,
+    collectionCard,
 }
