@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('../../models/user');
 var passport = require('passport');
+const Verify = require('../verify');
+const userHelper = require('../../helpers/userHelper');
 
 router.route('/')
     //create
@@ -26,8 +28,18 @@ router.route('/')
         }
     })
     //retrieve
-    .get(async (req, res) => {
+    .get(Verify.verifyOrdinaryUser, async (req, res, next) => {
         let { id, sort, skip, limit, nome, ...otherParams } = req.query;
+
+        /* if (id !== req.decoded._id) {
+            Verify.verifyRole(next, req.decoded.type,
+                [
+                    userHelper.roles.admin,
+                    userHelper.roles.controller,
+                ]);
+        } */
+
+
         if (id) {
             let user = await User.findById(id);
             res.json(user);
@@ -48,7 +60,6 @@ router.route('/')
                 query = query.limit(Number(skip)) :
                 null;
 
-            console.log(query.getQuery());
             let users = await query.exec();
             res.json(users);
         }
@@ -64,7 +75,7 @@ router.route('/')
                     const userToChange = await User.findById(id);
                     await userToChange.setPassword(user.password);
                     await userToChange.save();
-                    res.status(200).json({msg: 'Password changed'});
+                    res.status(200).json({ msg: 'Password changed' });
                 } else {
                     let newUser = await User.updateOne({ '_id': id }, { '$set': user });
                     if (status) {
@@ -88,6 +99,11 @@ router.route('/')
     })
     //delete
     .delete(async (req, res) => {
+        Verify.verifyRole(next, req.decoded.type,
+            [
+                userHelper.roles.admin,
+            ]);
+
         let { id } = req.query;
         if (id) {
             try {
