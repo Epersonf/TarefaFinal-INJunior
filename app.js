@@ -1,38 +1,38 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var config = require('./config')
-var Verify = require('./routes/verify');
-var login = require('./routes/login');
-var users = require('./routes/users');
-var historico = require('./routes/historico');
-var encomendas = require('./routes/encomendas');
-var acertos = require('./routes/acertos');
-var brindes = require('./routes/brindes');
-var trocas = require('./routes/trocas');
-var logs = require('./routes/logs');
-var api = require('./routes/api');
-var kits = require('./routes/kits');
-var v1 = require('./routes/v1/');
-var secure = require('express-force-https');
-var NotificationHelper = require('./helpers/notification.helper');
-var cors = require('cors');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const config = require('./config')
+const Verify = require('./routes/verify');
+const login = require('./routes/login');
+const users = require('./routes/users');
+const historico = require('./routes/historico');
+const encomendas = require('./routes/encomendas');
+const acertos = require('./routes/acertos');
+const brindes = require('./routes/brindes');
+const trocas = require('./routes/trocas');
+const logs = require('./routes/logs');
+const api = require('./routes/api');
+const kits = require('./routes/kits');
+const v1 = require('./routes/v1/');
+const secure = require('express-force-https');
+// const NotificationHelper = require('./helpers/notification.helper');
+const cors = require('cors');
 
-var connection = require('./connection');
+const connection = require('./connection');
 
-var app = connection.app;
-var io = connection.io;
-var server = connection.server;
+const app = connection.app;
+const io = connection.io;
+const server = connection.server;
 
-var user;
+const user;
 
-io.on('connection', async socket => {
+/* io.on('connection', async socket => {
   let userId = socket.handshake.query.user;
   if(userId === undefined){
     console.error('Falha ao conectar');
@@ -62,10 +62,10 @@ io.on('connection', async socket => {
 
   console.log('user conected => ', user.nome);
   console.log('id: ', user._id);
-});
+}); */
 
 mongoose.connect(config.mongoUrl);
-var db = mongoose.connection;
+const db = mongoose.connection;
 app.use(secure);
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger('dev'));
@@ -74,7 +74,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // passport config
-var User = require('./models/user');
+const User = require('./models/user');
 app.use(passport.initialize());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -104,11 +104,11 @@ app.use('/v1', v1);
 app.use('/api', api);
 
 //captando notificações para broadcast e adição no usuário
-app.use(NotificationHelper.notifyUser);
+// app.use(NotificationHelper.notifyUser);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
