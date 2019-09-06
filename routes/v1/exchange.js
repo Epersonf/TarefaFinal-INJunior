@@ -8,23 +8,25 @@ router.route('/')
         const exchange = req.body;
         try{
             const newExchange = await Exchange.create(exchange); 
-            /* req.exchange = newExchange;
-            next(); */ 
             res.status(200).json(newExchange);
         } 
-        catch (error) {
-            res.status(404).json({error});
+        catch (err) {
+            return next(err);
         }        
     })
     //retrieve
     .get(async (req, res) => {
         const { id } = req.query;
-        if (id) {
-            const exchange = await Exchange.findById(id);
-            res.json(exchange);
-        } else {
-            const exchanges = await Exchange.find({}).exec();
-            res.json(exchanges);
+        try{
+            if (id) {
+                const exchange = await Exchange.findById(id);
+                res.json(exchange);
+            } else {
+                const exchanges = await Exchange.find({}).exec();
+                res.json(exchanges);
+            }
+        } catch (err) {
+            return next(err);
         }
     })
     //update
@@ -36,12 +38,14 @@ router.route('/')
                 const newExchange = await Exchange.updateOne({'_id': id}, {'$set': exchange});
                 res.json(newExchange);
             }
-            catch(error){
-                res.status(404).json({error});
+            catch(err){
+                return next(err);
             }
             
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
@@ -52,13 +56,14 @@ router.route('/')
                 let remove = await Exchange.deleteOne({'_id': id});
                 res.json(remove);
             }
-            catch(error){
-                //console.log('error');
-                res.status(404).json(error);
+            catch(err){
+                return next(err);
             }
             
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

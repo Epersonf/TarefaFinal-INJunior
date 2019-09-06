@@ -13,30 +13,34 @@ router.route('/')
                 .execPopulate();
             res.status(200).json(newProduct);
         }
-        catch (error) {
-            res.status(404).json({ error });
+        catch (err) {
+            return next(err);
         }
     })
     //retrieve
     .get(async (req, res) => {
         let { id, sort, skip, limit, ...otherParams } = req.query;
-        if (id) {
-            let product = await Product.findById(id);
-            res.json(product);
-        } else {
-            let query = Product.find(otherParams)
-                .populate('tags');
-            sort ?
-                query = query.sort(sort) :
-                null;
-            limit ?
-                query = query.limit(Number(limit)) :
-                null;
-            skip ?
-                query = query.limit(Number(skip)) :
-                null
-            let orders = await query.exec();
-            res.json(orders);
+        try {
+            if (id) {
+                let product = await Product.findById(id);
+                res.json(product);
+            } else {
+                let query = Product.find(otherParams)
+                    .populate('tags');
+                sort ?
+                    query = query.sort(sort) :
+                    null;
+                limit ?
+                    query = query.limit(Number(limit)) :
+                    null;
+                skip ?
+                    query = query.limit(Number(skip)) :
+                    null
+                let orders = await query.exec();
+                res.json(orders);
+            }
+        } catch (err) {
+            return next(err);
         }
     })
     //update
@@ -48,12 +52,14 @@ router.route('/')
                 let newProduct = await Product.updateOne({ '_id': id }, { '$set': product });
                 res.json(newProduct);
             }
-            catch (error) {
-                res.status(404).json({ error });
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
@@ -70,7 +76,9 @@ router.route('/')
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

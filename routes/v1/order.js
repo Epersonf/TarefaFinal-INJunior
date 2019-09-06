@@ -10,56 +10,58 @@ const frete = require('frete');
 router.route('/')
     //create
     .post(async (req, res, next) => {
-        let order = req.body;
+        const order = req.body;
         try {
             let newOrder = await Order.create(order);
-            /* req.order = newOrder;
-            console.log('API: ', order);
-            next();  */
             newOrder = await newOrder.populate({ 'path': 'pagamento' }).execPopulate();
             res.status(200).json(newOrder);
         }
-        catch (error) {
-            res.status(404).json({ error });
+        catch (err) {
+            return next(err);
         }
     })
     //retrieve
     .get(async (req, res) => {
-        let { id, sort, skip, limit, ...otherParams } = req.query;
-        if (id) {
-            let order = await Order.findById(id)
-                .populate(
-                    {
-                        'path': 'donoId',
-                        'select': '_id nome sobrenome whatsapp endereco cidade cep cpf estoque'
-                    })
-                .populate(
-                    {
-                        'path': 'products'
-                    });
-            res.json(order);
-        } else {
-            let query = Order.find(otherParams)
-                .populate(
-                    {
-                        'path': 'donoId',
-                        'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
-                    })
-                .populate(
-                    {
-                        'path': 'pagamento'
-                    });
-            sort ?
-                query = query.sort(sort) :
-                null;
-            limit ?
-                query = query.limit(Number(limit)) :
-                null;
-            skip ?
-                query = query.limit(Number(skip)) :
-                null
-            let orders = await query.exec();
-            res.json(orders);
+        const { id, sort, skip, limit, ...otherParams } = req.query;
+        try {
+            if (id) {
+                const order = await Order.findById(id)
+                    .populate(
+                        {
+                            'path': 'donoId',
+                            'select': '_id nome sobrenome whatsapp endereco cidade cep cpf estoque'
+                        })
+                    .populate(
+                        {
+                            'path': 'products'
+                        });
+                res.json(order);
+            } else {
+                const query = Order.find(otherParams)
+                    .populate(
+                        {
+                            'path': 'donoId',
+                            'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
+                        })
+                    .populate(
+                        {
+                            'path': 'pagamento'
+                        });
+                sort ?
+                    query = query.sort(sort) :
+                    null;
+                limit ?
+                    query = query.limit(Number(limit)) :
+                    null;
+                skip ?
+                    query = query.limit(Number(skip)) :
+                    null
+                const orders = await query.exec();
+                res.json(orders);
+            }
+        }
+        catch (err) {
+            return next(err);
         }
     })
     //update
@@ -71,12 +73,14 @@ router.route('/')
                 let newOrder = await Order.updateOne({ '_id': id }, { '$set': order });
                 res.json(newOrder);
             }
-            catch (error) {
-                res.status(404).json({ error });
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
@@ -93,7 +97,9 @@ router.route('/')
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 
@@ -113,8 +119,9 @@ router.route('/shippMentPrice')
             .avisoRecebimento('S')
             .servico(frete.codigos.pac)
             .preco(cep, function (err, results) {
+                // TODO: verify error model
                 if (results.erro) {
-                    res.status(400).json({ msg: results.msgErro });
+                    return next(results.erro);
                 }
                 res.json(results);
             });
@@ -130,14 +137,14 @@ router.route('/orderFromCollection')
             if (removalResult.status === 'done') {
                 collection.products = removalResult.items;
                 let transaction;
-                if(type === 'boleto') {
-                    transaction =  PagseguroHelper.collectionBoleto(values, costumer, senderHash);
-                } else if(type === 'credito') {
-                    transaction =  PagseguroHelper.collectionCard(values, costumer, senderHash);
+                if (type === 'boleto') {
+                    transaction = PagseguroHelper.collectionBoleto(values, costumer, senderHash);
+                } else if (type === 'credito') {
+                    transaction = PagseguroHelper.collectionCard(values, costumer, senderHash);
                 } else {
                     throw new Error('Tipo de transação inválido');
                 }
-                console.log({transaction});
+                console.log({ transaction });
                 const transactionResult = await PagseguroHelper.newTransaction(transaction);
                 const payment = await Payment.create({
                     transactionId: transactionResult.code[0],
@@ -149,7 +156,7 @@ router.route('/orderFromCollection')
                     frete: values.shipment,
                     total: values.total,
                 });
-                if(type === 'boleto') {                    
+                if (type === 'boleto') {
                     payment.boletoUrl = transactionResult.paymentLink[0];
                 }
                 await Order.create({
@@ -166,14 +173,11 @@ router.route('/orderFromCollection')
                 });
                 return;
             }
-            res.status(400).json({
-                error: 'Peças não encontradas',
-            });
-            return;
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error });
-            return;
+            const err = new Error('Peças não encontradas');
+            err.status = 404;
+            return next(err);
+        } catch (err) {
+            return next(err);
         }
     })
 

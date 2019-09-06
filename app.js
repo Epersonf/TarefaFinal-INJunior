@@ -27,10 +27,10 @@ const cors = require('cors');
 const connection = require('./connection');
 
 const app = connection.app;
-const io = connection.io;
+// const io = connection.io;
 const server = connection.server;
 
-const user;
+// const user;
 
 /* io.on('connection', async socket => {
   let userId = socket.handshake.query.user;
@@ -64,8 +64,9 @@ const user;
   console.log('id: ', user._id);
 }); */
 
-mongoose.connect(config.mongoUrl);
+mongoose.connect(config.mongoUrl, { useNewUrlParser: true });
 const db = mongoose.connection;
+
 app.use(secure);
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger('dev'));

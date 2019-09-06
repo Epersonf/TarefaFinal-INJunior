@@ -15,16 +15,13 @@ router.route('/')
                     if (err) {
                         return res.status(500).json({ err: err });
                     }
-                    //console.log(user);
-                    //criacaoo de configuracoes de consultor e supervisor
-
                     passport.authenticate('local')(req, res, function () {
                         return res.status(200).json({ status: 'Usuário registrado', id: user._id });
                     });
                 });
         }
-        catch (error) {
-            res.status(404).json({ error });
+        catch (err) {
+            return next(err);
         }
     })
     //retrieve
@@ -39,29 +36,32 @@ router.route('/')
                 ]);
         } */
 
+        try {
+            if (id) {
+                let user = await User.findById(id);
+                res.json(user);
+            } else {
+                let query = User.find({ ...otherParams, nome: { $regex: nome || '', $options: 'i' } })
+                    .populate(
+                        {
+                            'path': 'supervisor',
+                            'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
+                        });
+                sort ?
+                    query = query.sort(sort) :
+                    null;
+                limit ?
+                    query = query.limit(Number(limit)) :
+                    null;
+                skip ?
+                    query = query.limit(Number(skip)) :
+                    null;
 
-        if (id) {
-            let user = await User.findById(id);
-            res.json(user);
-        } else {
-            let query = User.find({ ...otherParams, nome: { $regex: nome || '', $options: 'i' } })
-                .populate(
-                    {
-                        'path': 'supervisor',
-                        'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
-                    });
-            sort ?
-                query = query.sort(sort) :
-                null;
-            limit ?
-                query = query.limit(Number(limit)) :
-                null;
-            skip ?
-                query = query.limit(Number(skip)) :
-                null;
-
-            let users = await query.exec();
-            res.json(users);
+                let users = await query.exec();
+                res.json(users);
+            }
+        } catch (err) {
+            return next(err);
         }
     })
     //update
@@ -89,12 +89,14 @@ router.route('/')
                     res.json(newUser);
                 }
             }
-            catch (error) {
-                res.status(404).json({ error });
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
@@ -110,13 +112,14 @@ router.route('/')
                 let remove = await User.deleteOne({ '_id': id });
                 res.json(remove);
             }
-            catch (error) {
-                console.log('error');
-                res.status(404).json(error);
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

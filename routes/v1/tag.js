@@ -11,29 +11,33 @@ router.route('/')
             newTag = await newTag;
             res.status(200).json(newTag);
         }
-        catch (error) {
-            res.status(404).json({ error });
+        catch (err) {
+            return next(err);
         }
     })
     //retrieve
     .get(async (req, res) => {
         let { id, sort, skip, limit, ...otherParams } = req.query;
-        if (id) {
-            let tag = await Tag.findById(id);
-            res.json(tag);
-        } else {
-            let query = Tag.find(otherParams);
-            sort ?
-                query = query.sort(sort) :
-                null;
-            limit ?
-                query = query.limit(Number(limit)) :
-                null;
-            skip ?
-                query = query.limit(Number(skip)) :
-                null
-            let orders = await query.exec();
-            res.json(orders);
+        try {
+            if (id) {
+                let tag = await Tag.findById(id);
+                res.json(tag);
+            } else {
+                let query = Tag.find(otherParams);
+                sort ?
+                    query = query.sort(sort) :
+                    null;
+                limit ?
+                    query = query.limit(Number(limit)) :
+                    null;
+                skip ?
+                    query = query.limit(Number(skip)) :
+                    null
+                let orders = await query.exec();
+                res.json(orders);
+            }
+        } catch (err) {
+            return next(err);
         }
     })
     //update
@@ -51,7 +55,9 @@ router.route('/')
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

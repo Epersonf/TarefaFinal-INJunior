@@ -17,7 +17,7 @@ router.route('/')
                     break;
             }
             transactionResult = await pagSeguroHelper.newTransaction(transaction);
-            console.info({transactionResult});
+            console.info({ transactionResult });
             let newPayment = await Payment.create({
                 transactionId: transactionResult.code[0],
                 boletoUrl: transactionResult.paymentLink[0],
@@ -26,19 +26,23 @@ router.route('/')
             });
             res.status(200).json(newPayment);
         }
-        catch (error) {
-            res.status(404).json({ error });
+        catch (err) {
+            return next(err);
         }
     })
     //retrieve
     .get(async (req, res) => {
         let { id, ...otherParams } = req.query;
-        if (id) {
-            let payment = await Payment.findById(id);
-            res.json(payment);
-        } else {
-            let payments = await Payment.find(otherParams).exec();
-            res.json(payments);
+        try {
+            if (id) {
+                let payment = await Payment.findById(id);
+                res.json(payment);
+            } else {
+                let payments = await Payment.find(otherParams).exec();
+                res.json(payments);
+            }
+        } catch (err) {
+            return next(err);
         }
     })
     //update
@@ -50,12 +54,14 @@ router.route('/')
                 let newPayment = await Payment.updateOne({ '_id': id }, { '$set': payment });
                 res.json(newPayment);
             }
-            catch (error) {
-                res.status(404).json({ error });
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
@@ -72,7 +78,9 @@ router.route('/')
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

@@ -6,26 +6,28 @@ router.route('/')
     //create
     .post(async (req, res, next) => {
         let log = req.body;
-        try{
-            let newLog = await Log.create(log); 
-            /* req.log = newLog;
-            console.log('API: ', log);
-            next(); */ 
+        try {
+            let newLog = await Log.create(log);
             res.status(200).json(newLog);
-        } 
-        catch (error) {
-            res.status(404).json({error});
-        }        
+        }
+        catch (err) {
+            return next(err);
+        }
     })
     //retrieve
     .get(async (req, res) => {
         let { id } = req.query;
-        if (id) {
-            let log = await Log.findById(id);
-            res.json(log);
-        } else {
-            let logs = await Log.find({}).exec();
-            res.json(logs);
+        try {
+            if (id) {
+                let log = await Log.findById(id);
+                res.json(log);
+            } else {
+                let logs = await Log.find({}).exec();
+                res.json(logs);
+            }
+        }
+        catch (err) {
+            return next(err);
         }
     })
     //update
@@ -33,33 +35,36 @@ router.route('/')
         let { id } = req.query;
         let log = req.body;
         if (id) {
-            try{
-                let newLog = await Log.updateOne({'_id': id}, {'$set': log});
+            try {
+                let newLog = await Log.updateOne({ '_id': id }, { '$set': log });
                 res.json(newLog);
             }
-            catch(error){
-                res.status(404).json({error});
+            catch (err) {
+                return next(err);
             }
-            
+
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
     .delete(async (req, res) => {
         let { id } = req.query;
         if (id) {
-            try{
-                let remove = await Log.deleteOne({'_id': id});
+            try {
+                let remove = await Log.deleteOne({ '_id': id });
                 res.json(remove);
             }
-            catch(error){
-                console.log('error');
-                res.status(404).json(error);
+            catch (err) {
+                return next(err);
             }
-            
+
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

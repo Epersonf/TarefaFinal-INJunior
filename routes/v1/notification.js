@@ -7,23 +7,28 @@ router.route('/')
     .post(async (req, res, next) => {
         let notification = req.body;
         try {
-            let newNotification = await Notification.create(notification);
-            req.notification = newNotification;
-            next();
+            const newNotification = await Notification.create(notification);
+            res.status(200).json(newNotification);
         }
-        catch (error) {
-            res.status(404).json({ error });
+        catch (err) {
+            return next(err);
         }
     })
     //retrieve
     .get(async (req, res) => {
         let { id, ...otherParams } = req.query;
-        if (id) {
-            let notification = await Notification.findById(id);
-            res.json(notification);
-        } else {
-            let notifications = await Notification.find(otherParams).exec();
-            res.json(notifications);
+
+        try {
+            if (id) {
+                let notification = await Notification.findById(id);
+                res.json(notification);
+            } else {
+                let notifications = await Notification.find(otherParams).exec();
+                res.json(notifications);
+            }
+        }
+        catch (err) {
+            return next(err);
         }
     })
     //update
@@ -35,12 +40,14 @@ router.route('/')
                 let newNotification = await Notification.updateOne({ '_id': id }, { '$set': notification });
                 res.json(newNotification);
             }
-            catch (error) {
-                res.status(404).json({ error });
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
@@ -51,13 +58,14 @@ router.route('/')
                 let remove = await Notification.deleteOne({ '_id': id });
                 res.json(remove);
             }
-            catch (error) {
-                console.log('error');
-                res.status(404).json(error);
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

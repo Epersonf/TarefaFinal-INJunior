@@ -55,7 +55,9 @@ router.route('/')
             req.notification = notification;
             next();
         } catch (e) {
-            res.status(500).json({error: 'Cannot update payment'});
+            const err = new Error('Cannot update payment');
+            err.status = 400;
+            return next(err);
         }
         return;
     })

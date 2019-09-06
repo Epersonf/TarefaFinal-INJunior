@@ -15,33 +15,37 @@ router.route('/')
                 .execPopulate();
             res.status(200).json(newCollection);
         }
-        catch (error) {
-            res.status(404).json({ error });
+        catch (err) {
+            return next(err);
         }
     })
     //retrieve
     .get(async (req, res) => {
         let { id, sort, skip, limit, ...otherParams } = req.query;
-        if (id) {
-            let collection = await Collection.findById(id)
-                .populate('products')
-                .populate('tags');
-            res.json(collection);
-        } else {
-            let query = Collection.find(otherParams)
-                .populate('products')
-                .populate('tags');
-            sort ?
-                query = query.sort(sort) :
-                null;
-            limit ?
-                query = query.limit(Number(limit)) :
-                null;
-            skip ?
-                query = query.limit(Number(skip)) :
-                null
-            let orders = await query.exec();
-            res.json(orders);
+        try {
+            if (id) {
+                let collection = await Collection.findById(id)
+                    .populate('products')
+                    .populate('tags');
+                res.json(collection);
+            } else {
+                let query = Collection.find(otherParams)
+                    .populate('products')
+                    .populate('tags');
+                sort ?
+                    query = query.sort(sort) :
+                    null;
+                limit ?
+                    query = query.limit(Number(limit)) :
+                    null;
+                skip ?
+                    query = query.limit(Number(skip)) :
+                    null
+                let orders = await query.exec();
+                res.json(orders);
+            }
+        } catch (err) {
+            return next(err);
         }
     })
     //update
@@ -53,12 +57,14 @@ router.route('/')
                 let newCollection = await Collection.updateOne({ '_id': id }, { '$set': collection });
                 res.json(newCollection);
             }
-            catch (error) {
-                res.status(404).json({ error });
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
@@ -69,13 +75,14 @@ router.route('/')
                 let remove = await Collection.deleteOne({ '_id': id });
                 res.json(remove);
             }
-            catch (error) {
-                console.log('error');
-                res.status(404).json(error);
+            catch (err) {
+                return next(err);
             }
 
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 

@@ -5,27 +5,30 @@ var Kit = require('../../models/kit');
 router.route('/')
     //create
     .post(async (req, res, next) => {
-        let kit = req.body;
-        try{
-            let newKit = await Kit.create(kit); 
-            /* req.kit = newKit;
-            console.log('API: ', kit);
-            next();  */
-            res.status(200).json(kit);
-        } 
-        catch (error) {
-            res.status(404).json({error});
-        }        
+        const kit = req.body;
+        try {
+            const newKit = await Kit.create(kit);
+            res.status(200).json(newKit);
+        }
+        catch (err) {
+            return next(err);
+        }
     })
     //retrieve
     .get(async (req, res) => {
         let { id } = req.query;
-        if (id) {
-            let kit = await Kit.findById(id);
-            res.json(kit);
-        } else {
-            let kits = await Kit.find({}).exec();
-            res.json(kits);
+
+        try {
+            if (id) {
+                let kit = await Kit.findById(id);
+                res.json(kit);
+            } else {
+                let kits = await Kit.find({}).exec();
+                res.json(kits);
+            }
+        }
+        catch (err) {
+            return next(err);
         }
     })
     //update
@@ -33,33 +36,36 @@ router.route('/')
         let { id } = req.query;
         let kit = req.body;
         if (id) {
-            try{
-                let newKit = await Kit.updateOne({'_id': id}, {'$set': kit});
+            try {
+                let newKit = await Kit.updateOne({ '_id': id }, { '$set': kit });
                 res.json(newKit);
             }
-            catch(error){
-                res.status(404).json({error});
+            catch (err) {
+                return next(err);
             }
-            
+
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
     //delete
     .delete(async (req, res) => {
         let { id } = req.query;
         if (id) {
-            try{
-                let remove = await Kit.deleteOne({'_id': id});
+            try {
+                let remove = await Kit.deleteOne({ '_id': id });
                 res.json(remove);
             }
-            catch(error){
-                console.log('error');
-                res.status(404).json(error);
+            catch (err) {
+                return next(err);
             }
-            
+
         } else {
-            res.status(400).json({ error: 'Missing ID' });
+            const err = new Error('Missing ID');
+            err.status = 400;
+            return next(err);
         }
     })
 
