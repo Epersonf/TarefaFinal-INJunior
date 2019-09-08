@@ -1,12 +1,16 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const logSchema = new Schema({
   type: {
     type: String,
     enum: ['Error']
   },
-  user: String,
+  user: {
+    type: ObjectId,
+    ref: 'User'
+  },
   method: String,
   path: String,
   body: String,
