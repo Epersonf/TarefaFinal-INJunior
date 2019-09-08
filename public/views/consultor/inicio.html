@@ -1,6 +1,6 @@
 <div class="fixed-action-btn venda">
-	<a ng-click="modalVenda()" class="btn-floating btn-large fundoBranco waves-effect waves-light tooltipped " data-position="left"
-	 data-delay="100" data-tooltip="Vender!">
+	<a ng-click="modalVenda()" class="btn-floating btn-large fundoBranco waves-effect waves-light tooltipped "
+		data-position="left" data-delay="100" data-tooltip="Vender!">
 		<i class="large material-icons textoAmarelo">attach_money</i>
 	</a>
 </div>
@@ -38,7 +38,8 @@
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
 				<p>
-					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+					<span class=" badge fundoAmarelo textoBranco"
+						data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
 				</p>
 				<div class="card-content">
 					<span class="card-title">Parabéns!</span>
@@ -57,7 +58,8 @@
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
 				<p>
-					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+					<span class=" badge fundoAmarelo textoBranco"
+						data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
 				</p>
 				<div class="card-content">
 					<span class="card-title">Parabéns!</span>
@@ -76,7 +78,8 @@
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
 				<p>
-					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+					<span class=" badge fundoAmarelo textoBranco"
+						data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
 				</p>
 				<div class="card-content">
 					<span class="card-title">Brinde do mês das Mães!</span>
@@ -95,7 +98,8 @@
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
 				<p>
-					<span class=" badge fundoAmarelo textoBranco" data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
+					<span class=" badge fundoAmarelo textoBranco"
+						data-badge-caption="brinde(s) pendente(s)">{{usuario.brindesPendentes.length}}</span>
 				</p>
 				<div class="card-content">
 					<span class="card-title">Brinde do mês das Mães!</span>
@@ -117,8 +121,10 @@
 					<div class="row">
 						<h1>{{usuario.nome}}</h1>
 						<div class="medalha">
-							<object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg" type="image/svg+xml"></object>
-							<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg" type="image/svg+xml"></object>
+							<object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg"
+								type="image/svg+xml"></object>
+							<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata"
+								data="../../img/sol_prata.svg" type="image/svg+xml"></object>
 							<object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
 
 
@@ -162,8 +168,10 @@
 						</span>
 					</div>
 					<div class="row marker-container" ng-if="maxAbsoluto==0">
-						<span ng-repeat="cBrinde in usuario.brindesEntregues" ng-if="(cBrinde.valorAbsoluto - vendidoHistorico) > 0">
-							<div class="speech-bubble textoAmarelo" style="left:{{(cBrinde.valorAbsoluto - vendidoHistorico)*90/maxRelativo}}%">
+						<span ng-repeat="cBrinde in usuario.brindesEntregues"
+							ng-if="(cBrinde.valorAbsoluto - vendidoHistorico) > 0">
+							<div class="speech-bubble textoAmarelo"
+								style="left:{{(cBrinde.valorAbsoluto - vendidoHistorico)*90/maxRelativo}}%">
 								<i class="material-icons">{{cBrinde.campanha == 'maleta' ? 'business_center' : 'card_giftcard'}}</i>
 								<label>{{cBrinde.valorAbsoluto - vendidoHistorico | currency:'R$'}}</label>
 							</div>
@@ -213,18 +221,20 @@
 				<div class="card-content">
 					<span class="card-title">Personalizados</span>
 					<ul class="collection">
-						<li class="textoPreto collection-item avatar row" ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:filtroStatus as encomendasPendentes">
+						<li class="textoPreto collection-item avatar s12 m3"
+							ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:filtroStatus as encomendasPendentes">
 							<i class="material-icons circle">star</i>
-							<p>
-								<span class="title strong">{{encomenda.detalhes}}</span>
-								<br>
-								<div class="chip">
-									{{encomenda.createdAt | date: "d/MM/yy"}} (Data do Pedido)
-								</div>
-								<br>
-								<button class="btn" ng-click="vendaPersonalizado(encomenda)" ng-disabled="encomenda.status!='Enviada'">Entregar</button>
-
-							</p>
+							<span class="title strong">{{encomenda.detalhes}}</span>
+							<br>
+							<div class="chip">
+								{{encomenda.enviados[0]}}
+							</div>
+							<div class="chip">
+								{{encomenda.createdAt | date: "d/MM/yy"}} (Data do Pedido)
+							</div>
+							<br>
+							<button class="btn" ng-click="vendaPersonalizado(encomenda)"
+								ng-disabled="encomenda.status!='Enviada' || !hasPiece(encomenda.enviados[0])">Entregar</button>
 						</li>
 					</ul>
 				</div>
@@ -298,11 +308,12 @@
 	<div class="modal-content center-align">
 		<form ng-submit="entrada()" id="entradaForm">
 			<div class="input-field col m8 s12 offset-m2">
-				<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()">
+				<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right"
+					ng-click="entradaCamera()">
 					<i class="material-icons">camera_alt</i>
 				</a>
-				<input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase" pattern="[A-Za-z]{2}[0-9]{3,6}"
-				 title="Código inválido" required>
+				<input placeholder="Código" id="codigo" type="text" ng-model="codigo" style="text-transform:uppercase"
+					pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
 				<div class="chip" ng-repeat="codigo in adicionando track by $index">
 					{{codigo}}
 					<i class="right material-icons clicavel" ng-click="deletaElemento(adicionando, $index)">close</i>
@@ -327,7 +338,8 @@
 		<div id="camera"></div>
 	</div>
 	<div class="modal-footer center-align">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="fechaCamera()">Cancelar</a>
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat"
+			ng-click="fechaCamera()">Cancelar</a>
 	</div>
 </div>
 
@@ -336,8 +348,8 @@
 		<form ng-submit="pegaBrinde()" id="brindeForm">
 			<div class="input-field col m8 s12 offset-m2">
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
-				<select style="display:block" ng-model="codigoBrinde" name="item" ng-show="tipoBrinde == 'natal' || tipoBrinde == 'maes'"
-				 required>
+				<select style="display:block" ng-model="codigoBrinde" name="item"
+					ng-show="tipoBrinde == 'natal' || tipoBrinde == 'maes'" required>
 					<option value="" disabled selected>Selecione o item</option>
 					<option value="BP017">Brinco Pequeno de R$17,00</option>
 					<option value="BP023">Brinco Pequeno de R$23,00</option>
@@ -346,8 +358,8 @@
 					<option value="PN023">Pingente de R$23,00</option>
 					<option value="PN027">Pingente de R$27,00</option>
 				</select>
-				<input ng-show="tipoBrinde == 'mil'" placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde" style="text-transform:uppercase"
-				 pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
+				<input ng-show="tipoBrinde == 'mil'" placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde"
+					style="text-transform:uppercase" pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
 				<br>
 				<button type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo">
 					<i class="material-icons">card_giftcard</i>
