@@ -1,12 +1,19 @@
-var express = require('express');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const mongoose = require('mongoose');
+const config = require('./config')
+
+mongoose.connect(config.mongoUrl, { useNewUrlParser: true });
+
+const db = mongoose.connection;
 
 module.exports = {
     io,
     app,
-    server
+    server,
+    db,
 }
 
 

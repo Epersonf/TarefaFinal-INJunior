@@ -37,7 +37,7 @@ router.route('/')
                         });
                 res.json(order);
             } else {
-                const query = Order.find(otherParams)
+                let query = Order.find(otherParams)
                     .populate(
                         {
                             'path': 'donoId',

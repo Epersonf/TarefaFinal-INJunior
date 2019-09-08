@@ -29,7 +29,7 @@ exports.verifyOrdinaryUser = function (req, res, next) {
     } else {
         // if there is no token
         // return an error
-        const err = new Error('Usuário não logado');
+        let err = new Error('Usuário não logado');
         err.status = 403;
         return next(err);
     }
@@ -39,6 +39,6 @@ exports.verifyRole = (next, type, roles) => {
     if(!roles.includes(type)) {
         const err = new Error('Acesso negado!');
         err.status = 403;
-        return next(err);
+        next(err);
     }
 }

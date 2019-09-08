@@ -4,7 +4,6 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const config = require('./config')
@@ -23,12 +22,16 @@ const v1 = require('./routes/v1/');
 const secure = require('express-force-https');
 // const NotificationHelper = require('./helpers/notification.helper');
 const cors = require('cors');
-
 const connection = require('./connection');
+const Log = require('./models/log')
+
+
 
 const app = connection.app;
-// const io = connection.io;
 const server = connection.server;
+// const socket = connection.io;
+const db = connection.db;
+
 
 // const user;
 
@@ -64,8 +67,7 @@ const server = connection.server;
   console.log('id: ', user._id);
 }); */
 
-mongoose.connect(config.mongoUrl, { useNewUrlParser: true });
-const db = mongoose.connection;
+
 
 app.use(secure);
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
@@ -81,7 +83,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(function (req, res, next) {
+app.use(function (_, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -104,13 +106,45 @@ app.use('/kits', Verify.verifyOrdinaryUser, kits);
 app.use('/v1', v1);
 app.use('/api', api);
 
+//handling 404
+app.use(function (req, res, next) {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+//handling erros
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+
+  const errorLog = {
+    type: 'Error',
+    user: req.decoded ? req.decoded.id : '',
+    method: req.method,
+    path: req.originalUrl,
+    body: JSON.stringify(req.body),
+    status: err.status,
+    message: err.message,
+    stack: err.stack
+  };
+
+  Log.create(errorLog)
+
+  res.json({
+    message: err.message,
+    error: (app.get('env') === 'development') ? errorLog : {}
+  });
+});
+
+
 //captando notificações para broadcast e adição no usuário
 // app.use(NotificationHelper.notifyUser);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+/* app.use(function (req, res, next) {
   const err = new Error('Not Found');
   err.status = 404;
+  err.toJson();
   next(err);
 });
 
@@ -121,9 +155,14 @@ app.use(function (req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
+    const errorLog = {
+      status: err.status,
+      message: err.message,
+      stack: err.stack
+    };
     res.json({
       message: err.message,
-      error: err
+      error: errorLog
     });
   });
 }
@@ -132,11 +171,15 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
+  const errorLog = {
+    status: err.status,
+    message: err.message,
+    stack: err.stack
+  };
   res.json({
     message: err.message,
-    error: {}
   });
-});
+}); */
 
 
 db.on('error', console.error.bind(console, 'connection error:'));
