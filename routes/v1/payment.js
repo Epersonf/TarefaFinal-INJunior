@@ -11,10 +11,12 @@ router.route('/')
         let transactionResult, transaction;
         const user = await User.findById(payment.userId);
         try {
-            switch (payment.tipo) {
-                case 'boleto':
-                    transaction = pagSeguroHelper.newBoleto(payment, user, senderHash)
-                    break;
+            if (payment.tipo === 'boleto') {
+                transaction = pagSeguroHelper.collectionBoleto(payment, user, senderHash);
+            } else if (payment.tipo === 'credito') {
+                transaction = pagSeguroHelper.collectionCard(payment, user, senderHash);
+            } else {
+                throw new Error('Tipo de transação inválido');
             }
             transactionResult = await pagSeguroHelper.newTransaction(transaction);
             console.info({ transactionResult });

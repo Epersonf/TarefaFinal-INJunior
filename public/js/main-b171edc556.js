@@ -26946,7 +26946,7 @@ angular.module('ambaya')
     $scope.filtroStatus = function(encomenda) {
         return ($scope.status.indexOf(encomenda.status) !== -1);
     };
-    consultoresService.todos().then(
+    consultoresService.todos(true).then(
             function(response) {
                 $scope.consultores = response.data;
                 $scope.total = $scope.consultores.length; 
@@ -27878,7 +27878,6 @@ angular.module('ambaya')
     }
 
     $scope.hasPiece = function(piece) {
-        console.log({piece});
         return $scope.usuario.estoque.includes(piece);
     }
 }]);
@@ -29299,9 +29298,14 @@ angular.module('ambaya')
     }])
 angular.module('ambaya')
 .service('consultoresService', ["$http", function($http) {
-    this.todos = function(){
-        return $http.get("/users/consultores/");
+    this.todos = function(incluirInativos){
+        if(incluirInativos === true) {
+            return $http.get("v1/user?tipo=Consultor&inactive=true");
+        } else {
+            return $http.get("v1/user?tipo=Consultor");
+        }
     };
+
     this.porSupervisor = function(id){
         return $http.get("/users/consultores/"+id);
     };

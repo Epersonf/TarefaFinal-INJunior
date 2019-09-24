@@ -226,7 +226,7 @@
 							<i class="material-icons circle">star</i>
 							<span class="title strong">{{encomenda.detalhes}}</span>
 							<br>
-							<div class="chip">
+							<div class="chip" ng-if="encomenda.enviados.length > 0">
 								{{encomenda.enviados[0]}}
 							</div>
 							<div class="chip">

@@ -26,7 +26,7 @@ router.route('/')
     })
     //retrieve
     .get(Verify.verifyOrdinaryUser, async (req, res, next) => {
-        let { id, sort, skip, limit, nome, ...otherParams } = req.query;
+        let { id, sort, skip, inactive, limit, nome, ...otherParams } = req.query;
 
         /* if (id !== req.decoded._id) {
             Verify.verifyRole(next, req.decoded.type,
@@ -47,6 +47,9 @@ router.route('/')
                             'path': 'supervisor',
                             'select': '_id nome sobrenome whatsapp endereco cidade cep cpf'
                         });
+                inactive ?
+                    null :
+                    query = query.find({ status: { $ne: 'Inativo' } })
                 sort ?
                     query = query.sort(sort) :
                     null;
@@ -54,7 +57,7 @@ router.route('/')
                     query = query.limit(Number(limit)) :
                     null;
                 skip ?
-                    query = query.limit(Number(skip)) :
+                    query = query.skip(Number(skip)) :
                     null;
 
                 let users = await query.exec();

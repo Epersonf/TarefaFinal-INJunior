@@ -6,19 +6,19 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 // create a schema
 var User = new Schema({
-	username: {
-		type: String,		
+    username: {
+        type: String,
         unique: true
-	},
-	passowrd: {
-		type: String,		
     },
-    email:{
+    passowrd: {
+        type: String,
+    },
+    email: {
         type: String
     },
-	status: { //ativo, inativo, pendente
+    status: { //ativo, inativo, pendente
         type: String,
-		default: "Pendente"
+        default: "Pendente"
     },
     nome: {
         type: String
@@ -26,30 +26,30 @@ var User = new Schema({
     sobrenome: {
         type: String
     },
-	whatsapp: {
+    whatsapp: {
         type: String
     },
-	nascimento: {
+    nascimento: {
         type: Date
     },
-	cpf: {
+    cpf: {
         type: String
     },
-	cidade: {
+    cidade: {
         type: String
     },
-	endereco: {
+    endereco: {
         type: String
     },
-	cep: {
+    cep: {
         type: String
     },
-	tipo: { //supervisor, consultor, controladoria, estoque, 
+    tipo: { //supervisor, consultor, controladoria, estoque, 
         type: String
     },
-	sexo: {
-		type: String
-	},
+    sexo: {
+        type: String
+    },
     //caracteristicas extras, depende do tipo de usuario
     estoquista: {
         type: ObjectId,
@@ -67,29 +67,29 @@ var User = new Schema({
         //required: true
     },
     porcentagem: {
-		type: Number
-		//required: true,
-	},
+        type: Number
+        //required: true,
+    },
     investidor: {
         type: Boolean
         //required: true,
     },
-    proxAcerto:{
-		type: Date
-		//required: true,
-	},
+    proxAcerto: {
+        type: Date
+        //required: true,
+    },
     estoque: [String],
     vendido: [String],
     totalVendido: Number,
     tipoTaxa: String,//vista, primeiro, parcelado
     taxa: Number,
-    desconto:{
+    desconto: {
         type: Number,
         default: 0
-    } ,
+    },
     state: String,
     notificacoes: {
-        type: [ObjectId], 
+        type: [ObjectId],
         ref: 'Notification',
         default: []
     },
@@ -102,6 +102,12 @@ var User = new Schema({
 
 }, {
     timestamps: true
+}, { 
+    toJSON: { virtuals: true } 
+});
+
+User.virtual('fullName').get(function () {
+    return this.nome + ' ' + this.sobrenome;
 });
 
 User.plugin(passportLocalMongoose);
