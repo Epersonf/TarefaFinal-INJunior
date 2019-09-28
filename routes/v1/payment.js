@@ -8,24 +8,31 @@ router.route('/')
     //create
     .post(async (req, res, next) => {
         let { senderHash, ...payment } = req.body;
-        let transactionResult, transaction;
+        let transactionResult, transaction, newPayment;
         const user = await User.findById(payment.userId);
+        console.log({payment});
         try {
             if (payment.tipo === 'boleto') {
                 transaction = pagSeguroHelper.collectionBoleto(payment, user, senderHash);
             } else if (payment.tipo === 'credito') {
                 transaction = pagSeguroHelper.collectionCard(payment, user, senderHash);
+            }
+
+            if (transaction) {
+                transactionResult = await pagSeguroHelper.newTransaction(transaction);
+                console.info({ transactionResult });
+                newPayment = await Payment.create({
+                    transactionId: transactionResult.code[0],
+                    boletoUrl: transactionResult.paymentLink[0],
+                    status: 'WaitingForPayment',
+                    ...payment
+                });
+            } else if (payment.tipo === 'Consultor') {
+                newPayment = await Payment.create(payment);
             } else {
                 throw new Error('Tipo de transação inválido');
             }
-            transactionResult = await pagSeguroHelper.newTransaction(transaction);
-            console.info({ transactionResult });
-            let newPayment = await Payment.create({
-                transactionId: transactionResult.code[0],
-                boletoUrl: transactionResult.paymentLink[0],
-                status: 'WaitingForPayment',
-                ...payment
-            });
+
             res.status(200).json(newPayment);
         }
         catch (err) {

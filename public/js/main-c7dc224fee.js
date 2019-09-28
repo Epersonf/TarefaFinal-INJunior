@@ -27978,7 +27978,7 @@ angular.module('ambaya')
 //'use strict';
 
 angular.module('ambaya')
-.controller('SupervisorInicioController',[ '$scope', 'supervisoresService', 'consultoresService', function($scope, supervisoresService, consultoresService){
+.controller('SupervisorInicioController',[ '$scope', 'consultoresService', function($scope, consultoresService){
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});
     $scope.consultores = {};
@@ -28827,64 +28827,8 @@ angular.module('ambaya')
 'use strict';
 
 angular.module('ambaya')
-    .service('userService', ["$http", function ($http) {
-        this.novo = function (usuario) {
-            return $http.post("/users/register", usuario);
-        };
-        this.carregaUm = function (id) {
-            return $http.get("/users/" + id);
-        };
-        this.deletaUm = function (id) {
-            return $http.delete("/users/" + id);
-        };
-        this.estoqueId = function () {
-            return $http.get("/users/estoqueId");
-        }
-        this.getRecoveryCode = function (id) {
-            return $http.get("/login/new-state/" + id);
-        }
-        this.esqueciSenha = function (login, email) {
-            return $http.post("/login/esqueci-senha/", {
-                login: login,
-                email: email
-            });
-        }
-        this.novaSenha = function (state, senha) {
-            return $http.post("/login/nova-senha/",
-                {
-                    state: state,
-                    senha: senha
-                });
-        }
-        this.atualiza = function (usuario, data) {
-            return $http.post("/users/atualizar/",
-                {
-                    _id: usuario._id,
-                    update: data
-                }
-            );
-        };
-    }])
-    .service('loginService', ["$localStorage", "$http", "$location", function ($localStorage, $http, $location) {
-        this.login = function (usuario) {
-            return $http.post("/login", usuario);
-        };
-        this.check = function () {
-            return $localStorage.logado;
-        };
-        this.getUser = function () {
-            if ($localStorage.logado == true)
-                return $localStorage.usuario;
-            else return false;
-        };
-        this.logout = function () {
-            delete $localStorage.token;
-            delete $localStorage.usuario;
-            delete $localStorage.logado;
-            return;
-        };
-    }])
     .service('estoqueService', ["$http", function ($http) {
+        // TODO: essa operação não deve ser usada, substituida por uma operação única
         this.atualizaEstoque = function (id, estoque) {
             return $http.post("/users/atualizar/",
                 {
@@ -28893,6 +28837,7 @@ angular.module('ambaya')
                 }
             );
         };
+        // TODO: essa operação não deve ser usada, substituida por uma operação única
         this.entradaEstoque = function (id, entrada) {
             return $http.post("/users/entrada/",
                 {
@@ -28901,6 +28846,7 @@ angular.module('ambaya')
                 }
             );
         };
+        // TODO: deve ser transferida para o back end
         this.atualizaHistorico = function (entrada) {
             return $http.post("/historico/entrada",
                 {
@@ -28908,10 +28854,13 @@ angular.module('ambaya')
                 }
             );
         };
+        // TODO: deve ser transferida para o back end
         this.entradasLog = function (entrada) {
             return $http.get("/historico/pecalog");
         };
     }])
+
+    // TODO: implementar na nova api
     .service('controladoriaService', ["$http", function ($http) {
         this.consultores = function () {
             return $http.get("/users/consultores/num");
@@ -28920,58 +28869,7 @@ angular.module('ambaya')
             return $http.get("/users/supervisores/num");
         };
     }])
-    .service('supervisoresService', ["$http", function ($http) {
-        this.todos = function () {
-            return $http.get("/users/supervisores/");
-        };
-    }])
-    .service('encomendasService', ["$http", function ($http) {
-        this.nova = function (encomenda) {
-            return $http.post("/encomendas/", encomenda);
-        };
-        this.todas = function () {
-            return $http.get("/encomendas/");
-        };
-        this.supervisor = function (id) {
-            return $http.get("/encomendas/supervisor/" + id);
-        };
-        this.consultor = function (id) {
-            return $http.get("/encomendas/consultor/" + id);
-        };
-        this.excluir = function (id) {
-            return $http.delete("/encomendas/" + id);
-        };
-        this.atualizarStatus = function (id, status, enviados) {
-            return $http.post("/encomendas/atualizar/",
-                {
-                    _id: id,
-                    update: { status: status, enviados: enviados }
-                }
-            );
-        };
-        this.totalAprovado = function () {
-            return $http.post("/encomendas/total/",
-                {
-                    status: "Aprovada"
-                }
-            );
-        };
-    }])
-    .service('acertosService', ["$http", function ($http) {
-        this.acerto = function (info) {
-            return $http.post("/acertos/", info);
-        }
-        this.atualizaHistorico = function (vendas) {
-            return $http.post("/historico/vendas",
-                {
-                    vendas: vendas
-                }
-            );
-        };
-        this.todos = function () {
-            return $http.get("/acertos/");
-        }
-    }])
+    // TODO: desfazer /api/*
     .service('apiService', ["$http", function ($http) {
         this.cadastro = function (usuario) {
             return $http.post("/api/cadastro", usuario);
@@ -29021,6 +28919,64 @@ angular.module('ambaya')
     }])
     ;
 
+angular.module('ambaya')
+    .service('loginService', ["$localStorage", "$http", "$location", function ($localStorage, $http, $location) {
+        this.login = function (usuario) {
+            return $http.post("/login", usuario);
+        };
+        this.check = function () {
+            return $localStorage.logado;
+        };
+        this.getUser = function () {
+            if ($localStorage.logado == true)
+                return $localStorage.usuario;
+            else return false;
+        };
+        this.logout = function () {
+            delete $localStorage.token;
+            delete $localStorage.usuario;
+            delete $localStorage.logado;
+            return;
+        };
+    }])
+angular.module('ambaya')
+  .service('userService', ["$http", function ($http) {
+    this.novo = function (usuario) {
+      return $http.post("v1/user", usuario);
+    };
+    this.carregaUm = function (id) {
+      return $http.get("v1/user?id=" + id);
+    };
+    this.deletaUm = function (id) {
+      return $http.delete("v1/user?id=" + id);
+    };
+    this.atualiza = function (usuario, data) {
+      return $http.put("v1/user?id=" + usuario._id, data);
+    };
+
+    // TODO: create endpoint in v1
+    this.estoqueId = function () {
+      return $http.get("/users/estoqueId");
+    }
+
+    //login related
+    this.getRecoveryCode = function (id) {
+      return $http.get("/login/new-state/" + id);
+    }
+    this.esqueciSenha = function (login, email) {
+      return $http.post("/login/esqueci-senha/", {
+        login: login,
+        email: email
+      });
+    }
+    this.novaSenha = function (state, senha) {
+      return $http.post("/login/nova-senha/",
+        {
+          state: state,
+          senha: senha
+        });
+    }
+  }])
 angular.module('ambaya')
 .service('pecasService', [function(){
     var pecasService = this;
@@ -29255,21 +29211,20 @@ angular.module('ambaya')
             return $http.get("v1/kit?sort=-createdAt&limit=100");
         };
         this.consultor = function (id) {
-            return $http.get("v1/kit?consultora=" + id);
+            return $http.get("v1/kit?sort=-createdAt&limit=100&consultora=" + id);
         };
         this.excluir = function (id) {
             return $http.delete("v1/kit?id=" + id);
         };
         this.atualizar = function (id, update) {
-            return $http.post("v1/kit/kit?id=" + id, update);
+            return $http.put("v1/kit/kit?id=" + id, update);
         };
     }])
-const path = "v1/user?tipo=Consultor&";
-
-const pathWithInactive = "v1/user?tipo=Consultor&inactive=true&";
-
 angular.module('ambaya')
   .service('consultoresService', ["$http", function ($http) {
+    const path = "v1/user?tipo=Consultor&";
+    const pathWithInactive = "v1/user?tipo=Consultor&inactive=true&";
+
     this.todos = function (incluirInativos) {
       if (incluirInativos === true) {
         return $http.get(pathWithInactive);
@@ -29433,7 +29388,7 @@ angular.module('ambaya')
       return $http.post("/trocas/", troca);
     };
     this.historico = function (id) {
-      return $http.get("/acertos/usuario/" + id);
+      return $http.get("v1/payment?userId=" + id);
     };
 
 
@@ -29447,6 +29402,80 @@ angular.module('ambaya')
 
 
   }])
+angular.module('ambaya')
+  .service('supervisoresService', ["$http", function ($http) {
+    const path = "v1/user?tipo=Supervisor&";
+    const pathWithInactive = "v1/user?tipo=Supervisor&inactive=true&";
+    
+    this.todos = function (incluirInativos) {
+      if (incluirInativos === true) {
+        return $http.get(pathWithInactive);
+      } else {
+        return $http.get(path);
+      }
+    };
+  }]);
+
+
+angular.module('ambaya')
+  .service('encomendasService', ["$http", function ($http) {
+    this.nova = function (encomenda) {
+      return $http.post("v1/order", encomenda);
+    };
+    this.todas = function () {
+      return $http.get("v1/order");
+    };
+    this.supervisor = function (id) {
+      return $http.get("v1/order?supervisor=" + id);
+    };
+    this.consultor = function (id) {
+      return $http.get("v1/order?consultor=" + id);
+    };
+    this.excluir = function (id) {
+      return $http.delete("v1/order?id=" + id);
+    };
+    this.atualizarStatus = function (id, status, enviados) {
+      return $http.put("v1/order?id=" + id,
+      { 
+        status: status, 
+        enviados: enviados 
+      });
+    };
+
+    // TODO: criar opção compatível na api v1
+    this.totalAprovado = function () {
+      return $http.post("/encomendas/total/",
+        {
+          status: "Aprovada"
+        }
+      );
+    };
+  }])
+
+angular.module('ambaya')
+  .service('acertosService', ["$http", function ($http) {
+    this.acerto = function (info) {
+      return $http.post("v1/payment", info);
+    }
+    this.todos = function () {
+      return $http.get("v1/payment");
+    }
+
+    // TODO: deve ser movido para o back end
+    this.atualizaHistorico = function (vendas) {
+      return $http.post("/historico/vendas",
+        {
+          vendas: vendas
+        }
+      );
+    };
+  }])
+angular.module('ambaya')
+  .service('UserUtils', function () {
+    this.getFullName = function(user) {
+      return user.nome + " " + user.sobrenome;
+    }
+  })
 angular.module('ambaya')
 .directive('tabelaPecas', ['pecasService', function(pecasService){
     return{
@@ -29766,9 +29795,3 @@ angular.module('ambaya')
 		}
 	}
 ]);
-angular.module('ambaya')
-  .service('UserUtils', function () {
-    this.getFullName = function(user) {
-      return user.nome + " " + user.sobrenome;
-    }
-  })
