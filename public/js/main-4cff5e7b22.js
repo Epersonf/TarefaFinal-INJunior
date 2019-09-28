@@ -26172,12 +26172,13 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode', 'nvd3'])
 //'use strict';
 
 angular.module('ambaya')
-.controller('BaseController',['userService', 'consultoresService', 'loginService', '$scope', '$state', '$localStorage', function(userService, consultoresService, loginService, $scope, $state, $localStorage){
+.controller('BaseController',['userService', 'consultoresService', 'loginService', '$scope', '$state', '$localStorage', 'UserUtils', function(userService, consultoresService, loginService, $scope, $state, $localStorage, UserUtils){
     $(".button-collapse").sideNav({
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
         draggable: true // Choose whether you can drag to open on touch screens
     });
     $scope.usuario = {username: "", password: ""};
+    $scope.UserUtils = UserUtils;
     var rotas = {
             "Consultor": [
                 {nome:"Início", icone:"home"},
@@ -26623,17 +26624,7 @@ angular.module('ambaya')
     }
     
     $scope.aprovar = function(){
-        if($scope.indicador){
-            consultoresService.indicadoPor(id, $scope.indicador).then(
-                function(response) {
-                    Materialize.toast("Indicação atualizada!", 5000, 'notificacaoBoa');
-                },
-                function(response) {
-                    Materialize.toast("Falha ao atualizar indicação", 5000, 'notificacaoRuim');
-                }
-            );
-        }
-         consultoresService.aprovar(id).then(
+         consultoresService.aprovar(id, $scope.indicador || null).then(
             function(response) {
                 $scope.consultor.status = "Aprovado";
             },
@@ -26835,7 +26826,7 @@ angular.module('ambaya')
         pecas:[]
     }
     $scope.enviaKit = function(kit){
-        kitsService.atualizaStatus(kit._id, 'Entregue').then(                
+        kitsService.atualizar(kit._id, {status: 'Entregue'}).then(                
             function(res){
                 estoqueService.entradaEstoque(id, kit.pecas).then(
                     function(res){
@@ -28064,7 +28055,7 @@ angular.module('ambaya')
         }
         carregaSupervisor();
         var carregaConsultores = function () {
-            consultoresService.porSupervisor(id).then(
+            consultoresService.porSupervisor(id, true).then(
                 function (response) {
                     $scope.consultores = response.data;
                 },
@@ -28720,7 +28711,7 @@ angular.module('ambaya')
         } else {
             $scope.kitAtual.consultora = null;
         }
-        kitsService.atualizaKit($scope.kitAtual).then(
+        kitsService.atualizar($scope.kitAtual._id, $scope.kitAtual).then(
             function(response){
                 estoqueService.atualizaEstoque($scope.usuario._id, $scope.estoqueTemp).then(
                     function (response){
@@ -28785,7 +28776,7 @@ angular.module('ambaya')
         pecas:[]
     }
     $scope.enviaKit = function(kit){
-        kitsService.atualizaStatus(kit._id, 'Entregue').then(                
+        kitsService.atualizar(kit._id, {status: 'Entregue'}).then(                
             function(res){
                 estoqueService.entradaEstoque(kit.consultor._id, kit.pecas).then(
                     function(res){
@@ -28801,7 +28792,7 @@ angular.module('ambaya')
         );
     };
     $scope.pegaKit = function(kit){
-        kitsService.atualizaStatus(kit._id, 'Entregue').then(                
+        kitsService.atualizar(kit._id, {status: 'Entregue'}).then(                
             function(res){
                 estoqueService.entradaEstoque($scope.usuario._id, kit.pecas).then(
                     function(res){
@@ -29258,233 +29249,204 @@ angular.module('ambaya')
 angular.module('ambaya')
     .service('kitsService', ["$http", function ($http) {
         this.novo = function (kit) {
-            return $http.post("/kits/", kit);
+            return $http.post("v1/kit", kit);
         };
         this.todos = function () {
-            return $http.get("/kits/");
+            return $http.get("v1/kit?sort=-createdAt&limit=100");
         };
         this.consultor = function (id) {
-            return $http.get("/kits/porConsultora/" + id);
+            return $http.get("v1/kit?consultora=" + id);
         };
         this.excluir = function (id) {
-            return $http.delete("/kits/" + id);
+            return $http.delete("v1/kit?id=" + id);
         };
-        this.atualizaStatus = function (id, status) {
-            return $http.post("/kits/atualizar/",
-                {
-                    _id: id,
-                    update: { status: status }
-                }
-            );
-        };
-        this.atualizaPecas = function (id, pecas) {
-            return $http.post("/kits/atualizar/",
-                {
-                    _id: id,
-                    update: { pecas: pecas }
-                }
-            );
-        };
-        this.atualizaKit = function (kit) {
-            var id = kit._id;
-            delete kit._id;
-            return $http.post("/kits/atualizar/",
-                {
-                    _id: id,
-                    update: kit
-                }
-            );
+        this.atualizar = function (id, update) {
+            return $http.post("v1/kit/kit?id=" + id, update);
         };
     }])
+const path = "v1/user?tipo=Consultor&";
+
+const pathWithInactive = "v1/user?tipo=Consultor&inactive=true&";
+
 angular.module('ambaya')
-.service('consultoresService', ["$http", function($http) {
-    this.todos = function(incluirInativos){
-        if(incluirInativos === true) {
-            return $http.get("v1/user?tipo=Consultor&inactive=true");
-        } else {
-            return $http.get("v1/user?tipo=Consultor");
-        }
+  .service('consultoresService', ["$http", function ($http) {
+    this.todos = function (incluirInativos) {
+      if (incluirInativos === true) {
+        return $http.get(pathWithInactive);
+      } else {
+        return $http.get(path);
+      }
+    };
+    this.porSupervisor = function (id, incluirInativos) {
+      if (incluirInativos === true) {
+        return $http.get(pathWithInactive + "supervisor=" + id);
+      } else {
+        return $http.get(path + "supervisor=" + id);
+      }
     };
 
-    this.porSupervisor = function(id){
-        return $http.get("/users/consultores/"+id);
-    };
-    this.aprovar = function(id){
-        return $http.post("/users/atualizar/",
+    // TODO: update user
+    this.aprovar = function (id, indicador) {
+      return $http.put("v1/user?id=" + id,
         {
-            _id: id,
-            update: {status: 'Aprovado'}
-        }
-        );
+          status: 'Aprovado',
+          indicador: indicador
+        });
     };
-    this.incrementaDesconto = function(id, valor){
-        return $http.post("/users/consultores/maisdesconto",
+    this.desaprovar = function (id) {
+      return $http.put("v1/user?id=" + id,
         {
-            _id: id,
-            inc: {desconto: valor}
-        }
-        );
-    };
-    this.indicadoPor = function(id, indicador){
-        return $http.post("/users/atualizar/",
-        {
-            _id: id,
-            update: {indicador: indicador}
-        }
-        );
-    };
-    this.desaprovar = function(id){
-        return $http.post("/users/atualizar/",
-        {
-            _id: id,
-            update: {status: 'Inativo'}
-        }
-        );
+          status: 'Inativo'
+        });
     }
-    this.venda = function(usuario, pecas, userId){
-        return $http.post("/users/venda/",
+    this.atualizaEmail = function (usuario, email) {
+      return $http.put("v1/user?id=" + usuario._id,
         {
-            _id: usuario._id,
-            update: {
-                estoque: usuario.estoque,
-                vendido: usuario.vendido,
-                totalVendido: usuario.totalVendido,
-            }, 
-            pecas: pecas,
-            userId: userId
-        }
-        );
+          email: email
+        });
     };
-    this.estorno = function(usuario, pecas, userId){
-        return $http.post("/users/estorno/",
+    this.trocaSupervisor = function (consultorId, supervisorId) {
+      return $http.put("v1/user?id=" + consultorId,
         {
-            _id: usuario._id,
-            update: {
-                estoque: usuario.estoque,
-                vendido: usuario.vendido,
-                totalVendido: usuario.totalVendido,
-            }, 
-            pecas: pecas,
-            userId: userId
-        }
-        );
+          supervisor: supervisorId
+        });
     };
-    this.acerto = function(usuario){
-        return $http.post("/users/atualizar/",
+    this.atualizaProxAcerto = function (usuario, data) {
+      return $http.put("v1/user?id=" + usuario._id,
         {
-                _id: usuario._id,
-                update: {
-                    vendido: usuario.vendido,
-                    taxa: usuario.taxa,
-                    totalVendido: 0,
-                    desconto: 0
-                }
-        }
-        );
-    }
-    this.novoBrinde = function(usuario, campanha, valorVenda, valorAbsoluto){
-        return $http.post("/brindes/",
-        {
-                consultorId: usuario._id,
-                consultorNome: usuario.nome,
-                campanha: campanha,
-                valorVenda: valorVenda,
-                valorAbsoluto: valorAbsoluto
-        }
-        );
-    }
-    this.meuBrinde = function(id){
-        return $http.get("/brindes/usuario/"+id);
-    }
-    this.minhaMaleta = function(id){
-        return $http.get("/brindes/maleta/"+id);
-    }
-    this.pegaBrinde = function(brinde, peca){
-        return $http.post("/brindes/atualizar/",
-        {
-                _id: brinde._id,
-                update: {
-                    status: "Entregue",
-                    peca: peca
-                }
-        }
-        );
-    }
-    this.pedeMaleta = function(brinde){
-        return $http.post("/brindes/atualizar/",
-        {
-                _id: brinde._id,
-                update: {
-                    status: "Solicitada"
-                }
-        }
-        );
-    }
-    this.atualizaEstoque = function(usuario){
-        return $http.post("/users/atualizar/",
-        {
-            _id: usuario._id,
-            update: {
-                estoque: usuario.estoque
-            }
-        }
-        );
+          proxAcerto: data
+        });
     };
-    this.troca = function(troca){
-        return $http.post("/trocas/", troca);
-    };
-    this.historico = function(id){
-        return $http.get("/acertos/usuario/"+id);
-    };
-    this.tipoTaxa = function(usuario){
-        return $http.post("/users/atualizar/",
+    this.atualizaEstoque = function (usuario) {
+      return $http.put("v1/user?id=" + usuario._id,
         {
-                _id: usuario._id,
-                update: {
-                    tipoTaxa: usuario.tipoTaxa,
-                    taxa: usuario.taxa
-                }
-        }
-        );
-    }
-    this.atualizaProxAcerto = function(usuario, data){
-        return $http.post("/users/atualizar/",
+          estoque: usuario.estoque
+        });
+    };
+    this.tipoTaxa = function (usuario) {
+      return $http.put("v1/user?id=" + usuario._id,
         {
-            _id: usuario._id,
-            update: {
-                proxAcerto: data
-            }
-        }
-        );
-    };
-    this.atualizaEmail = function(usuario, email){
-        return $http.post("/users/atualizar/",
-        {
-            _id: usuario._id,
-            update: {
-                email: email
-            }
-        }
-        );
-    };
-    this.indicados = function(indicadorId){
-        return $http.get("/users/consultores/indicados/"+indicadorId);
-    };
-    this.totalAcertos = function(userId){
-        return $http.get("/acertos/usuario/"+userId+"/total");
-    };
-    this.trocaSupervisor = function(consultorId, supervisorId){
-        return $http.post("/users/atualizar/",
-        {
-            _id: consultorId,
-            update: {
-                supervisor: supervisorId
-            }
-        }
-        );
+          tipoTaxa: usuario.tipoTaxa,
+          taxa: usuario.taxa
+        });
     }
 
-}])
+    // TODO: migrar pra api V1
+    this.incrementaDesconto = function (id, valor) {
+      return $http.post("/users/consultores/maisdesconto",
+        {
+          _id: id,
+          inc: { desconto: valor }
+        }
+      );
+    };
+
+    // TODO: Operação crítica!!! 
+    this.venda = function (usuario, pecas, userId) {
+      return $http.post("/users/venda/",
+        {
+          _id: usuario._id,
+          update: {
+            estoque: usuario.estoque,
+            vendido: usuario.vendido,
+            totalVendido: usuario.totalVendido,
+          },
+          pecas: pecas,
+          userId: userId
+        }
+      );
+    };
+
+    // TODO: Operação crítica!!! 
+    this.estorno = function (usuario, pecas, userId) {
+      return $http.post("/users/estorno/",
+        {
+          _id: usuario._id,
+          update: {
+            estoque: usuario.estoque,
+            vendido: usuario.vendido,
+            totalVendido: usuario.totalVendido,
+          },
+          pecas: pecas,
+          userId: userId
+        }
+      );
+    };
+
+    // TODO: Operação crítica!!! 
+    this.acerto = function (usuario) {
+      return $http.post("/users/atualizar/",
+        {
+          _id: usuario._id,
+          update: {
+            vendido: usuario.vendido,
+            taxa: usuario.taxa,
+            totalVendido: 0,
+            desconto: 0
+          }
+        }
+      );
+    }
+
+    // TODO: giftService
+    this.novoBrinde = function (usuario, campanha, valorVenda, valorAbsoluto) {
+      return $http.post("/brindes/",
+        {
+          consultorId: usuario._id,
+          consultorNome: usuario.nome,
+          campanha: campanha,
+          valorVenda: valorVenda,
+          valorAbsoluto: valorAbsoluto
+        }
+      );
+    }
+    this.meuBrinde = function (id) {
+      return $http.get("/brindes/usuario/" + id);
+    }
+    this.minhaMaleta = function (id) {
+      return $http.get("/brindes/maleta/" + id);
+    }
+    this.pegaBrinde = function (brinde, peca) {
+      return $http.post("/brindes/atualizar/",
+        {
+          _id: brinde._id,
+          update: {
+            status: "Entregue",
+            peca: peca
+          }
+        }
+      );
+    }
+    this.pedeMaleta = function (brinde) {
+      return $http.post("/brindes/atualizar/",
+        {
+          _id: brinde._id,
+          update: {
+            status: "Solicitada"
+          }
+        }
+      );
+    }
+
+    // TODO: misc
+    this.troca = function (troca) {
+      return $http.post("/trocas/", troca);
+    };
+    this.historico = function (id) {
+      return $http.get("/acertos/usuario/" + id);
+    };
+
+
+
+    this.indicados = function (indicadorId) {
+      return $http.get("/users/consultores/indicados/" + indicadorId);
+    };
+    this.totalAcertos = function (userId) {
+      return $http.get("/acertos/usuario/" + userId + "/total");
+    };
+
+
+  }])
 angular.module('ambaya')
 .directive('tabelaPecas', ['pecasService', function(pecasService){
     return{
@@ -29804,3 +29766,9 @@ angular.module('ambaya')
 		}
 	}
 ]);
+angular.module('ambaya')
+  .service('UserUtils', function () {
+    this.getFullName = function(user) {
+      return user.nome + " " + user.sobrenome;
+    }
+  })

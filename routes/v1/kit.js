@@ -15,15 +15,46 @@ router.route('/')
         }
     })
     //retrieve
-    .get(async (req, res) => {
-        let { id } = req.query;
+    .get(async (req, res, next) => {
+        let { id, sort, limit, skip } = req.query;
 
         try {
             if (id) {
-                let kit = await Kit.findById(id);
+                let kit = await Kit.findById(id)
+                    .populate(
+                        {
+                            'path': 'consultora',
+                            'select': '_id nome sobrenome'
+                        })
+                    .populate(
+                        {
+                            'path': 'supervisor',
+                            'select': '_id nome sobrenome'
+                        });
                 res.json(kit);
             } else {
-                let kits = await Kit.find({}).exec();
+                let query = Kit.find({})
+                    .populate(
+                        {
+                            'path': 'consultora',
+                            'select': '_id nome sobrenome'
+                        })
+                    .populate(
+                        {
+                            'path': 'supervisor',
+                            'select': '_id nome sobrenome'
+                        });
+                sort ?
+                    query = query.sort(sort) :
+                    null;
+                limit ?
+                    query = query.limit(Number(limit)) :
+                    null;
+                skip ?
+                    query = query.limit(Number(skip)) :
+                    null
+
+                const kits = await query.exec();
                 res.json(kits);
             }
         }

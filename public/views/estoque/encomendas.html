@@ -57,7 +57,7 @@
 								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
 								<div class="chip">
 									<i class="material-icons left">person</i>
-									{{encomenda.donoId.nome}}
+									{{UserUtils.getFullName(encomenda.donoId)}}
 								</div>
 							</div>
 							<div ng-if="encomenda.status==='Enviada'" class="card-reveal">
@@ -105,7 +105,7 @@
 						<div class="col m6">
 							<div class="chip">
 								<i class="material-icons left">person</i>
-								{{encomendaAtual.donoId.nome}}
+								{{UserUtils.getFullName(encomendaAtual.donoId)}}
 							</div>
 						</div>
 					</div>

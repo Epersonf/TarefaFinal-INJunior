@@ -25,7 +25,7 @@
 							</ul>
 					<a class="textoPreto collection-item avatar" href="#/consultor/{{consultor._id}}" style="overflow-y:overlay" ng-repeat="consultor in consultores | orderBy:'proxAcerto' | filter:filtroStatus |filter:filtro">
 						<i class="material-icons circle">person</i>
-						<div class="col s12"><b>{{consultor.nome}} - ({{consultor.supervisor ? consultor.supervisor.nome : 'Nenhum'}})</b></div>
+						<div class="col s12"><b>{{UserUtils.getFullName(consultor)}} - ({{consultor.supervisor ? UserUtils.getFullName(consultor.supervisor) : 'Nenhum'}})</b></div>
 							<div class="col s12 m2">
 									<div class="chip" ng-class="{'orange': consultor.status==='Pendente', 'red': consultor.status==='Inativo', 'green': consultor.status==='Aprovado'}">
 											{{consultor.status}}

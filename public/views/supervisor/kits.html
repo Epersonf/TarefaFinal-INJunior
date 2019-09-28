@@ -7,12 +7,12 @@
                 <div class="row">
                     <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()" ng-disabled="usuario.tipo=='Supervisor'">
                             <option value="" disabled selected>Selecione o supervisor</option>
-                            <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{supervisor.nome}} - {{supervisor.cidade}}</option>
+                            <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{UserUtils.getFullName(supervisor)}} - {{supervisor.cidade}}</option>
                     </select>
                     <select style="display:block" ng-model="selectedConsultora" class="col m6 s12" ng-show="consultores.length>0">
                             <option value="" disabled selected>Selecione o consultor</option>
                             <option value="">Nenhum</option>
-                            <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome}}</option>
+                            <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{UserUtils.getFullName(consultor)}}</option>
                     </select>
                 </div>
                 <div class="row" ng-show="kitAtual.supervisor!=''">
@@ -237,11 +237,11 @@
                         <div class="row">
                             <div class="col s6">
                                     <span class="title">
-                                       <span ng-if="kit.consultora.nome">{{kit.consultora.nome}} </span>
+                                       <span ng-if="kit.consultora.nome">{{UserUtils.getFullName(kit.consultora)}} </span>
                                        <span ng-if="!kit.consultora.nome"><SEM CONSULTOR> </span>
                                     </br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
                                 </br>
-                                <span>Supervisor: {{kit.supervisor.nome}}</span>
+                                <span>Supervisor: {{UserUtils.getFullName(kit.supervisor)}}</span>
                                 </br>
                                 <div class="chip tooltipped" ng-class="{'orange': kit.status==='Pendente', 'green': kit.status==='Entregue'}" >
                                     {{kit.status}}

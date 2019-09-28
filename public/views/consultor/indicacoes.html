@@ -9,7 +9,7 @@
                 <ul class="collection">
                     <li class="textoPreto collection-item avatar" ng-repeat="indicado in indicados | orderBy:'-createdAt'">
                         <i class="material-icons circle">person</i>
-                        <span class="title strong">{{indicado.nome}}</span>
+                        <span class="title strong">{{UserUtils.getFullName(indicado)}}</span>
                         <p>
                             <span ng-show="indicado.totalAcertos <= 3">
                                     Próximo acerto: {{indicado.totalVendido | currency:'R$'}} ({{indicado.proxAcerto | date: "d/MM/yy"}})

@@ -10,7 +10,7 @@
 				<div class="collection">
 					<a class="textoPreto collection-item avatar" href="#/supervisor/{{supervisor._id}}" ng-repeat="supervisor in supervisores | filter:filtro">
 						<i class="material-icons circle">person</i>
-						<span class="title">{{supervisor.nome}}</span>
+						<span class="title">{{UserUtils.getFullName(supervisor)}}</span>
 						<p> Usuário: {{supervisor.username}} </p>
 					</a>
 				</div>                 

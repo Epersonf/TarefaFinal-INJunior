@@ -102,12 +102,6 @@ var User = new Schema({
 
 }, {
     timestamps: true
-}, { 
-    toJSON: { virtuals: true } 
-});
-
-User.virtual('fullName').get(function () {
-    return this.nome + ' ' + this.sobrenome;
 });
 
 User.plugin(passportLocalMongoose);
