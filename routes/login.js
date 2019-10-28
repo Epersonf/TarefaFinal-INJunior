@@ -36,9 +36,9 @@ router.post('/',
 //TODO: tratar requisição vinda do app
 router.post('/esqueci-senha', function (req, res, next) {
   const state = uuid();
-  const { login, email, origin} = req.body;
+  const { login, email, origin } = req.body;
   let returnUrl;
-  switch(origin){
+  switch (origin) {
     case 'app':
       returnUrl = 'https://app.ambaya.com.br/nova-senha';
       break;
@@ -61,13 +61,16 @@ router.post('/esqueci-senha', function (req, res, next) {
 
       // send mail with defined transport object
       transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          next(error);
+        }
         res.json(data);
       });
     }
   );
 });
 
-router.post('/nova-senha', async  (req, res, next) => {
+router.post('/nova-senha', async (req, res, next) => {
   const userToChange = await User.findOne({ state: req.body.state }).exec();
   await userToChange.setPassword(req.body.senha);
   await userToChange.save();
