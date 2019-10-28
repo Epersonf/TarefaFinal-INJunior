@@ -29203,23 +29203,23 @@ angular.module('ambaya')
 }])
 
 angular.module('ambaya')
-    .service('kitsService', ["$http", function ($http) {
-        this.novo = function (kit) {
-            return $http.post("v1/kit", kit);
-        };
-        this.todos = function () {
-            return $http.get("v1/kit?sort=-createdAt&limit=100");
-        };
-        this.consultor = function (id) {
-            return $http.get("v1/kit?sort=-createdAt&limit=100&consultora=" + id);
-        };
-        this.excluir = function (id) {
-            return $http.delete("v1/kit?id=" + id);
-        };
-        this.atualizar = function (id, update) {
-            return $http.put("v1/kit/kit?id=" + id, update);
-        };
-    }])
+  .service('kitsService', ["$http", function ($http) {
+    this.novo = function (kit) {
+      return $http.post("v1/kit", kit);
+    };
+    this.todos = function () {
+      return $http.get("v1/kit?sort=-createdAt&limit=100");
+    };
+    this.consultor = function (id) {
+      return $http.get("v1/kit?sort=-createdAt&limit=100&consultora=" + id);
+    };
+    this.excluir = function (id) {
+      return $http.delete("v1/kit?id=" + id);
+    };
+    this.atualizar = function (id, update) {
+      return $http.put("v1/kit?id=" + id, update);
+    };
+  }])
 angular.module('ambaya')
   .service('consultoresService', ["$http", function ($http) {
     const path = "v1/user?tipo=Consultor&";
