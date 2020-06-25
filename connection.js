@@ -3,19 +3,18 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const mongoose = require('mongoose');
-const config = require('./config')
+const { config } = require('./config.js');
 
 mongoose.connect(config.mongoUrl, { useNewUrlParser: true });
 
 const db = mongoose.connection;
 
 module.exports = {
-    io,
-    app,
-    server,
-    db,
-}
-
+  io,
+  app,
+  server,
+  db
+};
 
 /* const CONNECTION_KEY = Symbol.for("ambaya.connection");
 

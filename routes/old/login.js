@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const User = require('../models/user');
+const User = require('../../models/user');
 const Verify = require('./verify');
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
-const emailHelper = require('../helpers/emailHelper');
+const emailHelper = require('../../helpers/emailHelper');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.weblink.com.br',
@@ -15,21 +15,17 @@ const transporter = nodemailer.createTransport({
     user: 'equipe@ambaya.com.br',
     pass: 'ambaya2014'
   }
-})
+});
 
-
-router.post('/',
-  passport.authenticate('local'),
-  function (req, res) {
-    var token = Verify.getToken(req.user);
-    res.status(200).json({
-      status: 'Logado com sucesso',
-      success: true,
-      token: token,
-      user: req.user
-    });
-  }
-);
+router.post('/', passport.authenticate('local'), function (req, res) {
+  var token = Verify.getToken(req.user);
+  res.status(200).json({
+    status: 'Logado com sucesso',
+    success: true,
+    token: token,
+    user: req.user
+  });
+});
 
 //Password Recovery
 
@@ -45,7 +41,8 @@ router.post('/esqueci-senha', function (req, res, next) {
     default:
       returnUrl = 'http://minha.ambaya.com.br/#/recuperar-senha';
   }
-  User.update({ username: login, email: email },
+  User.update(
+    { username: login, email: email },
     {
       $set: {
         state: state
@@ -73,7 +70,7 @@ router.post('/esqueci-senha', function (req, res, next) {
 router.post('/nova-senha', async (req, res, next) => {
   const userToChange = await User.findOne({ state: req.body.state }).exec();
   if (!userToChange) {
-    console.log('Invalid password change request')
+    console.log('Invalid password change request');
     res.status(404).json({ msg: 'Password not changed' });
   }
   await userToChange.setPassword(req.body.senha);

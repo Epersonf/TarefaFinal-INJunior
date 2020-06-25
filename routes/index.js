@@ -1,9 +1,28 @@
-var express = require('express');
-var router = express.Router();
+const { Router } = require('express');
+const { loginApi } = require('./login.route');
+const { userApi } = require('./user.route');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const api = Router();
+
+api.get('/health-check', (req, res) => res.status(200).json('ok'));
+api.use('/login', loginApi);
+api.use('/user', userApi);
+
+// handling 404
+api.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.name = 'error.notFound';
+  err.status = 404;
+  next(err);
 });
 
-module.exports = router;
+// handling erros
+api.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: err.name
+  });
+});
+
+module.exports = { api };
