@@ -3,38 +3,38 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-
-var encomendaSchema = new Schema({
+var encomendaSchema = new Schema(
+  {
     item: {
-        type: String,
-        required: false
+      type: String,
+      required: false
     },
     status: {
-        type: String,
-        required: true,
-        default: "Pendente"
+      type: String,
+      required: true,
+      default: 'Pendente'
     },
     tipo: {
-        type: String,
-        required: true,
-        default: "simples" // simples, enxoval, catalogo
+      type: String,
+      required: true,
+      default: 'simples' // simples, enxoval, catalogo
     },
     quantidade: {
-        type: Number,
-        required: false
+      type: Number,
+      required: false
     },
     donoNome: {
-        type: String,
-        required: false
+      type: String,
+      required: false
     },
     donoId: {
-        type: ObjectId,
-        required: true,
-        ref: 'User'
+      type: ObjectId,
+      required: true,
+      ref: 'User'
     },
     pagamento: {
-        type: ObjectId,
-        ref: 'Acerto'
+      type: ObjectId,
+      ref: 'Acerto'
     },
     consultorNome: String,
     consultorId: ObjectId,
@@ -42,18 +42,22 @@ var encomendaSchema = new Schema({
     shipmentCode: String,
     enviados: [String],
     products: {
-        type: [{
-            type: ObjectId,
-            ref: 'Product'
-        }],
+      type: [
+        {
+          type: ObjectId,
+          ref: 'Product'
+        }
+      ]
     },
     catalog: {
-        type: ObjectId,
-        ref: 'Collection'
+      type: ObjectId,
+      ref: 'Collection'
     }
-}, {
-        timestamps: true
-    });
+  },
+  {
+    timestamps: true
+  }
+);
 
 // the schema is useless so far
 // we need to create a model using it

@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const { loginApi } = require('./login.route');
 const { userApi } = require('./user.route');
+const { consultantApi } = require('./consultant.route');
 
 const api = Router();
 
 api.get('/health-check', (req, res) => res.status(200).json('ok'));
 api.use('/login', loginApi);
 api.use('/user', userApi);
+api.use('/consultant', consultantApi);
 
 // handling 404
 api.use((req, res, next) => {
@@ -17,7 +19,7 @@ api.use((req, res, next) => {
 });
 
 // handling erros
-api.use((err, req, res, next) => {
+api.use((err, req, res) => {
   res.status(err.status || 500);
   res.json({
     message: err.message,

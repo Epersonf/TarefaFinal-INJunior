@@ -2,23 +2,24 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var User = require('./user');
 
-
-var pecalogSchema = new Schema({
-	acao: {
-		type: String,		
-        required: true
+var pecalogSchema = new Schema(
+  {
+    acao: {
+      type: String,
+      required: true
     },
     user: {
-        type: ObjectId,
-        required: false,
-        ref: 'User'
+      type: ObjectId,
+      required: false,
+      ref: 'USER'
     },
     pecas: [String]
-}, {
+  },
+  {
     timestamps: true
-});
+  }
+);
 
 // the schema is useless so far
 // we need to create a model using it

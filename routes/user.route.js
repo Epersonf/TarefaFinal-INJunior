@@ -30,7 +30,7 @@ userApi
       next(e);
     }
   })
-  .get(verifyToken(['admin']), async (req, res, next) => {
+  .get(verifyToken(['admin', 'self']), async (req, res, next) => {
     try {
       const users = await handleGetFilters(req.query, UserModel);
       res.status(200).json(users);

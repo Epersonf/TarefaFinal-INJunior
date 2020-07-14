@@ -2,33 +2,34 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
-var User = require('./user');
 
-
-var kitSchema = new Schema({
-	consultora: {
-		type: ObjectId,		
-        ref: 'User'
+var kitSchema = new Schema(
+  {
+    consultora: {
+      type: ObjectId,
+      ref: 'User'
     },
     supervisor: {
-		type: ObjectId,		
-        required: false,
-        ref: 'User'
+      type: ObjectId,
+      required: false,
+      ref: 'User'
     },
-	valor: {
-		type: Number,
-		required: true,
-		default: 0
+    valor: {
+      type: Number,
+      required: true,
+      default: 0
     },
     status: {
-        type: String,
-        required: true,
-        default: "Pendente"
+      type: String,
+      required: true,
+      default: 'Pendente'
     },
-	pecas: [String]
-}, {
+    pecas: [String]
+  },
+  {
     timestamps: true
-});
+  }
+);
 
 // the schema is useless so far
 // we need to create a model using it
