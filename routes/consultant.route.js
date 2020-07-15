@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { ConsultantModel } = require('../models/consultant.model');
+const { CheckoutModel } = require('../models/checkout.model');
 const { verifyToken } = require('../helpers/auth.helper');
 
 const consultantApi = Router();
@@ -9,8 +10,12 @@ consultantApi
   .post(async (req, res, next) => {
     const consultant = req.body;
     try {
+      // TODO: posssível necessidade de uma transaction
       const newConsultant = await ConsultantModel.create(consultant);
-      res.status(200).json(newConsultant);
+      const newCheckout = await CheckoutModel.create({
+        user: newConsultant.user
+      });
+      res.status(200).json({ newConsultant, newCheckout });
     } catch (err) {
       return next(err);
     }

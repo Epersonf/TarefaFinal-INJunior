@@ -30,6 +30,9 @@ const verifyToken = (allowedRoles) => (req, res, next) => {
           message: 'token.invalid'
         });
       } else {
+        if (allowedRoles.indexOf('all') > -1) {
+          next();
+        }
         if (
           allowedRoles.indexOf(decoded.currentRole) > -1 ||
           (allowedRoles.indexOf('self') > -1 && id === decoded.id)
