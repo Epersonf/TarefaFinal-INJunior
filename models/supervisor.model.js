@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { aggregate } = require('../helpers/piecesHelper');
+const { aggregate } = require('../helpers/stock.helper');
 
 const { UserModelName } = require('./user.model');
 const { StockSchema, emptyStock } = require('./common');

@@ -1,3 +1,5 @@
+require('dotenv/config');
+
 const config = {
   appEnv: process.env.APP_ENV || 'test',
   // 'appEnv': process.env.APP_ENV || 'prod',

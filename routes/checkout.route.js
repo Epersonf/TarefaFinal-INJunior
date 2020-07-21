@@ -6,14 +6,17 @@ const checkoutApi = Router();
 
 checkoutApi
   .route('/')
-  .get(verifyToken(['all']), async (req, res, next) => {
-    try {
-      const checkouts = await CheckoutModel.find(req.query);
-      res.status(200).json(checkouts);
-    } catch (e) {
-      next(e);
+  .get(
+    verifyToken(['admin', 'controller', 'consultant', 'supervisor']),
+    async (req, res, next) => {
+      try {
+        const checkouts = await CheckoutModel.find(req.query);
+        return res.status(200).json(checkouts);
+      } catch (e) {
+        next(e);
+      }
     }
-  })
+  )
   .put(
     verifyToken(['admin', 'controller', 'consultant', 'supervisor']),
     async (req, res, next) => {

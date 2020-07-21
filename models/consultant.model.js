@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const { addDays } = require('date-fns');
-const { aggregate } = require('../helpers/piecesHelper');
+const { aggregate } = require('../helpers/stock.helper');
 
 const { UserModelName } = require('./user.model');
 const { StockSchema, emptyStock } = require('./common');
@@ -25,7 +25,7 @@ const ConsultantScheme = new Schema(
     level: {
       type: String,
       enum: ConsultantLevels,
-      defalut: 'bronze'
+      default: 'bronze'
     },
     supervisor: {
       type: ObjectId,
@@ -35,7 +35,7 @@ const ConsultantScheme = new Schema(
       type: StockSchema,
       default: emptyStock
     },
-    nextPaymend: {
+    nextPayment: {
       type: Date,
       default: addDays(new Date(), 45)
     },

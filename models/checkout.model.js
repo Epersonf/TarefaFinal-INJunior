@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { aggregate } = require('../helpers/piecesHelper');
+const { aggregate } = require('../helpers/stock.helper');
 
 const { UserModelName } = require('./user.model');
 const { StockSchema, emptyStock } = require('./common');
@@ -55,13 +55,11 @@ const CheckoutScheme = new Schema(
       ref: UserModelName,
       required: true
     },
-    status: [
-      {
-        type: String,
-        enum: checkoutStatus,
-        default: 'open'
-      }
-    ],
+    status: {
+      type: String,
+      enum: checkoutStatus,
+      default: 'open'
+    },
     sold: {
       type: StockSchema,
       default: emptyStock

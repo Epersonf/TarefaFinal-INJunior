@@ -8,6 +8,9 @@ const { mailer } = require('../services/mailer.service');
 const { UserModel } = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const { config } = require('../config');
+const {
+  getPasswordRecoveryMail
+} = require('../htmlTemplates/forgotPasswordEmail');
 
 const loginApi = Router();
 
@@ -30,7 +33,8 @@ loginApi.route('/forgot-password').get(async (req, res, next) => {
     mailer.sendMail(
       {
         to: email,
-        html: `Recovery token: ${token}`
+        subject: '[Ambaya] Recuperação de senha',
+        html: getPasswordRecoveryMail(token)
       },
       (err) => {
         if (err) {
@@ -38,10 +42,14 @@ loginApi.route('/forgot-password').get(async (req, res, next) => {
         }
       }
     );
+    res.status(200).json({
+      message: 'forgotPassword.emailSent'
+    });
+  } else {
+    res.status(404).json({
+      message: 'forgotPassword.emailNotFound'
+    });
   }
-  res.status(200).json({
-    message: 'forgotPassword.emailSent'
-  });
 });
 
 loginApi.route('/reset-password').post(async (req, res, next) => {
@@ -56,8 +64,8 @@ loginApi.route('/reset-password').post(async (req, res, next) => {
       const user = await UserModel.findById(decoded.id);
       const isValid = user && user.email === decoded.email;
       if (isValid) {
-        user.set('password', password);
-        user.save();
+        await user.setPassword(password);
+        await user.save();
         return res.status(200).json({
           message: 'forgotPassword.reset'
         });

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node app",
-    "dev": "nodemon app"
+    "dev": "nodemon app",
+    "db": "run-rs --mongod --keep"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -13,6 +14,7 @@
     "cors": "^2.8.5",
     "date-fns": "^2.14.0",
     "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-force-https": "^1.0.0",
     "express-force-ssl": "^0.3.2",
@@ -48,6 +50,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "gulp-exec": "^4.0.0",
     "nodemon": "^2.0.2",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "run-rs": "^0.6.2"
   }
 }

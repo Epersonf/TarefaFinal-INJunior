@@ -65,5 +65,6 @@ const UserModel = model(UserModelName, UserSchema);
 
 module.exports = {
   UserModel,
-  UserModelName
+  UserModelName,
+  Roles
 };

@@ -1,21 +1,35 @@
 const { Router } = require('express');
-const { UserModel } = require('../models/user.model');
+const { UserModel, Roles } = require('../models/user.model');
 const passport = require('passport');
 const { verifyToken } = require('../helpers/auth.helper');
 const { handleGetFilters } = require('../helpers/request.helper');
+const { createNewConsultant } = require('../helpers/consultant.helper');
 
 const userApi = Router();
 
 userApi
   .route('/')
   .post(async (req, res, next) => {
+    const { role, ...userBasicData } = req.body;
+    if (Roles.indexOf(role) === -1) {
+      return res.status(401).json({ message: 'user.invalidRole' });
+    }
+    const userData = {
+      ...userBasicData,
+      roles: [role],
+      currentRole: role
+    };
     try {
       UserModel.register(
-        new UserModel(req.body),
-        req.body.password,
-        (err, newUser) => {
+        new UserModel(userData),
+        userData.password,
+        async (err, newUser) => {
           if (err) {
             return res.status(500).json({ err: err });
+          }
+
+          if (role === 'consultant') {
+            await createNewConsultant({ user: newUser._id });
           }
 
           passport.authenticate('local')(req, res, function () {
