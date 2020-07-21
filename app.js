@@ -13,6 +13,8 @@
 
   const { UserModel } = require('./models/user.model');
 
+  const { checkForAdminUser } = require('./inicialization');
+
   const { api } = require('./routes');
 
   const app = connection.app;
@@ -31,6 +33,8 @@
   passport.use(new LocalStrategy(UserModel.authenticate()));
   passport.serializeUser(UserModel.serializeUser());
   passport.deserializeUser(UserModel.deserializeUser());
+
+  checkForAdminUser();
 
   app.use((_, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
