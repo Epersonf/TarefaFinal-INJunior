@@ -26,9 +26,12 @@ const UserSchema = new Schema(
     },
     active: {
       type: Boolean,
-      default: false
+      default: true
     },
-    fullName: String,
+    fullName: {
+      type: String,
+      required: true
+    },
     deactivatedAt: Date,
     lastLogin: Date,
     cpf: String,

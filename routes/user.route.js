@@ -2,15 +2,16 @@ const { Router } = require('express');
 const { UserModel, Roles } = require('../models/user.model');
 const passport = require('passport');
 const { verifyToken } = require('../helpers/auth.helper');
-const { handleGetFilters } = require('../helpers/request.helper');
+const { handleGetFilters } = require('../helpers/user.helper');
 const { createNewConsultant } = require('../helpers/consultant.helper');
+const { SupervisorModel } = require('../models/supervisor.model');
 
 const userApi = Router();
 
 userApi
   .route('/')
   .post(async (req, res, next) => {
-    const { role, ...userBasicData } = req.body;
+    const { role, supervisorId, ...userBasicData } = req.body;
     if (Roles.indexOf(role) === -1) {
       return res.status(401).json({ message: 'user.invalidRole' });
     }
@@ -29,7 +30,17 @@ userApi
           }
 
           if (role === 'consultant') {
-            await createNewConsultant({ user: newUser._id });
+            await createNewConsultant({
+              user: newUser._id,
+              supervisor: supervisorId || null
+            });
+          }
+
+          if (role === 'supervisor') {
+            await SupervisorModel.create({
+              user: newUser._id,
+              supervisor: supervisorId || null
+            });
           }
 
           passport.authenticate('local')(req, res, function () {
@@ -44,7 +55,7 @@ userApi
       next(e);
     }
   })
-  .get(verifyToken(['admin', 'self']), async (req, res, next) => {
+  .get(verifyToken(['admin', 'controller', 'self']), async (req, res, next) => {
     try {
       const users = await handleGetFilters(req.query, UserModel);
       res.status(200).json(users);

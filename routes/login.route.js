@@ -54,8 +54,9 @@ loginApi.route('/forgot-password').get(async (req, res, next) => {
 
 loginApi.route('/reset-password').post(async (req, res, next) => {
   const { token, password, confirmPassword } = req.body;
+  console.log(JSON.stringify(req.body));
   if (!(password && password === confirmPassword)) {
-    return res.status(403).json({
+    return res.status(400).json({
       message: 'forgotPassword.passwordNotMatching'
     });
   }

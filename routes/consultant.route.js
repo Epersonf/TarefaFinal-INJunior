@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const { ConsultantModel } = require('../models/consultant.model');
-const { createNewConsultant } = require('./../helpers/consultant.helper');
+const {
+  createNewConsultant,
+  handleGetFilters
+} = require('./../helpers/consultant.helper');
 const { verifyToken } = require('../helpers/auth.helper');
 
 const consultantApi = Router();
@@ -18,9 +21,7 @@ consultantApi
   })
   .get(async (req, res, next) => {
     try {
-      const consultants = await ConsultantModel.find(req.query)
-        .populate('user', 'fullName adress phoneNumber active')
-        .populate('supervisor', 'fullName adress phoneNumber active');
+      const consultants = await handleGetFilters(req.query, ConsultantModel);
       res.status(200).json(consultants);
     } catch (e) {
       next(e);

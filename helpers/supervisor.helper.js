@@ -1,25 +1,3 @@
-const { startSession } = require('mongoose');
-const { ConsultantModel } = require('./../models/consultant.model');
-const { CheckoutModel } = require('./../models/checkout.model');
-
-const createNewConsultant = async (consultantData) => {
-  const session = await startSession();
-  try {
-    session.startTransaction();
-    const newConsultant = await ConsultantModel.create(consultantData);
-    const newCheckout = await CheckoutModel.create({
-      user: newConsultant.user
-    });
-    await session.commitTransaction();
-    session.endSession();
-    return { newConsultant, newCheckout };
-  } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
-    throw error;
-  }
-};
-
 const handleGetFilters = async (query, Model) => {
   const { id, sort, skip, limit, count, inactive, ...otherParams } = query;
   if (id) {
@@ -41,7 +19,7 @@ const handleGetFilters = async (query, Model) => {
       },
       {
         path: 'supervisor',
-        select: 'fullName adress phoneNumber active email'
+        select: 'fullName adress phoneNumber active'
       }
     ]);
     const collection = await query.exec();
@@ -54,6 +32,5 @@ const handleGetFilters = async (query, Model) => {
 };
 
 module.exports = {
-  createNewConsultant,
   handleGetFilters
 };

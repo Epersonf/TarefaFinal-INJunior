@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { loginApi } = require('./login.route');
 const { userApi } = require('./user.route');
 const { consultantApi } = require('./consultant.route');
+const { supervisorApi } = require('./supervisor.route');
 const { checkoutApi } = require('./checkout.route');
 
 const api = Router();
@@ -10,6 +11,7 @@ api.get('/health-check', (req, res) => res.status(200).json('ok'));
 api.use('/login', loginApi);
 api.use('/user', userApi);
 api.use('/consultant', consultantApi);
+api.use('/supervisor', supervisorApi);
 api.use('/checkout', checkoutApi);
 
 // handling 404
