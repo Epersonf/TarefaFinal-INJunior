@@ -5,6 +5,7 @@ const { verifyToken } = require('../helpers/auth.helper');
 const { handleGetFilters } = require('../helpers/user.helper');
 const { createNewConsultant } = require('../helpers/consultant.helper');
 const { SupervisorModel } = require('../models/supervisor.model');
+const { StockistModel } = require('../models/stockist.model');
 
 const userApi = Router();
 
@@ -40,6 +41,12 @@ userApi
             await SupervisorModel.create({
               user: newUser._id,
               supervisor: supervisorId || null
+            });
+          }
+
+          if (role === 'stockist') {
+            await StockistModel.create({
+              user: newUser._id
             });
           }
 
