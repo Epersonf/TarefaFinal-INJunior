@@ -11,20 +11,6 @@ const PieceSchema = {
   }
 };
 
-const emptyStock = {
-  AN: [],
-  BP: [],
-  BG: [],
-  CF: [],
-  CM: [],
-  PN: [],
-  PF: [],
-  PM: [],
-  TZ: [],
-  PZ: [],
-  ES: []
-};
-
 const StockSchema = {
   AN: [PieceSchema],
   BP: [PieceSchema],
@@ -41,6 +27,5 @@ const StockSchema = {
 
 module.exports = {
   PieceSchema,
-  StockSchema,
-  emptyStock
+  StockSchema
 };

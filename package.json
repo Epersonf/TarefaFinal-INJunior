@@ -1,11 +1,12 @@
 {
   "name": "ambaya",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node app",
     "dev": "nodemon app",
-    "db": "run-rs --mongod --keep"
+    "db": "run-rs --mongod --keep",
+    "test": "mocha"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -40,6 +41,7 @@
     "xml2js-es6-promise": "^1.1.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.1",
@@ -49,6 +51,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "gulp-exec": "^4.0.0",
+    "mocha": "^8.1.1",
     "nodemon": "^2.0.2",
     "prettier": "^2.0.2",
     "run-rs": "^0.6.2"

@@ -2,7 +2,8 @@ const { Schema, model } = require('mongoose');
 const { aggregate } = require('../helpers/stock.helper');
 
 const { UserModelName } = require('./user.model');
-const { StockSchema, emptyStock } = require('./common');
+const { StockSchema } = require('./common');
+const { emptyStock } = require('../helpers/stock.helper');
 
 const { ObjectId } = Schema.Types;
 

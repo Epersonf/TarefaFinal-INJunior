@@ -1,4 +1,8 @@
 module.exports = {
+  env: {
+    node: true,
+    mocha: true
+  },
   extends: 'standard',
   plugins: ['prettier'],
 
@@ -11,8 +15,8 @@ module.exports = {
         objects: 'never',
         imports: 'never',
         exports: 'never',
-        functions: 'never',
-      },
-    ],
-  },
+        functions: 'never'
+      }
+    ]
+  }
 };
