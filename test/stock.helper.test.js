@@ -1,4 +1,8 @@
-const { sumStocks, emptyStock } = require('../helpers/stock.helper');
+const {
+  emptyStock,
+  sumStocks,
+  calculateTotals
+} = require('../helpers/stock.helper');
 const { expect } = require('chai');
 
 const stockA = {
@@ -71,6 +75,22 @@ describe('Testing Stock helper', () => {
         ES: [{ price: 20, quantity: 5 }]
       };
       expect(result).to.be.deep.equal(expectedResult);
+    });
+  });
+  describe('calculateTotals function', () => {
+    it('Should return 0s if array is empty', () => {
+      const totals = calculateTotals([]);
+      const expectedTotals = { price: 0, quantity: 0 };
+      expect(totals).to.be.deep.equal(expectedTotals);
+    });
+    it('Should the prices and the quatities', () => {
+      const totals = calculateTotals([
+        { price: 20, quantity: 5 },
+        { price: 10, quantity: 10 },
+        { price: 15, quantity: 12 }
+      ]);
+      const expectedTotals = { price: 380, quantity: 27 };
+      expect(totals).to.be.deep.equal(expectedTotals);
     });
   });
 });
