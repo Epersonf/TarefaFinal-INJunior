@@ -5,6 +5,7 @@ const { consultantApi } = require('./consultant.route');
 const { supervisorApi } = require('./supervisor.route');
 const { stockistApi } = require('./stockist.route');
 const { checkoutApi } = require('./checkout.route');
+const { pieceEntryApi } = require('./pieceEntry.route');
 
 const api = Router();
 
@@ -15,6 +16,7 @@ api.use('/consultant', consultantApi);
 api.use('/supervisor', supervisorApi);
 api.use('/stockist', stockistApi);
 api.use('/checkout', checkoutApi);
+api.use('/pieceentry', pieceEntryApi);
 
 // handling 404
 api.use((req, res, next) => {

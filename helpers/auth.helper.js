@@ -31,6 +31,7 @@ const verifyToken = (allowedRoles) => (req, res, next) => {
         });
       } else {
         if (allowedRoles.indexOf('all') > -1) {
+          req.user = decoded;
           next();
         }
         if (
