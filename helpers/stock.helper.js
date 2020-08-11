@@ -75,10 +75,49 @@ const sumStocks = (stockA, stockB) => {
   return sum;
 };
 
+const subtractStocks = (stock, subtractor) => {
+  const result = { ...emptyStock };
+  const missing = { ...emptyStock };
+  pieceTypes.forEach((type) => {
+    subtractor[type.sigla].forEach((subtractorPiece) => {
+      const stockPiece = stock[type.sigla].find(
+        (piece) => piece.price === subtractorPiece.price
+      );
+      if (!stockPiece) {
+        missing[type.sigla].push(subtractorPiece);
+      } else {
+        if (stockPiece.quantity > subtractorPiece.quantity) {
+          result[type.sigla] = [
+            ...result[type.sigla],
+            {
+              price: stockPiece.price,
+              quantity: stockPiece.quantity - subtractorPiece.quantity
+            }
+          ];
+        } else if (stockPiece.quantity < subtractorPiece.quantity) {
+          missing[type.sigla] = [
+            ...missing[type.sigla],
+            {
+              price: stockPiece.price,
+              quantity: subtractorPiece.quantity - stockPiece.quantity
+            }
+          ];
+        }
+      }
+    });
+  });
+  const status = aggregate(missing).total.quantity === 0 ? 'done' : 'missing';
+  return {
+    status,
+    result: status === 'done' ? result : missing
+  };
+};
+
 module.exports = {
   pieceTypes,
   emptyStock,
   calculateTotals,
   aggregate,
-  sumStocks
+  sumStocks,
+  subtractStocks
 };

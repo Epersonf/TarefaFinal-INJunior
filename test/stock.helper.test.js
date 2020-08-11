@@ -97,6 +97,40 @@ const emptyAggregated = {
   total: { price: 0, quantity: 0 }
 };
 
+const dSubtractor = {
+  AN: [{ price: 10, quantity: 3 }],
+  BP: [],
+  BG: [],
+  CF: [],
+  CM: [
+    { price: 20, quantity: 5 },
+    { price: 10, quantity: 8 },
+    { price: 15, quantity: 12 }
+  ],
+  PN: [],
+  PF: [],
+  PM: [],
+  TZ: [],
+  PZ: [],
+  ES: [{ price: 20, quantity: 5 }]
+};
+
+const dResult = {
+  AN: [{ price: 10, quantity: 2 }],
+  BP: [],
+  BG: [],
+  CF: [],
+  CM: [
+    { price: 10, quantity: 2 },
+  ],
+  PN: [],
+  PF: [],
+  PM: [],
+  TZ: [],
+  PZ: [],
+  ES: []
+};
+
 describe('Testing Stock helper', () => {
   describe('Sum stock function', () => {
     it('Should sum to an empty stock', () => {
@@ -148,9 +182,25 @@ describe('Testing Stock helper', () => {
       const aggregatedResult = aggregate(emptyStock);
       expect(aggregatedResult).to.be.deep.equal(emptyAggregated);
     });
-    it('Should the prices and the quatities', () => {
+    it('Should get prices and quatities', () => {
       const aggregated = aggregate(stockD);
       expect(aggregated).to.be.deep.equal(stockDAggregated);
+    });
+  });
+  describe('subtractStocks function', () => {
+    it('Should subtract the pieces correctly', () => {
+      const result = subtractStocks(stockD, dSubtractor);
+      expect(result).to.be.deep.equal({
+        result: dResult,
+        status: 'done'
+      });
+    });
+    it('Should the detect not possible subtraction', () => {
+      const result = subtractStocks(dResult, stockD);
+      expect(result).to.be.deep.equal({
+        result: dSubtractor,
+        status: 'missing'
+      });
     });
   });
 });
