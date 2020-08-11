@@ -57,7 +57,7 @@ const aggregate = (stock) => {
 };
 
 const sumStocks = (stockA, stockB) => {
-  const sum = emptyStock;
+  const sum = { ...emptyStock };
   pieceTypes.forEach((type) => {
     const sumArray = [...stockA[type.sigla], ...stockB[type.sigla]];
     sum[type.sigla] = sumArray.reduce((result, piece) => {

@@ -1,7 +1,9 @@
 const {
   emptyStock,
   sumStocks,
-  calculateTotals
+  subtractStocks,
+  calculateTotals,
+  aggregate
 } = require('../helpers/stock.helper');
 const { expect } = require('chai');
 
@@ -45,6 +47,54 @@ const stockC = {
   TZ: [],
   PZ: [],
   ES: [{ price: 20, quantity: 5 }]
+};
+
+const stockD = {
+  AN: [{ price: 10, quantity: 5 }],
+  BP: [],
+  BG: [],
+  CF: [],
+  CM: [
+    { price: 20, quantity: 5 },
+    { price: 10, quantity: 10 },
+    { price: 15, quantity: 12 }
+  ],
+  PN: [],
+  PF: [],
+  PM: [],
+  TZ: [],
+  PZ: [],
+  ES: [{ price: 20, quantity: 5 }]
+};
+
+const stockDAggregated = {
+  AN: { price: 50, quantity: 5 },
+  BP: { price: 0, quantity: 0 },
+  BG: { price: 0, quantity: 0 },
+  CF: { price: 0, quantity: 0 },
+  CM: { price: 380, quantity: 27 },
+  PN: { price: 0, quantity: 0 },
+  PF: { price: 0, quantity: 0 },
+  PM: { price: 0, quantity: 0 },
+  TZ: { price: 0, quantity: 0 },
+  PZ: { price: 0, quantity: 0 },
+  ES: { price: 100, quantity: 5 },
+  total: { price: 530, quantity: 37 }
+};
+
+const emptyAggregated = {
+  AN: { price: 0, quantity: 0 },
+  BP: { price: 0, quantity: 0 },
+  BG: { price: 0, quantity: 0 },
+  CF: { price: 0, quantity: 0 },
+  CM: { price: 0, quantity: 0 },
+  PN: { price: 0, quantity: 0 },
+  PF: { price: 0, quantity: 0 },
+  PM: { price: 0, quantity: 0 },
+  TZ: { price: 0, quantity: 0 },
+  PZ: { price: 0, quantity: 0 },
+  ES: { price: 0, quantity: 0 },
+  total: { price: 0, quantity: 0 }
 };
 
 describe('Testing Stock helper', () => {
@@ -91,6 +141,16 @@ describe('Testing Stock helper', () => {
       ]);
       const expectedTotals = { price: 380, quantity: 27 };
       expect(totals).to.be.deep.equal(expectedTotals);
+    });
+  });
+  describe('aggregate function', () => {
+    it('Should return 0s if stock is empty', () => {
+      const aggregatedResult = aggregate(emptyStock);
+      expect(aggregatedResult).to.be.deep.equal(emptyAggregated);
+    });
+    it('Should the prices and the quatities', () => {
+      const aggregated = aggregate(stockD);
+      expect(aggregated).to.be.deep.equal(stockDAggregated);
     });
   });
 });
