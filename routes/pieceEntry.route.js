@@ -2,7 +2,8 @@ const { Router } = require('express');
 const { PieceEntryModel } = require('../models/pieceEntry.model');
 const {
   handleGetFilters,
-  createPieceEntry
+  createPieceEntry,
+  deletePieceEntry
 } = require('./../helpers/pieceEntry.helper');
 const { verifyToken } = require('../helpers/auth.helper');
 
@@ -28,10 +29,9 @@ pieceEntryApi
     }
   })
   .delete(verifyToken(['stockist']), async (req, res, next) => {
-    // TODO: configure delete route
     try {
-      const consultants = await handleGetFilters(req.query, PieceEntryModel);
-      res.status(200).json(consultants);
+      const result = await deletePieceEntry(req.user.id, req.query.id);
+      res.status(200).json(result);
     } catch (e) {
       next(e);
     }

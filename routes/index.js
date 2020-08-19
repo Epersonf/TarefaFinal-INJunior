@@ -16,7 +16,7 @@ api.use('/consultant', consultantApi);
 api.use('/supervisor', supervisorApi);
 api.use('/stockist', stockistApi);
 api.use('/checkout', checkoutApi);
-api.use('/pieceentry', pieceEntryApi);
+api.use('/pieceEntry', pieceEntryApi);
 
 // handling 404
 api.use((req, res, next) => {

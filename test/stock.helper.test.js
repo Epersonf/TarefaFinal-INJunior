@@ -120,9 +120,7 @@ const dResult = {
   BP: [],
   BG: [],
   CF: [],
-  CM: [
-    { price: 10, quantity: 2 },
-  ],
+  CM: [{ price: 10, quantity: 2 }],
   PN: [],
   PF: [],
   PM: [],
