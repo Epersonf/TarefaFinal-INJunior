@@ -76,7 +76,7 @@ const sumStocks = (stockA, stockB) => {
 };
 
 const subtractStocks = (stock, subtractor) => {
-  const result = { ...emptyStock };
+  const result = { ...stock };
   const missing = { ...emptyStock };
   pieceTypes.forEach((type) => {
     subtractor[type.sigla].forEach((subtractorPiece) => {
@@ -88,20 +88,29 @@ const subtractStocks = (stock, subtractor) => {
       } else {
         if (stockPiece.quantity > subtractorPiece.quantity) {
           result[type.sigla] = [
-            ...result[type.sigla],
+            ...result[type.sigla].filter(
+              (piece) => piece.price !== subtractorPiece.price
+            ),
             {
               price: stockPiece.price,
               quantity: stockPiece.quantity - subtractorPiece.quantity
             }
           ];
-        } else if (stockPiece.quantity < subtractorPiece.quantity) {
-          missing[type.sigla] = [
-            ...missing[type.sigla],
-            {
-              price: stockPiece.price,
-              quantity: subtractorPiece.quantity - stockPiece.quantity
-            }
+        } else {
+          result[type.sigla] = [
+            ...result[type.sigla].filter(
+              (piece) => piece.price !== subtractorPiece.price
+            )
           ];
+          if (stockPiece.quantity < subtractorPiece.quantity) {
+            missing[type.sigla] = [
+              ...missing[type.sigla],
+              {
+                price: stockPiece.price,
+                quantity: subtractorPiece.quantity - stockPiece.quantity
+              }
+            ];
+          }
         }
       }
     });

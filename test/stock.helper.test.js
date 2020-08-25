@@ -193,6 +193,27 @@ describe('Testing Stock helper', () => {
         status: 'done'
       });
     });
+    it('Should subtract the pieces correctly 2', () => {
+      const result = subtractStocks(stockD, {
+        AN: [{ price: 10, quantity: 5 }],
+        BP: [],
+        BG: [],
+        CF: [],
+        CM: [],
+        PN: [],
+        PF: [],
+        PM: [],
+        TZ: [],
+        PZ: [],
+        ES: []
+      });
+      const expectedresult = { ...stockD };
+      expectedresult.AN = [];
+      expect(result).to.be.deep.equal({
+        result: expectedresult,
+        status: 'done'
+      });
+    });
     it('Should the detect not possible subtraction', () => {
       const result = subtractStocks(dResult, stockD);
       expect(result).to.be.deep.equal({

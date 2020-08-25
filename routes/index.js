@@ -6,6 +6,7 @@ const { supervisorApi } = require('./supervisor.route');
 const { stockistApi } = require('./stockist.route');
 const { checkoutApi } = require('./checkout.route');
 const { pieceEntryApi } = require('./pieceEntry.route');
+const { pieceTransactionApi } = require('./pieceTransaction.route');
 
 const api = Router();
 
@@ -17,6 +18,7 @@ api.use('/supervisor', supervisorApi);
 api.use('/stockist', stockistApi);
 api.use('/checkout', checkoutApi);
 api.use('/pieceEntry', pieceEntryApi);
+api.use('/pieceTransaction', pieceTransactionApi);
 
 // handling 404
 api.use((req, res, next) => {
@@ -26,8 +28,20 @@ api.use((req, res, next) => {
   next(err);
 });
 
+// logging errors
+api.use((err, req, res, next) => {
+  if (!err.status) {
+    console.info('------------------------------');
+    console.info('Error found on ' + new Date());
+    console.info({ request: req });
+    console.error(err);
+    console.info('------------------------------');
+  }
+  next(err);
+});
+
 // handling erros
-api.use((err, req, res) => {
+api.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json({
     message: err.message,

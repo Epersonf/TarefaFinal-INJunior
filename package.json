@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app",
     "dev": "nodemon app",
-    "db": "run-rs --mongod --keep",
+    "db": "run-rs --mongod",
     "test": "mocha"
   },
   "dependencies": {

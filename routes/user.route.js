@@ -62,14 +62,17 @@ userApi
       next(e);
     }
   })
-  .get(verifyToken(['admin', 'controller', 'self']), async (req, res, next) => {
-    try {
-      const users = await handleGetFilters(req.query, UserModel);
-      res.status(200).json(users);
-    } catch (e) {
-      next(e);
+  .get(
+    verifyToken(['admin', 'controller', 'self', 'supervisor', 'stockist']),
+    async (req, res, next) => {
+      try {
+        const users = await handleGetFilters(req.query, UserModel);
+        res.status(200).json(users);
+      } catch (e) {
+        next(e);
+      }
     }
-  })
+  )
   .put(
     (req, res, next) => {
       req.body.password || req.body.active

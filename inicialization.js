@@ -1,6 +1,7 @@
 const { UserModel } = require('./models/user.model');
 
 const adminData = {
+  fullName: 'Admin',
   username: 'admin',
   password: '8xvq9x8z',
   email: 'inbox@albert-dm.dev',
