@@ -61,5 +61,6 @@ const ConsultantModel = model(ConsultantModelName, ConsultantScheme);
 
 module.exports = {
   ConsultantModel,
-  ConsultantModelName
+  ConsultantModelName,
+  ConsultantLevels
 };

@@ -7,6 +7,7 @@ const { stockistApi } = require('./stockist.route');
 const { checkoutApi } = require('./checkout.route');
 const { pieceEntryApi } = require('./pieceEntry.route');
 const { pieceTransactionApi } = require('./pieceTransaction.route');
+const { sellingApi } = require('./selling.route');
 
 const api = Router();
 
@@ -19,6 +20,7 @@ api.use('/stockist', stockistApi);
 api.use('/checkout', checkoutApi);
 api.use('/pieceEntry', pieceEntryApi);
 api.use('/pieceTransaction', pieceTransactionApi);
+api.use('/selling', sellingApi);
 
 // handling 404
 api.use((req, res, next) => {
@@ -45,7 +47,8 @@ api.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json({
     message: err.message,
-    error: err.name
+    error: err.name,
+    data: err.data
   });
 });
 

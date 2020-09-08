@@ -26,6 +26,20 @@ const emptyStock = {
   ES: []
 };
 
+const getEmptyStock = () => ({
+  AN: [],
+  BP: [],
+  BG: [],
+  CF: [],
+  CM: [],
+  PN: [],
+  PF: [],
+  PM: [],
+  TZ: [],
+  PZ: [],
+  ES: []
+});
+
 const calculateTotals = (piecesArray) => {
   return piecesArray.reduce(
     (totals, piece) => {
@@ -57,7 +71,7 @@ const aggregate = (stock) => {
 };
 
 const sumStocks = (stockA, stockB) => {
-  const sum = { ...emptyStock };
+  const sum = getEmptyStock();
   pieceTypes.forEach((type) => {
     const sumArray = [...stockA[type.sigla], ...stockB[type.sigla]];
     sum[type.sigla] = sumArray.reduce((result, piece) => {
@@ -77,7 +91,7 @@ const sumStocks = (stockA, stockB) => {
 
 const subtractStocks = (stock, subtractor) => {
   const result = { ...stock };
-  const missing = { ...emptyStock };
+  const missing = getEmptyStock();
   pieceTypes.forEach((type) => {
     subtractor[type.sigla].forEach((subtractorPiece) => {
       const stockPiece = stock[type.sigla].find(

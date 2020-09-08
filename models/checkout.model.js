@@ -4,48 +4,13 @@ const { aggregate } = require('../helpers/stock.helper');
 const { UserModelName } = require('./user.model');
 const { StockSchema } = require('./common');
 const { emptyStock } = require('../helpers/stock.helper');
+const { SellingModelName } = require('./selling.model');
+const { PieceReplacementModelName } = require('./pieceReplacement.model');
+const { GiftModelName } = require('./gift.model');
 
 const { ObjectId } = Schema.Types;
 
 const CheckoutModelName = 'CHECKOUT';
-
-// TODO: add a pattern to make it safer
-const Replacement = new Schema({
-  newPiece: {
-    type: String,
-    required: true
-  },
-  brokenPiece: {
-    type: String,
-    required: true
-  },
-  difference: {
-    type: Number,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  }
-});
-
-const Gift = new Schema({
-  taken: {
-    type: Boolean,
-    default: false
-  },
-  piece: {
-    type: String
-  },
-  campaign: {
-    type: String,
-    required: true
-  },
-  currentAbsoluteSelling: {
-    type: Number,
-    required: true
-  }
-});
 
 const checkoutStatus = ['open', 'closed'];
 
@@ -65,14 +30,33 @@ const CheckoutScheme = new Schema(
       type: StockSchema,
       default: emptyStock
     },
-    replacements: {
-      type: [Replacement]
+    sellings: {
+      type: [
+        {
+          type: ObjectId,
+          ref: SellingModelName
+        }
+      ]
     },
     gifts: {
-      type: [Gift]
+      type: [
+        {
+          type: ObjectId,
+          ref: GiftModelName
+        }
+      ]
     },
-    income: {
-      type: Number
+    replacements: {
+      type: [
+        {
+          type: ObjectId,
+          ref: PieceReplacementModelName
+        }
+      ]
+    },
+    absoluteSoldBefore: {
+      type: Number,
+      default: 0
     },
     checkoutDetails: {
       type: String

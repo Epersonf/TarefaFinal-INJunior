@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { CheckoutModel } = require('../models/checkout.model');
 const { verifyToken } = require('../helpers/auth.helper');
+const { handleGetFilters } = require('../helpers/checkout.helper');
 
 const checkoutApi = Router();
 
@@ -10,7 +11,7 @@ checkoutApi
     verifyToken(['admin', 'controller', 'consultant', 'supervisor']),
     async (req, res, next) => {
       try {
-        const checkouts = await CheckoutModel.find(req.query);
+        const checkouts = await handleGetFilters(req.query, CheckoutModel);
         return res.status(200).json(checkouts);
       } catch (e) {
         next(e);
