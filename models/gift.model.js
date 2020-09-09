@@ -2,8 +2,6 @@ const { Schema, model } = require('mongoose');
 
 const { UserModelName } = require('./user.model');
 
-const { CheckoutModelName } = require('./checkout.model');
-
 const { StockSchema } = require('./common');
 
 const { ObjectId } = Schema.Types;

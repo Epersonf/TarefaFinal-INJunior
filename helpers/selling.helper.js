@@ -5,7 +5,7 @@ const { CheckoutModel } = require('./../models/checkout.model');
 const { GiftModel } = require('./../models/gift.model');
 const { sumStocks, subtractStocks, aggregate } = require('./stock.helper');
 const { getConsultantLevel } = require('./level.helper');
-const { checkForGifts } = require('./gift.helper');
+const { giftCampaings, checkGiftsForCampaing } = require('./gift.helper');
 
 const createSelling = async (user, pieces) => {
   const consultant = await ConsultantModel.findOne({ user });
@@ -33,11 +33,33 @@ const createSelling = async (user, pieces) => {
   const consultantLevel = getConsultantLevel(absoluteSold);
   const levelUp = consultantLevel !== consultant.level;
 
-  const giftsToGet = await checkForGifts(
-    openCheckout.aggregatedSold.total.price,
-    aggregatedPieces.total.price,
-    user
-  );
+  let giftsToGet = [];
+
+  // verify compaings that have reached the maximum
+  for (let i = 0; i < giftCampaings.length; i++) {
+    let maxAvailable;
+    if (giftCampaings[i].maxQuantity) {
+      const existingGifs = await GiftModel.find({
+        seller: user,
+        campaign: giftCampaings[i].name
+      }).count();
+      if (existingGifs >= giftCampaings[i].maxQuantity) {
+        continue;
+      } else {
+        maxAvailable = giftCampaings[i].maxQuantity - existingGifs;
+      }
+    }
+    const earnedGifts = checkGiftsForCampaing(
+      giftCampaings[i],
+      openCheckout.aggregatedSold.total.price,
+      checkoutTotalSold,
+      maxAvailable
+    );
+    giftsToGet = [
+      ...giftsToGet,
+      ...Array(earnedGifts).fill(giftCampaings[i].name)
+    ];
+  }
 
   const session = await startSession();
   try {

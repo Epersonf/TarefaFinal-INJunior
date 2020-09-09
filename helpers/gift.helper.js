@@ -53,7 +53,25 @@ const checkForGifts = async (totalSoldBefore, soldNow, user) => {
   }, Promise.resolve([]));
 };
 
+const checkGiftsForCampaing = (campaing, soldBefore, soldNow, maxAvailable) => {
+  const inicialGiftNumber =
+    Math.floor(soldNow / campaing.goalValue) -
+    Math.floor(soldBefore / campaing.goalValue);
+  const giftNumber =
+    inicialGiftNumber > 0
+      ? campaing.accumulative
+        ? inicialGiftNumber
+        : 1
+      : inicialGiftNumber;
+  return maxAvailable
+    ? giftNumber > maxAvailable
+      ? maxAvailable
+      : giftNumber
+    : giftNumber;
+};
+
 module.exports = {
   giftCampaings,
+  checkGiftsForCampaing,
   checkForGifts
 };
