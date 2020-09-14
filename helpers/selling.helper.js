@@ -35,7 +35,6 @@ const createSelling = async (user, pieces) => {
 
   let giftsToGet = [];
 
-  // verify compaings that have reached the maximum
   for (let i = 0; i < giftCampaings.length; i++) {
     let maxAvailable;
     if (giftCampaings[i].maxQuantity) {
