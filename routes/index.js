@@ -11,6 +11,7 @@ const { sellingApi } = require('./selling.route');
 const { giftApi } = require('./gift.route');
 const { pieceReplacementApi } = require('./pieceReplacement.route');
 const { requestApi } = require('./request.route');
+const { recommendationApi } = require('./recommendation.route');
 
 const api = Router();
 
@@ -27,6 +28,7 @@ api.use('/selling', sellingApi);
 api.use('/gift', giftApi);
 api.use('/pieceReplacement', pieceReplacementApi);
 api.use('/request', requestApi);
+api.use('/recommendation', recommendationApi);
 
 // handling 404
 api.use((req, res, next) => {
