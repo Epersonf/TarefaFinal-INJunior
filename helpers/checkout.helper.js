@@ -23,6 +23,20 @@ const handleGetFilters = async (query, Model) => {
     return collection;
   }
 };
+
+const closeCheckout = async () => {
+  // sum sellings
+  // sum pieceReplacement differences
+  // sum absoluteSold to absoluteSoldBefore
+  // verify absoluteSold from user
+  // sum value from recomendations to newAbsoluteSold
+  // update new absoluteSold for user
+  // update recommendations taken
+  // update checkout for closed
+  // create new checkout for user
+};
+
 module.exports = {
-  handleGetFilters
+  handleGetFilters,
+  closeCheckout
 };

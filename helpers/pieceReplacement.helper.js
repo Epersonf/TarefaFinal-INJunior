@@ -70,7 +70,7 @@ const createPieceReplacement = async (
 
     await session.commitTransaction();
     session.endSession();
-    return pieceReplacement;
+    return;
   } catch (error) {
     await session.abortTransaction();
     session.endSession();

@@ -45,7 +45,7 @@ const RequestSchema = new Schema(
 );
 
 RequestSchema.virtual('aggregatedPieces').get(function () {
-  return aggregate(this.pieces);
+  return this.pieces ? aggregate(this.pieces) : undefined;
 });
 
 const RequestModel = model(RequestModelName, RequestSchema);

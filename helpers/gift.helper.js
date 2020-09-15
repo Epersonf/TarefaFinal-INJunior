@@ -3,6 +3,7 @@ const { ConsultantModel } = require('../models/consultant.model');
 const { CheckoutModel } = require('./../models/checkout.model');
 const { subtractStocks } = require('./stock.helper');
 const { startSession } = require('mongoose');
+const { RequestModel } = require('../models/request.model');
 
 const giftCampaings = [
   {
@@ -122,12 +123,21 @@ const takeGift = async (giftId, pieces, userId) => {
       gift.piece = pieces;
       gift.markModified('piece');
     }
-    // else create request
+    if (campaing.type === 'request') {
+      await RequestModel.create({
+        status: 'approved',
+        requester: consultant,
+        receiver: consultant,
+        description: `Brinde: ${campaing.name}`
+      });
+    }
     await gift.save();
 
-    consultant.stock = stockSubtraction.result;
-    consultant.markModified('stock');
-    await consultant.save();
+    if (campaing.type === 'pieceTake') {
+      consultant.stock = stockSubtraction.result;
+      consultant.markModified('stock');
+      await consultant.save();
+    }
 
     await session.commitTransaction();
     session.endSession();
