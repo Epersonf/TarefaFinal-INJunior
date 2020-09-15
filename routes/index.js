@@ -9,6 +9,8 @@ const { pieceEntryApi } = require('./pieceEntry.route');
 const { pieceTransactionApi } = require('./pieceTransaction.route');
 const { sellingApi } = require('./selling.route');
 const { giftApi } = require('./gift.route');
+const { pieceReplacementApi } = require('./pieceReplacement.route');
+const { requestApi } = require('./request.route');
 
 const api = Router();
 
@@ -23,6 +25,8 @@ api.use('/pieceEntry', pieceEntryApi);
 api.use('/pieceTransaction', pieceTransactionApi);
 api.use('/selling', sellingApi);
 api.use('/gift', giftApi);
+api.use('/pieceReplacement', pieceReplacementApi);
+api.use('/request', requestApi);
 
 // handling 404
 api.use((req, res, next) => {
