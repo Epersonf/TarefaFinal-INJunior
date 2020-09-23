@@ -60,3 +60,6 @@ typings/
 package-lock.json
 data
 mongodb*
+
+app.test.yml
+app.yml
