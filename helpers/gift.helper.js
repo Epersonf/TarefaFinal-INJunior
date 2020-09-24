@@ -126,8 +126,9 @@ const takeGift = async (giftId, pieces, userId) => {
     if (campaing.type === 'request') {
       await RequestModel.create({
         status: 'approved',
-        requester: consultant,
-        receiver: consultant,
+        requester: consultant.user,
+        receiver: consultant.user,
+        receiverRole: 'consultant',
         description: `Brinde: ${campaing.name}`
       });
     }

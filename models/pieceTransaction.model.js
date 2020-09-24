@@ -3,6 +3,7 @@ const { aggregate } = require('../helpers/stock.helper');
 
 const { UserModelName, Roles } = require('./user.model');
 const { StockSchema } = require('./common');
+const { RequestModelName } = require('./request.model');
 
 const { ObjectId } = Schema.Types;
 
@@ -40,6 +41,10 @@ const PieceTransactionSchema = new Schema(
     pieces: {
       type: StockSchema,
       required: true
+    },
+    request: {
+      type: ObjectId,
+      ref: RequestModelName
     },
     receivedAt: Date,
     abortedAt: Date,

@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { aggregate } = require('../helpers/stock.helper');
 
-const { UserModelName } = require('./user.model');
+const { UserModelName, Roles } = require('./user.model');
 const { StockSchema } = require('./common');
 
 const { ObjectId } = Schema.Types;
@@ -25,6 +25,11 @@ const RequestSchema = new Schema(
     receiver: {
       type: ObjectId,
       ref: UserModelName,
+      required: true
+    },
+    receiverRole: {
+      type: String,
+      enum: Roles,
       required: true
     },
     pieces: {

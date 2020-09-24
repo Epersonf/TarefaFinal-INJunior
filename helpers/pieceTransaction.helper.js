@@ -5,6 +5,7 @@ const { SupervisorModel } = require('../models/supervisor.model');
 const { StockistModel } = require('../models/stockist.model');
 const { subtractStocks, sumStocks } = require('./stock.helper');
 const { startSession } = require('mongoose');
+const { RequestModel } = require('../models/request.model');
 
 const roleModels = {
   consultant: ConsultantModel,
@@ -16,7 +17,8 @@ const createPieceTransaction = async (
   senderId,
   receiverId,
   receiverRole,
-  pieces
+  pieces,
+  request
 ) => {
   const SenderUser = await UserModel.findById(senderId);
   if (!(SenderUser.currentRole in roleModels)) {
@@ -43,6 +45,15 @@ const createPieceTransaction = async (
     throw new Error('transaction.missingPieces');
   }
 
+  const selectedRequest = request
+    ? await RequestModel.findById(request)
+    : undefined;
+  if (request) {
+    if (!selectedRequest) {
+      throw new Error('request.notFound');
+    }
+  }
+
   const session = await startSession();
   try {
     session.startTransaction();
@@ -53,7 +64,14 @@ const createPieceTransaction = async (
       receiverRole,
       pieces
     });
+
     Sender.stock = subtractionResult.result;
+
+    if (selectedRequest) {
+      selectedRequest.status = 'sent';
+      await selectedRequest.save();
+    }
+
     await Sender.save();
     await session.commitTransaction();
     session.endSession();
@@ -208,6 +226,16 @@ const handleGetFilters = async (query, Model) => {
       sort && (query = query.sort(sort));
       limit && (query = query.limit(Number(limit)));
       skip && (query = query.limit(Number(skip)));
+      query = query.populate([
+        {
+          path: 'sender',
+          select: 'fullName adress phoneNumber active email'
+        },
+        {
+          path: 'receiver',
+          select: 'fullName adress phoneNumber active email'
+        }
+      ]);
     }
 
     const collection = await query.exec();

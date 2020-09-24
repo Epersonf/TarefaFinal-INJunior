@@ -15,13 +15,14 @@ pieceTransactionApi
   .post(
     verifyToken(['stockist', 'supervisor', 'consultant']),
     async (req, res, next) => {
-      const { pieces, receiverId, receiverRole } = req.body;
+      const { pieces, receiverId, receiverRole, request } = req.body;
       try {
         const newPieceTransaction = await createPieceTransaction(
           req.user.id,
           receiverId,
           receiverRole,
-          pieces
+          pieces,
+          request
         );
         res.status(200).json(newPieceTransaction);
       } catch (err) {

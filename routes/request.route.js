@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { RequestModel } = require('../models/request.model');
-const { handleGetFilters } = require('./../helpers/recommendation.helper');
+const { handleGetFilters } = require('./../helpers/request.helper');
 const { verifyToken } = require('../helpers/auth.helper');
 
 const requestApi = Router();
@@ -31,13 +31,14 @@ requestApi
       const request = req.body;
       if (id) {
         try {
-          const updatedRequest = await RequestModel.updateOne(
+          const updatedRequest = await RequestModel.findOneAndUpdate(
             { _id: id },
-            { $set: request }
+            { $set: request },
+            { new: true }
           );
           res.status(200).json({
             message: 'request.updated',
-            info: updatedRequest
+            request: updatedRequest
           });
         } catch (err) {
           return next(err);
