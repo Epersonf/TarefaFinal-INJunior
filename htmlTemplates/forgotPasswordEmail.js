@@ -1,4 +1,6 @@
-const resetPasswordUrl = 'http://localhost:3000/#/recuperar-senha';
+const { config } = require('../config');
+
+const resetPasswordUrl = `${config.appUrl}/recuperar-senha`;
 
 const getPasswordRecoveryMail = (token) => `<!DOCTYPE html>
 <html lang="pt-br">

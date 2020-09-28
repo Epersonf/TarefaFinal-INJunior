@@ -1,3 +1,5 @@
+const { RecomendationModel } = require('../models/recommendation.model');
+
 const handleGetFilters = async (query, Model) => {
   const { id, sort, skip, limit, count, ...otherParams } = query;
   if (id) {
@@ -29,6 +31,23 @@ const handleGetFilters = async (query, Model) => {
   }
 };
 
+const writeCheckoutToRecommendation = async (soldValue, userId) => {
+  const recommendation = await RecomendationModel.findOne({
+    recommended: userId
+  });
+  if (recommendation) {
+    if (recommendation.firstCheckout === undefined) {
+      recommendation.firstCheckout = soldValue;
+    } else if (recommendation.secondCheckout === undefined) {
+      recommendation.secondCheckout = soldValue;
+    } else if (recommendation.thirdCheckout === undefined) {
+      recommendation.thirdCheckout = soldValue;
+    }
+    await recommendation.save();
+  }
+};
+
 module.exports = {
-  handleGetFilters
+  handleGetFilters,
+  writeCheckoutToRecommendation
 };

@@ -63,6 +63,9 @@ const CheckoutScheme = new Schema(
     },
     closeDate: {
       type: Date
+    },
+    reportOnClose: {
+      type: Object
     }
   },
   {

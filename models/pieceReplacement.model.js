@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const { aggregate } = require('../helpers/stock.helper');
 
 const { UserModelName } = require('./user.model');
 const { StockSchema } = require('./common');
@@ -44,10 +43,6 @@ const PieceReplacementSchema = new Schema(
     }
   }
 );
-
-PieceReplacementSchema.virtual('aggregatedPieces').get(function () {
-  return aggregate(this.pieces);
-});
 
 const PieceReplacementModel = model(
   PieceReplacementModelName,

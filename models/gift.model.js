@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose');
 const { UserModelName } = require('./user.model');
 
 const { StockSchema } = require('./common');
+const { aggregate } = require('../helpers/stock.helper');
 
 const { ObjectId } = Schema.Types;
 
@@ -44,6 +45,10 @@ const GiftSchema = new Schema(
     timestamps: true
   }
 );
+
+GiftSchema.virtual('aggregatedPiece').get(function () {
+  return this.piece ? aggregate(this.piece) : undefined;
+});
 
 const GiftModel = model(GiftModelName, GiftSchema);
 

@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { UserModel, Roles } = require('../models/user.model');
 const passport = require('passport');
 const { verifyToken } = require('../helpers/auth.helper');
-const { handleGetFilters } = require('../helpers/user.helper');
+const { handleGetFilters, updateUser } = require('../helpers/user.helper');
 const { createNewConsultant } = require('../helpers/consultant.helper');
 const { SupervisorModel } = require('../models/supervisor.model');
 const { StockistModel } = require('../models/stockist.model');
@@ -75,22 +75,19 @@ userApi
   )
   .put(
     (req, res, next) => {
-      req.body.password || req.body.active
+      req.body.password || req.body.active || req.body.newRole
         ? verifyToken(['admin', 'controller'])(req, res, next)
         : verifyToken(['admin', 'controller', 'self'])(req, res, next);
     },
     async (req, res, next) => {
       const { id } = req.query;
-      const user = req.body;
+      const data = req.body;
       if (id) {
         try {
-          const updatedUser = await UserModel.updateOne(
-            { _id: id },
-            { $set: user }
-          );
+          const updatedUser = await updateUser(id, data);
           res.status(200).json({
             message: 'user.updated',
-            info: updatedUser
+            data: updatedUser
           });
         } catch (err) {
           return next(err);

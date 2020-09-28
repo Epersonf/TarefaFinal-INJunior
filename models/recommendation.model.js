@@ -24,16 +24,13 @@ const RecommendationScheme = new Schema(
       default: 'open'
     },
     firstCheckout: {
-      type: Number,
-      default: 0
+      type: Number
     },
     secondCheckout: {
-      type: Number,
-      default: 0
+      type: Number
     },
     thirdCheckout: {
-      type: Number,
-      default: 0
+      type: Number
     },
     currentlyReceived: [
       {

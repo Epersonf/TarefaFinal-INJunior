@@ -3,7 +3,7 @@ const { config } = require('../config');
 
 const getLoginToken = (user) => {
   return jwt.sign(
-    { id: user._id, currentRole: user.currentRole, fullName: user.fullName },
+    { id: user._id, roles: user.roles, fullName: user.fullName },
     config.secretKey,
     {
       expiresIn: 84600
@@ -35,7 +35,8 @@ const verifyToken = (allowedRoles) => (req, res, next) => {
           next();
         }
         if (
-          allowedRoles.indexOf(decoded.currentRole) > -1 ||
+          allowedRoles.filter((role) => decoded.roles.includes(role)).length >
+            0 ||
           (allowedRoles.indexOf('self') > -1 && id === decoded.id)
         ) {
           req.user = decoded;
