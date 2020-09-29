@@ -7,6 +7,7 @@ const {
   handleGetFilters
 } = require('./../helpers/pieceTransaction.helper');
 const { verifyToken } = require('../helpers/auth.helper');
+const { UserModel } = require('../models/user.model');
 
 const pieceTransactionApi = Router();
 
@@ -17,9 +18,13 @@ pieceTransactionApi
     async (req, res, next) => {
       const { pieces, receiverId, receiverRole, request } = req.body;
       try {
+        const stockistUser =
+          receiverRole === 'stockist'
+            ? await UserModel.findOne({ roles: 'stockist' })
+            : undefined;
         const newPieceTransaction = await createPieceTransaction(
           req.user.id,
-          receiverId,
+          stockistUser ? stockistUser.id : receiverId,
           receiverRole,
           pieces,
           request
