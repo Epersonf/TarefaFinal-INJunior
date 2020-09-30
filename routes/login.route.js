@@ -17,6 +17,11 @@ const loginApi = Router();
 loginApi
   .route('/')
   .post(passport.authenticate('local'), async (req, res, next) => {
+    if (!req.user.active) {
+      res.status(401).json({
+        message: 'user.inactive'
+      });
+    }
     const token = getLoginToken(req.user);
     res.status(200).json({
       message: 'login.success',
