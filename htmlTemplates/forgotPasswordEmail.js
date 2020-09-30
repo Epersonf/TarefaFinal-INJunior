@@ -20,8 +20,9 @@ const getPasswordRecoveryMail = (token) => `<!DOCTYPE html>
             <h2>Não tem problema, basta clicar no botão abaixo para configurar uma nova senha!</h2>
             </br>
             <a style="font-size: 20px; padding: 25px; background-color: #E6B000;text-decoration: none;padding: 7px 25px;border-radius: 3px;text-transform: uppercase;color: #ffffff;box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.75);"
-            href="${resetPasswordUrl}/${encodeURIComponent(
-  token
+            href="${resetPasswordUrl}/${token.replaceAll(
+  '.',
+  ','
 )}">Nova senha</a>
         </div>
         <small>Ambaya Semijoias - 2020</small>
