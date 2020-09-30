@@ -16,20 +16,30 @@ pieceTransactionApi
   .post(
     verifyToken(['stockist', 'supervisor', 'consultant']),
     async (req, res, next) => {
-      const { pieces, receiverId, receiverRole, request } = req.body;
+      const { pieces, receiverId, receiverRole, request, senderId } = req.body;
       try {
         const stockistUser =
           receiverRole === 'stockist'
             ? await UserModel.findOne({ roles: 'stockist' })
             : undefined;
         const newPieceTransaction = await createPieceTransaction(
-          req.user.id,
+          req.user.id === receiverId ? senderId : req.user.id,
           stockistUser ? stockistUser.id : receiverId,
           receiverRole,
           pieces,
           request
         );
-        res.status(200).json(newPieceTransaction);
+        if (req.user.id === receiverId) {
+          const receivedTransaction = await receivePieceTransaction(
+            newPieceTransaction.newTransaction.id,
+            req.user.id
+          );
+          res
+            .status(200)
+            .json({ newTransaction: receivedTransaction.transaction });
+        } else {
+          res.status(200).json(newPieceTransaction);
+        }
       } catch (err) {
         return next(err);
       }
