@@ -77,7 +77,11 @@ userApi
     (req, res, next) => {
       req.body.password || req.body.active || req.body.newRole
         ? verifyToken(['admin', 'controller'])(req, res, next)
-        : verifyToken(['admin', 'controller', 'self'])(req, res, next);
+        : verifyToken(['admin', 'controller', 'self', 'supervisor'])(
+            req,
+            res,
+            next
+          );
     },
     async (req, res, next) => {
       const { id } = req.query;

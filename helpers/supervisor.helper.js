@@ -26,7 +26,7 @@ const handleGetFilters = async (query, Model) => {
     if (inactive || count) {
       return collection;
     } else {
-      return collection.filter((consultant) => consultant.user.active === true);
+      return collection.filter((supervisor) => supervisor.user.active === true);
     }
   }
 };

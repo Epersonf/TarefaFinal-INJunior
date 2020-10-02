@@ -26,9 +26,7 @@ const createSelling = async (user, pieces) => {
   }
 
   const aggregatedPieces = aggregate(pieces);
-  const checkoutTotalSold =
-    openCheckout.aggregatedSold.total.price + aggregatedPieces.total.price;
-  const absoluteSold = openCheckout.absoluteSoldBefore + checkoutTotalSold;
+  const absoluteSold = consultant.totalSold + aggregatedPieces.total.price;
 
   const consultantLevel = getConsultantLevel(absoluteSold);
   const levelUp = consultantLevel !== consultant.level;
@@ -50,8 +48,8 @@ const createSelling = async (user, pieces) => {
     }
     const earnedGifts = checkGiftsForCampaing(
       giftCampaings[i],
-      openCheckout.aggregatedSold.total.price,
-      checkoutTotalSold,
+      consultant.totalSold,
+      absoluteSold,
       maxAvailable
     );
     giftsToGet = [
@@ -142,9 +140,8 @@ const deleteSelling = async (sellingId) => {
 
   const newSoldPieces = stockSubtraction.result;
 
-  const aggregatedSoldPieces = aggregate(newSoldPieces);
   const absoluteSold =
-    checkout.absoluteSoldBefore + aggregatedSoldPieces.total.price;
+    consultant.totalSold - selling.aggregatedPieces.total.price;
 
   const consultantLevel = getConsultantLevel(absoluteSold);
 

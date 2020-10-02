@@ -18,33 +18,8 @@ supervisorApi
   })
   .get(async (req, res, next) => {
     try {
-      const { inactive, ...query } = req.query;
-      const consultants = await handleGetFilters(query, SupervisorModel);
-      if (Array.isArray(consultants) && !inactive) {
-        const filteredConsultants = await SupervisorModel.populate(
-          consultants,
-          [
-            {
-              path: 'user',
-              select:
-                'fullName adress phoneNumber active username email cpf city cep'
-            },
-            {
-              path: 'supervisor',
-              select: 'fullName adress phoneNumber active email'
-            }
-          ]
-        );
-        res
-          .status(200)
-          .json(
-            filteredConsultants.filter(
-              (supervisor) => supervisor.user.active === true
-            )
-          );
-      } else {
-        res.status(200).json(consultants);
-      }
+      const consultants = await handleGetFilters(req.query, SupervisorModel);
+      res.status(200).json(consultants);
     } catch (e) {
       next(e);
     }
