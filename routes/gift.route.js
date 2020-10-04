@@ -7,6 +7,14 @@ const giftApi = Router();
 
 giftApi
   .route('/')
+  .post(verifyToken(['admin']), async (req, res, next) => {
+    try {
+      const gift = await GiftModel.create(req.body);
+      res.status(200).json(gift);
+    } catch (e) {
+      next(e);
+    }
+  })
   .get(
     verifyToken(['admin', 'controller', 'consultant']),
     async (req, res, next) => {
