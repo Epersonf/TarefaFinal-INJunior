@@ -18,8 +18,8 @@ supervisorApi
   })
   .get(async (req, res, next) => {
     try {
-      const consultants = await handleGetFilters(req.query, SupervisorModel);
-      res.status(200).json(consultants);
+      const supervisors = await handleGetFilters(req.query, SupervisorModel);
+      res.status(200).json(supervisors);
     } catch (e) {
       next(e);
     }

@@ -63,3 +63,4 @@ mongodb*
 
 app.test.yml
 app.yml
+dispatch.yml

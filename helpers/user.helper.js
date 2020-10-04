@@ -40,7 +40,7 @@ const addRoleToUser = async (user, role) => {
   }
 
   if (role === 'stockist') {
-    await { StockistModel }.create({
+    await StockistModel.create({
       user: user.id
     });
   }

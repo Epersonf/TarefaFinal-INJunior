@@ -31,7 +31,9 @@ const handleGetFilters = async (query, Model) => {
       query = query.count();
     } else {
       sort && (query = query.sort(sort));
-      limit && (query = query.limit(Number(limit)));
+      limit
+        ? (query = query.limit(Number(limit)))
+        : (query = query.limit(Number(20)));
       skip && (query = query.limit(Number(skip)));
     }
     query = query.populate([
