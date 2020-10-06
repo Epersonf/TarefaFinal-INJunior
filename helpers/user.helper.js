@@ -29,19 +29,22 @@ const addRoleToUser = async (user, role) => {
 
   if (role === 'consultant') {
     await createNewConsultant({
-      user: user.id
+      user: user.id,
+      fullName: user.fullName
     });
   }
 
   if (role === 'supervisor') {
     await SupervisorModel.create({
-      user: user.id
+      user: user.id,
+      fullName: user.fullName
     });
   }
 
   if (role === 'stockist') {
     await StockistModel.create({
-      user: user.id
+      user: user.id,
+      fullName: user.fullName
     });
   }
 

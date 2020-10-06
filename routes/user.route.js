@@ -33,20 +33,23 @@ userApi
           if (role === 'consultant') {
             await createNewConsultant({
               user: newUser._id,
-              supervisor: supervisorId || null
+              supervisor: supervisorId || null,
+              fullName: newUser.fullName
             });
           }
 
           if (role === 'supervisor') {
             await SupervisorModel.create({
               user: newUser._id,
-              supervisor: supervisorId || null
+              supervisor: supervisorId || null,
+              fullName: newUser.fullName
             });
           }
 
           if (role === 'stockist') {
             await StockistModel.create({
-              user: newUser._id
+              user: newUser._id,
+              fullName: newUser.fullName
             });
           }
 

@@ -21,7 +21,7 @@ const createNewConsultant = async (consultantData) => {
 };
 
 const handleGetFilters = async (query, Model) => {
-  const { id, sort, skip, limit, count, inactive, ...otherParams } = query;
+  const { id, sort, skip, limit, count, ...otherParams } = query;
   if (id) {
     const instance = await Model.findById(id);
     return instance;
@@ -31,10 +31,7 @@ const handleGetFilters = async (query, Model) => {
       query = query.count();
     } else {
       sort && (query = query.sort(sort));
-      limit
-        ? (query = query.limit(Number(limit)))
-        : (query = query.limit(Number(20)));
-      skip && (query = query.limit(Number(skip)));
+      query = query.skip(skip ? Number(skip) : 0).limit(20);
     }
     query = query.populate([
       {
@@ -47,11 +44,7 @@ const handleGetFilters = async (query, Model) => {
       }
     ]);
     const collection = await query.exec();
-    if (inactive || count) {
-      return collection;
-    } else {
-      return collection.filter((consultant) => consultant.user.active === true);
-    }
+    return collection;
   }
 };
 

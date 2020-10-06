@@ -1,5 +1,5 @@
 const handleGetFilters = async (query, Model) => {
-  const { id, sort, skip, limit, count, inactive, ...otherParams } = query;
+  const { id, sort, skip, limit, count, ...otherParams } = query;
   if (id) {
     const instance = await Model.findById(id);
     return instance;
@@ -9,8 +9,7 @@ const handleGetFilters = async (query, Model) => {
       query = query.count();
     } else {
       sort && (query = query.sort(sort));
-      limit && (query = query.limit(Number(limit)));
-      skip && (query = query.limit(Number(skip)));
+      query = query.skip(skip ? Number(skip) : 0).limit(20);
     }
     query = query.populate([
       {
@@ -19,15 +18,11 @@ const handleGetFilters = async (query, Model) => {
       },
       {
         path: 'supervisor',
-        select: 'fullName adress phoneNumber active'
+        select: 'fullName adress phoneNumber active email'
       }
     ]);
     const collection = await query.exec();
-    if (inactive || count) {
-      return collection;
-    } else {
-      return collection.filter((supervisor) => supervisor.user.active === true);
-    }
+    return collection;
   }
 };
 

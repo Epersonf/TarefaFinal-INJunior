@@ -19,6 +19,14 @@ const ConsultantScheme = new Schema(
       ref: UserModelName,
       required: true
     },
+    fullName: {
+      type: String,
+      required: true
+    },
+    active: {
+      type: Boolean,
+      default: true
+    },
     approved: {
       type: Boolean,
       default: false

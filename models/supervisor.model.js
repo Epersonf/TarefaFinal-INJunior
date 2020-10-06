@@ -18,6 +18,14 @@ const SupervisorScheme = new Schema(
       ref: UserModelName,
       required: true
     },
+    fullName: {
+      type: String,
+      required: true
+    },
+    active: {
+      type: Boolean,
+      default: true
+    },
     level: {
       type: String,
       enum: SupervisorLevels,
