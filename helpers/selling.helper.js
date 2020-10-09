@@ -10,16 +10,20 @@ const { giftCampaings, checkGiftsForCampaing } = require('./gift.helper');
 const createSelling = async (user, pieces) => {
   const consultant = await ConsultantModel.findOne({ user });
   if (!consultant) {
-    throw new Error('Consultant not found');
+    const error = new Error('consultant.notFound');
+    error.status = 404;
+    throw error;
   }
   const openCheckout = await CheckoutModel.findOne({ user, status: 'open' });
   if (!openCheckout) {
-    throw new Error('Open checkout not found');
+    const error = new Error('checkout.notFound');
+    error.status = 404;
+    throw error;
   }
 
   const stockSubtraction = subtractStocks(consultant.stock, pieces);
   if (stockSubtraction.status === 'missing') {
-    const err = new Error('missingPieces');
+    const err = new Error('stock.missingPieces');
     err.status = 400;
     err.data = stockSubtraction.result;
     throw err;

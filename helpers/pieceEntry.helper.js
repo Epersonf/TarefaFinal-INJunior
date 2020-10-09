@@ -7,7 +7,9 @@ const createPieceEntry = async (user, entry) => {
   const session = await startSession();
   const stockist = await StockistModel.findOne({ user });
   if (!stockist) {
-    throw new Error('Stockist not found');
+    const error = new Error('stockist.notFound');
+    error.status = 404;
+    throw error;
   }
   try {
     session.startTransaction();
@@ -29,10 +31,14 @@ const deletePieceEntry = async (userId, entryId) => {
   const stockist = await StockistModel.findOne({ user: userId });
   const pieceEntry = await PieceEntryModel.findById(entryId);
   if (!stockist) {
-    throw new Error('Stockist not found');
+    const error = new Error('stockist.notFound');
+    error.status = 404;
+    throw error;
   }
   if (!pieceEntry) {
-    throw new Error('PieceEntry not found');
+    const error = new Error('pieceEntry.notFound');
+    error.status = 404;
+    throw error;
   }
   const subtraction = subtractStocks(stockist.stock, pieceEntry.entry);
   if (subtraction.status === 'missing') {

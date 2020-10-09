@@ -40,7 +40,7 @@ api.use((req, res, next) => {
 
 // logging errors
 api.use((err, req, res, next) => {
-  if (!err.status) {
+  if (!err.status || err.status === 500) {
     console.info('------------------------------');
     console.info('Error found on ' + new Date());
     console.info({ request: req });

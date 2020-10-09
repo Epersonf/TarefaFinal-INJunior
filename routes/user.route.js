@@ -14,7 +14,9 @@ userApi
   .post(async (req, res, next) => {
     const { role, supervisorId, ...userBasicData } = req.body;
     if (Roles.indexOf(role) === -1) {
-      return res.status(401).json({ message: 'user.invalidRole' });
+      const err = new Error('user.invalidRole');
+      err.status = 401;
+      next(err);
     }
     const userData = {
       ...userBasicData,
@@ -27,7 +29,7 @@ userApi
         userData.password,
         async (err, newUser) => {
           if (err) {
-            return res.status(500).json({ err: err });
+            next(err);
           }
 
           if (role === 'consultant') {
@@ -100,9 +102,9 @@ userApi
           return next(err);
         }
       } else {
-        return res.status(400).json({
-          message: 'user.missingId'
-        });
+        const error = new Error('user.missingId');
+        error.status = 400;
+        next(error);
       }
     }
   )
@@ -127,9 +129,9 @@ userApi
         return next(err);
       }
     } else {
-      return res.status(400).json({
-        message: 'user.missingId'
-      });
+      const error = new Error('user.missingId');
+      error.status = 400;
+      next(error);
     }
   });
 

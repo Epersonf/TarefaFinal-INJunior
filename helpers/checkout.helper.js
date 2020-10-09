@@ -160,7 +160,9 @@ const closeCheckout = async (checkoutId) => {
     .populate('gifts')
     .populate('replacements');
   if (!checkout) {
-    throw new Error('checkout.notFound');
+    const error = new Error('checkout.notFound');
+    error.status = 404;
+    throw error;
   }
   const consultant = await ConsultantModel.findOne({ user: checkout.user.id });
   const recommendations = await RecomendationModel.find({
@@ -170,11 +172,15 @@ const closeCheckout = async (checkoutId) => {
 
   const checkoutReport = getCheckoutReport(checkout, recommendations);
   if (consultant.totalSold !== checkoutReport.absolutSoldAfter) {
-    throw new Error('checkout.wrongValue');
+    const error = new Error('checkout.wrongValue');
+    error.status = 400;
+    throw error;
   }
 
   if (checkoutReport.gifts.notTakenGifts > 0) {
-    throw new Error('checkout.giftsNotTaken');
+    const error = new Error('checkout.giftsNotTaken');
+    error.status = 400;
+    throw error;
   }
 
   const session = await startSession();

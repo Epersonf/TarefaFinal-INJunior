@@ -56,7 +56,9 @@ const addRoleToUser = async (user, role) => {
 const updateUser = async (userId, data) => {
   const user = await UserModel.findById(userId);
   if (!user) {
-    throw new Error('user.notFound');
+    const error = new Error('user.notFound');
+    error.status = 404;
+    throw error;
   }
   const { newRole, ...newData } = data;
   let updatedUser;

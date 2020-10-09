@@ -22,27 +22,37 @@ const createPieceTransaction = async (
 ) => {
   const SenderUser = await UserModel.findById(senderId);
   if (!(SenderUser.currentRole in roleModels)) {
-    throw new Error('senderRole.invalid');
+    const error = new Error('senderRole.invalid');
+    error.status = 400;
+    throw error;
   }
   const Sender = await roleModels[SenderUser.currentRole].findOne({
     user: senderId
   });
   if (!Sender) {
-    throw new Error('sender.notFound');
+    const error = new Error('sender.notFound');
+    error.status = 404;
+    throw error;
   }
 
   if (!(receiverRole in roleModels)) {
-    throw new Error('receiverRole.invalid');
+    const error = new Error('receiverRole.invalid');
+    error.status = 400;
+    throw error;
   }
   const Receiver = await roleModels[receiverRole].findOne({ user: receiverId });
   if (!Receiver) {
-    throw new Error('receiver.notFound');
+    const error = new Error('receiver.notFound');
+    error.status = 404;
+    throw error;
   }
 
   const subtractionResult = subtractStocks(Sender.stock, pieces);
 
   if (subtractionResult.status === 'missing') {
-    throw new Error('transaction.missingPieces');
+    const error = new Error('transaction.missingPieces');
+    error.status = 400;
+    throw error;
   }
 
   const selectedRequest = request
@@ -50,7 +60,9 @@ const createPieceTransaction = async (
     : undefined;
   if (request) {
     if (!selectedRequest) {
-      throw new Error('request.notFound');
+      const error = new Error('request.notFound');
+      error.status = 404;
+      throw error;
     }
   }
 
@@ -86,13 +98,17 @@ const createPieceTransaction = async (
 const receivePieceTransaction = async (transactionId) => {
   const transaction = await PieceTransactionModel.findById(transactionId);
   if (!transaction) {
-    throw new Error('transaction.notFound');
+    const error = new Error('transaction.notFound');
+    error.status = 404;
+    throw error;
   }
   const Receiver = await roleModels[transaction.receiverRole].findOne({
     user: transaction.receiver
   });
   if (!Receiver) {
-    throw new Error('receiver.notFound');
+    const error = new Error('receiver.notFound');
+    error.status = 404;
+    throw error;
   }
 
   const session = await startSession();
@@ -123,7 +139,9 @@ const abortPieceTransaction = async (transaction) => {
     user: transaction.sender
   });
   if (!Sender) {
-    throw new Error('sender.notFound');
+    const error = new Error('sender.notFound');
+    error.status = 404;
+    throw error;
   }
 
   const session = await startSession();
@@ -154,20 +172,26 @@ const revertPieceTransaction = async (transaction) => {
     user: transaction.receiver
   });
   if (!Receiver) {
-    throw new Error('receiver.notFound');
+    const error = new Error('receiver.notFound');
+    error.status = 404;
+    throw error;
   }
 
   const subtractionResult = subtractStocks(Receiver.stock, transaction.pieces);
 
   if (subtractionResult.status === 'missing') {
-    throw new Error('transaction.missingPieces');
+    const error = new Error('transaction.missingPieces');
+    error.status = 400;
+    throw error;
   }
 
   const Sender = await roleModels[transaction.senderRole].findOne({
     user: transaction.sender
   });
   if (!Sender) {
-    throw new Error('sender.notFound');
+    const error = new Error('sender.notFound');
+    error.status = 404;
+    throw error;
   }
   const session = await startSession();
   try {
@@ -200,10 +224,14 @@ const revertPieceTransaction = async (transaction) => {
 const deletePieceTransaction = async (transactionId) => {
   const transaction = await PieceTransactionModel.findById(transactionId);
   if (!transaction) {
-    throw new Error('transaction.notFound');
+    const error = new Error('transaction.notFound');
+    error.status = 404;
+    throw error;
   }
   if (transaction.status === 'reverted' || transaction.status === 'aborted') {
-    throw new Error(`transaction.${transaction.status}`);
+    const error = new Error(`transaction.${transaction.status}`);
+    error.status = 400;
+    throw error;
   }
   if (transaction.status === 'received') {
     return await revertPieceTransaction(transaction);
