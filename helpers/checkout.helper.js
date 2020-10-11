@@ -66,7 +66,7 @@ const getRecommendationIncome = (openRecommendations) => {
         !recommendation.currentlyReceived.includes('first')
       ) {
         listFromCurrentRecommendation.push({
-          recommendedFullName: recommendation.recommendee.fullName,
+          recommendedFullName: recommendation.recommended.fullName,
           checkoutOrder: 1,
           soldByRecommended: recommendation.firstCheckout,
           consultantSplit: recommendation.firstCheckout * 0.05
@@ -79,26 +79,26 @@ const getRecommendationIncome = (openRecommendations) => {
         !recommendation.currentlyReceived.includes('second')
       ) {
         listFromCurrentRecommendation.push({
-          recommendedFullName: recommendation.recommendee.fullName,
+          recommendedFullName: recommendation.recommended.fullName,
           checkoutOrder: 1,
-          soldByRecommended: recommendation.firstCheckout,
-          consultantSplit: recommendation.firstCheckout * 0.05
+          soldByRecommended: recommendation.secondCheckout,
+          consultantSplit: recommendation.secondCheckout * 0.05
         });
-        currentSoldByRecommendations += recommendation.firstCheckout;
-        currentTotalConsultantSplit += recommendation.firstCheckout * 0.05;
+        currentSoldByRecommendations += recommendation.secondCheckout;
+        currentTotalConsultantSplit += recommendation.secondCheckout * 0.05;
       }
       if (
         recommendation.thirdCheckout !== undefined &&
         !recommendation.currentlyReceived.includes('third')
       ) {
         listFromCurrentRecommendation.push({
-          recommendedFullName: recommendation.recommendee.fullName,
+          recommendedFullName: recommendation.recommended.fullName,
           checkoutOrder: 1,
-          soldByRecommended: recommendation.firstCheckout,
-          consultantSplit: recommendation.firstCheckout * 0.05
+          soldByRecommended: recommendation.thirdCheckout,
+          consultantSplit: recommendation.thirdCheckout * 0.05
         });
-        currentSoldByRecommendations += recommendation.firstCheckout;
-        currentTotalConsultantSplit += recommendation.firstCheckout * 0.05;
+        currentSoldByRecommendations += recommendation.thirdCheckout;
+        currentTotalConsultantSplit += recommendation.thirdCheckout * 0.05;
       }
       return {
         list: [...income.list, ...listFromCurrentRecommendation],
@@ -242,6 +242,7 @@ const closeCheckout = async (checkoutId) => {
 };
 
 module.exports = {
+  getRecommendationIncome,
   handleGetFilters,
   closeCheckout,
   getCheckoutReport

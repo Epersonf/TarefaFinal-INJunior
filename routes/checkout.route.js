@@ -75,7 +75,9 @@ checkoutApi
         const openRecommendations = await RecomendationModel.find({
           status: 'open',
           recommendee: checkout.user
-        }).populate('recommendee');
+        })
+          .populate('recommendee')
+          .populate('recommended');
         const report = getCheckoutReport(checkout, openRecommendations);
         return res.status(200).json(report);
       } catch (e) {
