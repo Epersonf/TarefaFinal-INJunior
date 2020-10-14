@@ -35,7 +35,7 @@ giftApi
         const gift = await takeGift(id, pieces, user.id);
         res.status(200).json(gift);
       } else {
-        const err = new Error('missingParams');
+        const err = new Error('gift.missingParams');
         err.status = 400;
         throw err;
       }

@@ -22,7 +22,7 @@ pieceReplacementApi
         );
         res.status(200).json();
       } else {
-        const err = new Error('missingParams');
+        const err = new Error('pieceReplacement.missingParams');
         err.status = 400;
         throw err;
       }

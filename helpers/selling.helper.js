@@ -139,6 +139,7 @@ const deleteSelling = async (sellingId) => {
   if (stockSubtraction.status === 'missing') {
     const err = new Error('checkout.missingPieces');
     err.status = 400;
+    err.data = stockSubtraction.result;
     throw err;
   }
 

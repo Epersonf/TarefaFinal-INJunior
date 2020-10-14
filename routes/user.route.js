@@ -29,7 +29,18 @@ userApi
         userData.password,
         async (err, newUser) => {
           if (err) {
-            next(err);
+            if (err.name === 'UserExistsError') {
+              const error = new Error('register.duplicated');
+              error.status = 500;
+              next(error);
+            } else {
+              const fields = err.keyPattern ? Object.keys(err.keyPattern) : [];
+              const error = fields[0]
+                ? new Error(`register.invalidField.${fields[0]}`)
+                : new Error('register.error');
+              error.status = 500;
+              next(error);
+            }
           }
 
           if (role === 'consultant') {

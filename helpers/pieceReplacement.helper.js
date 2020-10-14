@@ -29,7 +29,7 @@ const createPieceReplacement = async (
 
   const stockSubtraction = subtractStocks(consultant.stock, newPiece);
   if (stockSubtraction.status === 'missing') {
-    const err = new Error('missingPieces');
+    const err = new Error('pieceReplacement.missingPieces');
     err.status = 400;
     err.data = stockSubtraction.result;
     throw err;

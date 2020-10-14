@@ -42,7 +42,10 @@ const deletePieceEntry = async (userId, entryId) => {
   }
   const subtraction = subtractStocks(stockist.stock, pieceEntry.entry);
   if (subtraction.status === 'missing') {
-    return subtraction;
+    const err = new Error('pieceEntry.missingPieces');
+    err.status = 400;
+    err.data = subtraction.result;
+    throw err;
   }
   try {
     session.startTransaction();

@@ -52,6 +52,7 @@ const createPieceTransaction = async (
   if (subtractionResult.status === 'missing') {
     const error = new Error('transaction.missingPieces');
     error.status = 400;
+    error.data = subtractionResult.result;
     throw error;
   }
 
@@ -182,6 +183,7 @@ const revertPieceTransaction = async (transaction) => {
   if (subtractionResult.status === 'missing') {
     const error = new Error('transaction.missingPieces');
     error.status = 400;
+    error.data = subtractionResult.result;
     throw error;
   }
 
