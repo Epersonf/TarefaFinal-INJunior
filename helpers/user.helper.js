@@ -4,12 +4,24 @@ const { UserModel } = require('../models/user.model');
 const { createNewConsultant } = require('./consultant.helper');
 
 const handleGetFilters = async (query, Model) => {
-  const { id, sort, skip, limit, count, inactive, ...otherParams } = query;
+  const {
+    id,
+    sort,
+    skip,
+    limit,
+    count,
+    inactive,
+    fullName,
+    ...otherParams
+  } = query;
   if (id) {
     const instance = await Model.findById(id);
     return instance;
   } else {
-    let query = Model.find(otherParams);
+    let query = Model.find({
+      ...otherParams,
+      fullName: { $regex: fullName || '', $options: 'i' }
+    });
     !inactive && (query = query.find({ active: true }));
     if (count) {
       query = query.count();
