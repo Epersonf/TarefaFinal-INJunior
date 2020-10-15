@@ -15,7 +15,7 @@ const giftCampaings = [
   },
   {
     name: 'maleta',
-    goalValue: 2000,
+    goalValue: 1500,
     accumulative: false,
     type: 'request',
     maxQuantity: 1

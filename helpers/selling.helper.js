@@ -35,6 +35,9 @@ const createSelling = async (user, pieces) => {
   const consultantLevel = getConsultantLevel(absoluteSold);
   const levelUp = consultantLevel !== consultant.level;
 
+  const soldBefore = openCheckout.aggregatedSold.total.price;
+  const soldNow = soldBefore + aggregatedPieces.total.price;
+
   let giftsToGet = [];
 
   for (let i = 0; i < giftCampaings.length; i++) {
@@ -52,8 +55,8 @@ const createSelling = async (user, pieces) => {
     }
     const earnedGifts = checkGiftsForCampaing(
       giftCampaings[i],
-      consultant.totalSold,
-      absoluteSold,
+      soldBefore,
+      soldNow,
       maxAvailable
     );
     giftsToGet = [
