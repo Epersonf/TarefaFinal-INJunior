@@ -21,12 +21,15 @@ const createNewConsultant = async (consultantData) => {
 };
 
 const handleGetFilters = async (query, Model) => {
-  const { id, sort, skip, limit, count, ...otherParams } = query;
+  const { id, sort, skip, limit, count, fullName, ...otherParams } = query;
   if (id) {
     const instance = await Model.findById(id);
     return instance;
   } else {
-    let query = Model.find(otherParams);
+    let query = Model.find({
+      ...otherParams,
+      fullName: { $regex: fullName || '', $options: 'i' }
+    });
     if (count) {
       query = query.count();
     } else {
