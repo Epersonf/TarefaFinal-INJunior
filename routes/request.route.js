@@ -35,7 +35,19 @@ requestApi
             { _id: id },
             { $set: request },
             { new: true }
-          );
+          )
+            .populate([
+              {
+                path: 'requester',
+                select: 'fullName adress phoneNumber active email'
+              },
+              {
+                path: 'receiver',
+                select: 'fullName adress phoneNumber active email'
+              }
+            ])
+            .exec();
+
           res.status(200).json({
             message: 'request.updated',
             request: updatedRequest
