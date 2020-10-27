@@ -21,7 +21,7 @@ const createPieceTransaction = async (
   request
 ) => {
   const SenderUser = await UserModel.findById(senderId);
-  if (!(SenderUser.currentRole in roleModels)) {
+  if (!SenderUser || !(SenderUser.currentRole in roleModels)) {
     const error = new Error('senderRole.invalid');
     error.status = 400;
     throw error;

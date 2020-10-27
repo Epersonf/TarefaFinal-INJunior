@@ -46,6 +46,8 @@ api.use((err, req, res, next) => {
     console.info({ request: req });
     console.error(err);
     console.info('------------------------------');
+  } else {
+    console.err(`${err.status}: ${err.message}`);
   }
   next(err);
 });

@@ -23,7 +23,7 @@ pieceTransactionApi
             ? await UserModel.findOne({ roles: 'stockist' })
             : undefined;
         const newPieceTransaction = await createPieceTransaction(
-          req.user.id === receiverId ? senderId : req.user.id,
+          senderId || req.user.id,
           stockistUser ? stockistUser.id : receiverId,
           receiverRole,
           pieces,
