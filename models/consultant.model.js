@@ -47,10 +47,6 @@ const ConsultantScheme = new Schema(
     nextPayment: {
       type: Date,
       default: addDays(new Date(), 45)
-    },
-    totalSold: {
-      type: Number,
-      default: 0
     }
   },
   {

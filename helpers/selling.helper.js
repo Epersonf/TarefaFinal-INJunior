@@ -30,13 +30,14 @@ const createSelling = async (user, pieces) => {
   }
 
   const aggregatedPieces = aggregate(pieces);
-  const absoluteSold = consultant.totalSold + aggregatedPieces.total.price;
-
-  const consultantLevel = getConsultantLevel(absoluteSold);
-  const levelUp = consultantLevel !== consultant.level;
 
   const soldBefore = openCheckout.aggregatedSold.total.price;
   const soldNow = soldBefore + aggregatedPieces.total.price;
+
+  const absoluteSold = openCheckout.absoluteSoldBefore + soldNow;
+
+  const consultantLevel = getConsultantLevel(absoluteSold);
+  const levelUp = consultantLevel !== consultant.level;
 
   let giftsToGet = [];
 
@@ -96,7 +97,6 @@ const createSelling = async (user, pieces) => {
       consultant.level = consultantLevel;
       consultant.markModified('level');
     }
-    consultant.totalSold = absoluteSold;
     consultant.stock = stockSubtraction.result;
     consultant.markModified('stock');
     await consultant.save();
@@ -149,7 +149,8 @@ const deleteSelling = async (sellingId) => {
   const newSoldPieces = stockSubtraction.result;
 
   const absoluteSold =
-    consultant.totalSold - selling.aggregatedPieces.total.price;
+    aggregate(stockSubtraction.result).total.price +
+    checkout.absoluteSoldBefore;
 
   const consultantLevel = getConsultantLevel(absoluteSold);
 
@@ -168,7 +169,6 @@ const deleteSelling = async (sellingId) => {
 
     consultant.stock = sumStocks(consultant.stock, selling.pieces);
     consultant.markModified('stock');
-    consultant.totalSold = absoluteSold;
     if (levelDown) {
       consultant.level = consultantLevel;
     }

@@ -16,7 +16,14 @@ pieceTransactionApi
   .post(
     verifyToken(['stockist', 'supervisor', 'consultant']),
     async (req, res, next) => {
-      const { pieces, receiverId, receiverRole, request, senderId } = req.body;
+      const {
+        pieces,
+        receiverId,
+        receiverRole,
+        request,
+        senderId,
+        senderRole
+      } = req.body;
       try {
         const stockistUser =
           receiverRole === 'stockist'
@@ -24,6 +31,7 @@ pieceTransactionApi
             : undefined;
         const newPieceTransaction = await createPieceTransaction(
           senderId || req.user.id,
+          senderRole,
           stockistUser ? stockistUser.id : receiverId,
           receiverRole,
           pieces,

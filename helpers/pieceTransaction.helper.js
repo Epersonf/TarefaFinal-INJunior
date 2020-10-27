@@ -15,6 +15,7 @@ const roleModels = {
 
 const createPieceTransaction = async (
   senderId,
+  senderRole,
   receiverId,
   receiverRole,
   pieces,
@@ -26,9 +27,11 @@ const createPieceTransaction = async (
     error.status = 400;
     throw error;
   }
-  const Sender = await roleModels[SenderUser.currentRole].findOne({
-    user: senderId
-  });
+  const Sender = await roleModels[senderRole || SenderUser.currentRole].findOne(
+    {
+      user: senderId
+    }
+  );
   if (!Sender) {
     const error = new Error('sender.notFound');
     error.status = 404;
