@@ -62,10 +62,6 @@ const createPieceReplacement = async (
 
     consultant.stock = stockSubtraction.result;
     consultant.markModified('stock');
-    if (difference > 0) {
-      consultant.totalSold = consultant.totalSold + difference;
-      consultant.markModified('totalSold');
-    }
     await consultant.save();
 
     await session.commitTransaction();

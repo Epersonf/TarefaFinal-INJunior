@@ -171,11 +171,6 @@ const closeCheckout = async (checkoutId) => {
   }).populate('recommendee');
 
   const checkoutReport = getCheckoutReport(checkout, recommendations);
-  if (consultant.totalSold !== checkoutReport.absolutSoldAfter) {
-    const error = new Error('checkout.wrongValue');
-    error.status = 400;
-    throw error;
-  }
 
   if (checkoutReport.gifts.notTakenGifts > 0) {
     const error = new Error('checkout.giftsNotTaken');
