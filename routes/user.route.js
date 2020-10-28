@@ -6,6 +6,7 @@ const { handleGetFilters, updateUser } = require('../helpers/user.helper');
 const { createNewConsultant } = require('../helpers/consultant.helper');
 const { SupervisorModel } = require('../models/supervisor.model');
 const { StockistModel } = require('../models/stockist.model');
+const { ConsultantModel } = require('../models/consultant.model');
 
 const userApi = Router();
 
@@ -105,6 +106,20 @@ userApi
       if (id) {
         try {
           const updatedUser = await updateUser(id, data);
+          if (data.fullName) {
+            if (updatedUser.roles.includes('consultant')) {
+              await ConsultantModel.updateOne(
+                { user: updatedUser.id },
+                { fullName: data.fullName }
+              );
+            }
+            if (updatedUser.roles.includes('supervisor')) {
+              await SupervisorModel.updateOne(
+                { user: updatedUser.id },
+                { fullName: data.fullName }
+              );
+            }
+          }
           res.status(200).json({
             message: 'user.updated',
             data: updatedUser
