@@ -1,6 +1,10 @@
 const { Router } = require('express');
 const { GiftModel } = require('../models/gift.model');
-const { handleGetFilters, takeGift } = require('./../helpers/gift.helper');
+const {
+  handleGetFilters,
+  takeGift,
+  reverseTakeGift
+} = require('./../helpers/gift.helper');
 const { verifyToken } = require('../helpers/auth.helper');
 
 const giftApi = Router();
@@ -31,8 +35,11 @@ giftApi
     const { taken, pieces } = req.body;
     const user = req.user;
     try {
-      if (id && taken) {
-        const gift = await takeGift(id, pieces, user.id);
+      if (id && taken !== undefined) {
+        const gift =
+          taken === true
+            ? await takeGift(id, pieces, user.id)
+            : await reverseTakeGift(id);
         res.status(200).json(gift);
       } else {
         const err = new Error('gift.missingParams');
