@@ -1,7 +1,7 @@
 const { GiftModel } = require('../models/gift.model');
 const { ConsultantModel } = require('../models/consultant.model');
 const { CheckoutModel } = require('./../models/checkout.model');
-const { subtractStocks } = require('./stock.helper');
+const { subtractStocks, sumStocks } = require('./stock.helper');
 const { startSession } = require('mongoose');
 const { RequestModel } = require('../models/request.model');
 
@@ -150,9 +150,67 @@ const takeGift = async (giftId, pieces, userId) => {
   }
 };
 
+const reverseTakeGift = async (giftId) => {
+  const gift = await GiftModel.findById(giftId);
+  if (!gift) {
+    const err = new Error('gift.notfound');
+    err.status = 400;
+    throw err;
+  }
+  if (!gift.taken) {
+    const err = new Error('gift.notTaken');
+    err.status = 400;
+    throw err;
+  }
+  if (!gift.piece) {
+    const err = new Error('gift.noPiecesToRevert');
+    err.status = 400;
+    throw err;
+  }
+
+  const consultant = await ConsultantModel.findOne({ user: gift.seller });
+  if (!consultant) {
+    const err = new Error('consultant.notfound');
+    err.status = 400;
+    throw err;
+  }
+
+  const campaing = giftCampaings.find((c) => c.name === gift.campaign);
+  if (!campaing) {
+    const err = new Error('campaing.notfound');
+    err.status = 400;
+    throw err;
+  }
+
+  const newStock = sumStocks(consultant.stock, gift.piece);
+
+  const session = await startSession();
+  try {
+    session.startTransaction();
+    gift.taken = false;
+    gift.takenAt = new Date();
+    gift.piece = undefined;
+    gift.markModified('pieces');
+    await gift.save();
+
+    consultant.stock = newStock;
+    consultant.markModified('stock');
+    await consultant.save();
+
+    await session.commitTransaction();
+    session.endSession();
+    return gift;
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
+  }
+};
+
 module.exports = {
   giftCampaings,
   checkGiftsForCampaing,
   handleGetFilters,
-  takeGift
+  takeGift,
+  reverseTakeGift
 };
