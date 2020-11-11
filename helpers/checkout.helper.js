@@ -236,9 +236,56 @@ const closeCheckout = async (checkoutId) => {
   }
 };
 
+const getReportsForConsultants = async (consultants) => {
+  const reports = {
+    aggregatedReport: {
+      absolutSoldBefore: 0,
+      totalSold: 0,
+      replacementIncome: 0,
+      totalFromRecommendations: 0,
+      absoluteSoldAfter: 0
+    }
+  };
+
+  for (const consultant of consultants) {
+    const openCheckout = await CheckoutModel.findOne({
+      status: 'open',
+      user: consultant.user
+    })
+      .populate('gifts')
+      .populate('replacements');
+    const openRecommendations = await RecomendationModel.find({
+      status: 'open',
+      recommendee: consultant.user
+    })
+      .populate('recommendee')
+      .populate('recommended');
+    const report = getCheckoutReport(openCheckout, openRecommendations);
+    if (report) {
+      reports[consultant.user] = report;
+      reports.aggregatedReport = {
+        absolutSoldBefore:
+          reports.aggregatedReport.absolutSoldBefore + report.absolutSoldBefore,
+        totalSold: reports.aggregatedReport.totalSold + report.totalSold,
+        replacementIncome:
+          reports.aggregatedReport.replacementIncome +
+          report.replacements.replacementIncome,
+        totalFromRecommendations:
+          reports.aggregatedReport.totalFromRecommendations +
+          report.recommendations.totalConsultantSplit,
+        absoluteSoldAfter:
+          reports.aggregatedReport.absoluteSoldAfter + report.absolutSoldAfter
+      };
+    }
+  }
+
+  return reports;
+};
+
 module.exports = {
   getRecommendationIncome,
   handleGetFilters,
   closeCheckout,
-  getCheckoutReport
+  getCheckoutReport,
+  getReportsForConsultants
 };

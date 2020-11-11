@@ -30,15 +30,7 @@ const verifyToken = (allowedRoles) => (req, res, next) => {
           message: 'token.invalid'
         });
       } else {
-        if (allowedRoles.indexOf('all') > -1) {
-          req.user = decoded;
-          next();
-        }
-        if (
-          allowedRoles.filter((role) => decoded.roles.includes(role)).length >
-            0 ||
-          (allowedRoles.indexOf('self') > -1 && id === decoded.id)
-        ) {
+        if (checkRoles(allowedRoles, decoded, id)) {
           req.user = decoded;
           next();
         } else {
@@ -57,8 +49,21 @@ const verifyToken = (allowedRoles) => (req, res, next) => {
   }
 };
 
+const checkRoles = (allowedRoles, user, id) => {
+  if (allowedRoles.indexOf('all') > -1) {
+    return true;
+  }
+  if (
+    allowedRoles.filter((role) => user.roles.includes(role)).length > 0 ||
+    (allowedRoles.indexOf('self') > -1 && id === user.id)
+  ) {
+    return true;
+  }
+};
+
 module.exports = {
   getLoginToken,
   getResetPasswordToken,
-  verifyToken
+  verifyToken,
+  checkRoles
 };
