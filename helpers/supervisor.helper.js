@@ -5,13 +5,9 @@ const handleGetFilters = async (query, Model) => {
     return instance;
   } else {
     let query = Model.find(otherParams);
-    if (count) {
-      query = query.count();
-    } else {
-      sort && (query = query.sort(sort));
-      query = query.skip(skip ? Number(skip) : 0).limit(20);
-    }
-    query = query.populate([
+    sort && query.sort(sort);
+    query.skip(skip ? Number(skip) : 0).limit(20);
+    query.populate([
       {
         path: 'user',
         select: 'fullName adress phoneNumber active username email cpf city cep'
@@ -21,8 +17,9 @@ const handleGetFilters = async (query, Model) => {
         select: 'fullName adress phoneNumber active email'
       }
     ]);
-    const collection = await query.exec();
-    return collection;
+    const collection = await query;
+    const amount = (count) ? await query.count() : undefined;
+    return { count: amount, elements: collection };
   }
 };
 
